@@ -1,0 +1,76 @@
+.App-header {
+  position: absolute;
+  width: 1920px;
+  height: 88px;
+  top: 40px;
+  left: 40px;
+  right: 0%;
+
+  background: #1c1c21;
+
+  box-sizing: border-box;
+  border: 2px solid #4c4cff;
+}
+
+.Content {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  position: absolute;
+  width: 1280px;
+  height: 56px;
+  left: 320px;
+  bottom: 0px;
+  top: 0px;
+}
+
+.Flex-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.Constructor-container {
+  width: 178px;
+  height: 56px;
+}
+
+.Order-feed-container {
+  width: 197px;
+  height: 56px;
+}
+
+.Profile-container {
+  position: absolute;
+  left: 1073px;
+  width: 207px;
+  height: 56px;
+  bottom: 0px;
+  top: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.Border-round {
+  box-sizing: border-box;
+  border: 1px dashed #4c4cff;
+  border-radius: 40px;
+}
+
+.Logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: absolute;
+  width: 289.15px;
+  height: 40px;
+  left: 495px;
+  bottom: 0px;
+  top: 0px;
+}

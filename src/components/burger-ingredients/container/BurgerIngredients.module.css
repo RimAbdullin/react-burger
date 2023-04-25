@@ -1,0 +1,25 @@
+.Container {
+  position: absolute;
+  width: 600px;
+  height: 912px;
+  top: 128px;
+  left: 380px;
+
+  background: #131316;
+  border: 2px solid #4c4cff;
+}
+
+.Title {
+  width: 600px;
+  height: 40px;
+}
+
+.Scroll-area {
+  width: 600px;
+  height: 756px;
+  left: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  border-radius: 0px;
+}
