@@ -3,21 +3,22 @@ import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/container/BurgerIngredients';
 import Modal from '../modal/Modal';
 import BurgerConstructor from '../burger-constructor/container/BurgerConstructor';
+import styles from './App.module.css';
 
 function App() {
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
 
   return (
     <>
-      <button onClick={() => setModal(true)}>Открыть диалоговое окно</button>
+      {/* <button onClick={() => setModal(true)}>Открыть диалоговое окно</button>
       <Modal visible={modal} setVisible={setModal}>
         123
-      </Modal>
+      </Modal> */}
       <header>
         <AppHeader />
       </header>
       <main>
-        <section>
+        <section className={styles[`main-container`]}>
           <BurgerIngredients />
           <BurgerConstructor />
         </section>

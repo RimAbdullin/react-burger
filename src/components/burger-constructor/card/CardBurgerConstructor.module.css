@@ -1,48 +1,63 @@
 .Card-ingredients {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   flex: none;
 
-  width: 272px;
-  height: 208px;
+  width: 568px;
+  height: 80px;
 
   box-sizing: border-box;
-
-  position: relative;
-
   cursor: pointer;
 }
 
-.Illustration {
-  width: 240px;
-  height: 120px;
-
-  margin-top: -1px;
-}
-
-.Counter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: none;
-
-  /* position: absolute;
-  width: 32px;
-  height: 32px;
-  right: 0px; */
-}
-
-.Price {
+.Card-data {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex: none;
 
-  gap: 8px;
+  width: 536px;
+  height: 80px;
+}
+
+.Drag-icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 24px;
+  height: 24px;
+
+  border-left: 1px dashed #4c4cff;
+}
+
+.Icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 80px;
+  height: 40px;
 }
 
 .Icon {
+  width: 80px;
+  height: 40px;
+}
+
+.Price-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  height: 24px;
+}
+
+.Price-icon {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -51,18 +66,14 @@
   border-left: 1px dashed #4c4cff;
 }
 
+.Name-container {
+  width: 254px;
+  height: 48px;
+}
+
 .Name {
-  display: flex;
-  flex-direction: row;
   align-items: start;
-  justify-content: center;
-  flex: none;
-
-  width: 270px;
-  height: 52px;
-
-  background: #131316;
-  border: 1px dashed #4c4cff;
+  justify-content: start;
 }
 
 .Card-border {

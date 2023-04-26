@@ -1,9 +1,6 @@
 .Container {
-  position: absolute;
   width: 600px;
   height: 912px;
-  top: 128px;
-  left: 380px;
 
   background: #131316;
   border: 2px solid #4c4cff;

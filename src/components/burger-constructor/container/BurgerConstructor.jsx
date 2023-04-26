@@ -24,9 +24,6 @@ function BurgerConstructor() {
 
         setState({
           burgerData: data.data,
-          bun: data.data.filter((bun) => bun.type == 'bun'),
-          main: data.data.filter((bun) => bun.type == 'main'),
-          sauce: data.data.filter((bun) => bun.type == 'sauce'),
           loading: false,
         });
       } catch (err) {
@@ -47,9 +44,7 @@ function BurgerConstructor() {
             {/* <TabsBurgerIngredients click={scrollToElement} /> */}
             <section className={`mt-25 custom-scroll ${styles['Scroll-area']}`}>
               <ListBurgerConstructor
-                id={'id-bun'}
-                title={'Булки'}
-                data={state.bun}
+                data={state.burgerData}
               ></ListBurgerConstructor>
             </section>
           </>

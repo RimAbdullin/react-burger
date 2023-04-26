@@ -1,7 +1,8 @@
 import styles from './CardBurgerConstructor.module.css';
 import {
   CurrencyIcon,
-  Counter,
+  DragIcon,
+  DeleteIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import Modal from '../../modal/Modal';
@@ -13,15 +14,52 @@ function CardBurgerConstructor(props) {
 
   return (
     <div
-      className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']} ${styles['Card-border']}`}
+      className={`ml-4  ${styles['Card-ingredients']} ${styles['Card-border']}`}
       onClick={() => setModal(true)}
     >
-      <Counter
-        count={9}
-        size="default"
-        extraClass={`m-0 ${styles['Counter']} ${styles['Card-border']}`}
-      />
+      {/* Кнопка слева. */}
       <div
+        className={`${styles['Drag-icon-container']} ${styles['Card-border']}`}
+      >
+        <DragIcon type="primary" />
+      </div>
+      {/* Контейнер для данных. */}
+      <div className={`${styles['Card-data']}`}>
+        {/* Контейнер для иконки. */}
+        <div
+          className={`ml-6 ${styles['Icon-container']} ${styles['Card-border']}`}
+        >
+          {/* Иконка */}
+          <img className={styles.Icon} src={data.image} alt="" />
+        </div>
+        {/* Наименование */}
+        <div
+          className={`ml-5  ${styles['Name-container']} ${styles['Card-border']}`}
+        >
+          <span className={`text_type_main-default ${styles.Name}`}>
+            {data.name}
+          </span>
+        </div>
+        {/* Стоимость. */}
+        <div
+          className={`ml-5 ${styles['Price-container']} ${styles['Card-border']}`}
+        >
+          <div>
+            <span className={`mr-2 text_type_digits-default`}>
+              {data.price}
+            </span>
+          </div>
+          <div className={`${styles['Price-icon']}`}>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+        {/* иконка корзины */}
+        <div className="ml-5 mr-8">
+          <DeleteIcon type="primary" />
+        </div>
+      </div>
+
+      {/* <div
         className={`mr-4 ml-4 ${styles['Illustration']} ${styles['Card-border']}`}
       >
         <img src={data.image} alt="" />
@@ -41,7 +79,7 @@ function CardBurgerConstructor(props) {
         >
           {data.name}
         </span>
-      </div>
+      </div> */}
       <Modal visible={modal} setVisible={setModal}>
         {data.name}
       </Modal>

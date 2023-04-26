@@ -1,0 +1,9 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+  left: 380px;
+  top: 128px;
+  gap: 40px;
+}
