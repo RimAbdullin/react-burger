@@ -1,5 +1,5 @@
 import styles from './ListBurgerIngredients.module.css';
-import CardBurgerIngredients from '../card/CardBurgerIngredients';
+import CardBurgerIngredients from '../card-burger-ingredients/CardBurgerIngredients';
 
 const ListBurgerIngredients = (props) => {
   const modal = () => {

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import AppHeader from '../app-header/AppHeader';
-import BurgerIngredients from '../burger-ingredients/container/BurgerIngredients';
 import Modal from '../modal/Modal';
-import BurgerConstructor from '../burger-constructor/container/BurgerConstructor';
 import styles from './App.module.css';
+import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
+import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 
 function App() {
   // const [modal, setModal] = useState(false);

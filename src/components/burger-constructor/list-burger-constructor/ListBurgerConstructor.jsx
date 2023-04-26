@@ -1,5 +1,5 @@
 import styles from './ListBurgerConstructor.module.css';
-import CardBurgerConstructor from '../card/CardBurgerConstructor';
+import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstructor';
 
 const ListBurgerConstructor = (props) => {
   return (

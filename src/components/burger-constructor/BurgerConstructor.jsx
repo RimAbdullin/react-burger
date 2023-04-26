@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './BurgerConstructor.module.css';
-import ListBurgerConstructor from '../list/ListBurgerConstructor';
+import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstructor';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructor() {
   const [state, setState] = useState({
@@ -46,6 +47,19 @@ function BurgerConstructor() {
               <ListBurgerConstructor
                 data={state.burgerData}
               ></ListBurgerConstructor>
+            </section>
+            {/* Информация. */}
+            <section className={`${styles.Info}`}>
+              <div>
+                <span
+                  className={`mr-2 text_type_digits-medium ${styles['Card-border']}`}
+                >
+                  610
+                </span>
+              </div>
+              <div className={`${styles['Price-icon']}`}>
+                <CurrencyIcon type="primary" />
+              </div>
             </section>
           </>
         )
