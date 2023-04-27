@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './BurgerConstructor.module.css';
 import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstructor';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  CurrencyIcon,
+  Button,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructor() {
   const [state, setState] = useState({
@@ -42,23 +45,26 @@ function BurgerConstructor() {
       ) : (
         !state.loading && (
           <>
-            {/* <TabsBurgerIngredients click={scrollToElement} /> */}
             <section className={`mt-25 custom-scroll ${styles['Scroll-area']}`}>
               <ListBurgerConstructor
                 data={state.burgerData}
               ></ListBurgerConstructor>
             </section>
             {/* Информация. */}
-            <section className={`${styles.Info}`}>
-              <div>
-                <span
-                  className={`mr-2 text_type_digits-medium ${styles['Card-border']}`}
-                >
-                  610
-                </span>
-              </div>
-              <div className={`${styles['Price-icon']}`}>
+            <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
+              <div
+                className={`${styles['Info-price-container']} ${styles['Card-border']}`}
+              >
+                <span className={`mr-2 text_type_digits-medium`}>610</span>
+
                 <CurrencyIcon type="primary" />
+              </div>
+              <div
+                className={`ml-10 ${styles['Info-price-container ']} ${styles['Card-border']}`}
+              >
+                <Button htmlType="button" type="primary" size="large">
+                  Оформить заказ
+                </Button>
               </div>
             </section>
           </>

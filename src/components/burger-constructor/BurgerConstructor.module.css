@@ -16,23 +16,22 @@
   border-radius: 0px;
 }
 
-.Info {
+.Info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
   width: 568px;
   height: 64px;
+  margin-left: auto;
 }
 
-.Price-container {
+.Info-price-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex: none;
-}
-
-.Price-icon {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
+  height: 64px;
 }
 
 .Card-border {
