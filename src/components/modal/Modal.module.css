@@ -9,7 +9,7 @@
   right: 0;
   left: 0;
   /* display: none; */
-  /* background: rgba(100, 100, 100, 0.5); */
+  background: rgba(100, 100, 100, 0.5);
   z-index: 1;
 }
 
@@ -21,8 +21,10 @@
 
 .Modal-content {
   padding: 25px;
-  background: teal;
+  background-color: teal;
   border-radius: 16px;
-  min-width: 250px;
-  min-height: 250px;
+  min-width: 350px;
+  min-height: 350px;
+
+  border: 3px solid blue;
 }

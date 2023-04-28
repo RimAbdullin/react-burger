@@ -27,11 +27,10 @@ function CardBurgerIngredients(props) {
 
   return (
     <>
-      {visible && modal}
-      <div style={{ overflow: 'hidden' }}>
-        {/* <button onClick={handleOpenModal}>Открыть модальное окно</button>
+      {/* <div style={{ overflow: 'hidden' }}> */}
+      {/* <button onClick={handleOpenModal}>Открыть модальное окно</button>
         {visible && modal} */}
-      </div>
+      {/* </div> */}
       <div
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']} ${styles['Card-border']}`}
         onClick={handleOpenModal}
@@ -62,6 +61,7 @@ function CardBurgerIngredients(props) {
           </span>
         </div>
       </div>
+      {visible && modal}
     </>
   );
 }
