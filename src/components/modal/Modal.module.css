@@ -1,11 +1,15 @@
 .Modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   /* display: none; */
-  background: rgba(100, 100, 100, 0.5);
+  /* background: rgba(100, 100, 100, 0.5); */
   z-index: 1;
 }
 

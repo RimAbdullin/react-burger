@@ -13,10 +13,12 @@ const Modal = ({ children, header, onClose }) => {
   return PortalReactDOM.createPortal(
     <>
       <div className={`${styles.Modal}`}>
-        <div>{header}</div>
-        {children}
+        <div className={`${styles['Modal-content']}}`}>
+          <div>{header}</div>
+          {children}
 
-        <button onClick={onClose}>закрыть</button>
+          <button onClick={onClose}>закрыть</button>
+        </div>
       </div>
       <div onClose={onClose} />
     </>,
