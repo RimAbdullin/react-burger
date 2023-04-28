@@ -5,7 +5,6 @@
   flex: none;
 
   width: 568px;
-  /* height: 80px; */
 
   box-sizing: border-box;
   cursor: pointer;
@@ -15,10 +14,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: end;
   flex: none;
 
   width: 536px;
-  /* height: 80px; */
 }
 
 .Drag-icon-container {
@@ -31,49 +30,6 @@
   height: 24px;
 
   border-left: 1px dashed #4c4cff;
-}
-
-.Icon-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-
-  width: 80px;
-  height: 40px;
-}
-
-.Icon {
-  width: 80px;
-  height: 40px;
-}
-
-.Price-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-
-  height: 24px;
-}
-
-.Price-icon {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-
-  border-left: 1px dashed #4c4cff;
-}
-
-.Name-container {
-  width: 254px;
-  height: 48px;
-}
-
-.Name {
-  align-items: start;
-  justify-content: start;
 }
 
 .Card-border {

@@ -3,20 +3,15 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import Modal from '../../modal/Modal';
 import PropTypes from 'prop-types';
 
 function CardBurgerConstructor(props) {
-  const data = props.children;
-
-  const [modal, setModal] = useState(false);
+  const handleClose = () => {};
 
   return (
     <>
       <section
         className={`ml-4  ${styles['Card-ingredients']} ${styles['Card-border']}`}
-        onClick={() => setModal(true)}
       >
         <div
           className={`${styles['Drag-icon-container']} ${styles['Card-border']}`}
@@ -27,19 +22,15 @@ function CardBurgerConstructor(props) {
         <div className={`${styles['Card-data']}`}>
           <ConstructorElement
             extraClass="ml-10"
-            key={data._id}
+            key={props.children._id}
             type={props.type}
             isLocked={false}
-            // handleClose={handleClose}
-            text={data.name}
-            price={data.price}
-            thumbnail={data.image}
+            handleClose={handleClose}
+            text={props.children.name}
+            price={props.children.price}
+            thumbnail={props.children.image}
           />
         </div>
-
-        {/* <Modal visible={modal} setVisible={setModal}>
-        {data.name}
-      </Modal> */}
       </section>
     </>
   );
@@ -48,5 +39,9 @@ function CardBurgerConstructor(props) {
 export default CardBurgerConstructor;
 
 CardBurgerConstructor.propTypes = {
-  test: PropTypes.string,
+  type: PropTypes.string,
+  isLocked: PropTypes.bool,
+  text: PropTypes.string,
+  price: PropTypes.number,
+  thumbnail: PropTypes.string,
 };

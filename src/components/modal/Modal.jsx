@@ -1,28 +1,26 @@
+import ReactDOM from 'react-dom/client';
+import PortalReactDOM from 'react-dom';
+
 import styles from './Modal.module.css';
-import {
-  CurrencyIcon,
-  Counter,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Modal = ({ children, visible, setVisible }) => {
-  const classesModal = [styles.Modal];
+const modalRoot = document.getElementById('react-modals');
+// const modalRoot = ReactDOM.createRoot(document.getElementById('react-modals'));
 
-  if (visible) {
-    classesModal.push(styles.active);
-  }
+console.log(modalRoot);
 
-  return (
-    <div className={classesModal.join(' ')} onClick={() => setVisible(false)}>
-      <div
-        className={`${styles['Modal-content']}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <p>{children}</p>
-        <button onClick={() => setVisible(false)}>
-          Закрыть диалоговое окно
-        </button>
+const Modal = ({ children, header, onClose }) => {
+  return PortalReactDOM.createPortal(
+    <>
+      <div className={`${styles.Modal}`}>
+        <div>{header}</div>
+        {children}
+
+        <button onClick={onClose}>закрыть</button>
       </div>
-    </div>
+      <div onClose={onClose} />
+    </>,
+    modalRoot
   );
 };
 

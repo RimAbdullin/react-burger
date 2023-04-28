@@ -8,9 +8,7 @@
   height: 208px;
 
   box-sizing: border-box;
-
   position: relative;
-
   cursor: pointer;
 }
 
@@ -53,11 +51,12 @@
   justify-content: center;
   flex: none;
 
+  text-align: center;
+
   width: 270px;
   height: 52px;
 
   background: #131316;
-  border: 1px dashed #4c4cff;
 }
 
 .Card-border {

@@ -1,34 +1,15 @@
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ListBurgerConstructor.module.css';
 import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstructor';
+import PropTypes from 'prop-types';
 
 const ListBurgerConstructor = (props) => {
-  const handleClose = () => {
-    alert('123');
-  };
+  const handleClose = () => {};
 
   return (
     <section>
-      <div className={styles.Column}>
+      <div className={styles['List-container']}>
         {props.data.map((item, index) => (
-          // <ConstructorElement
-          //   extraClass="ml-10"
-          //   key={item._id}
-          //   type={
-          //     index === 0
-          //       ? 'top'
-          //       : index === props.data.length - 1
-          //       ? 'bottom'
-          //       : undefined
-          //   }
-          //   isLocked={false}
-          //   handleClose={handleClose}
-          //   text={item.name}
-          //   price={item.price}
-          //   thumbnail={item.image}
-          // />
           <CardBurgerConstructor
-            test={1}
             key={item._id}
             type={
               index === 0
@@ -48,27 +29,21 @@ const ListBurgerConstructor = (props) => {
 
 export default ListBurgerConstructor;
 
-{
-  /* <section>
-      <div className={styles.Column}>
-        {props.data.map((item, index) => (
-          <ConstructorElement
-            extraClass="ml-10"
-            key={item._id}
-            type={
-              index === 0
-                ? 'top'
-                : index === props.data.length - 1
-                ? 'bottom'
-                : undefined
-            }
-            isLocked={false}
-            handleClose={handleClose}
-            text={item.name}
-            price={item.price}
-            thumbnail={item.image}
-          />
-        ))}
-      </div>
-    </section> */
-}
+ListBurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      __v: PropTypes.number.isRequired,
+    })
+  ),
+};
