@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
+import { API_DATA } from '../../data';
 
 function BurgerIngredients() {
   const [state, setState] = useState({
@@ -17,9 +18,7 @@ function BurgerIngredients() {
     const getBurgerData = async () => {
       setState({ ...state, loading: true });
       try {
-        const res = await fetch(
-          `https://norma.nomoreparties.space/api/ingredients`
-        );
+        const res = await fetch(API_DATA);
 
         const data = await res.json();
 

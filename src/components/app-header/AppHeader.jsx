@@ -21,7 +21,6 @@ function AppHeader() {
             Конструктор
           </a>
         </div>
-
         <div
           className={`ml-2 ${styles['Order-feed-container']} ${styles['Border-round']} ${styles['Flex-container']}`}
         >
@@ -33,11 +32,9 @@ function AppHeader() {
             Лента заказов
           </a>
         </div>
-
         <div className={`mt-2 mb-2 ${styles.Logo}`}>
           <Logo />
         </div>
-
         <div
           className={`${styles['Profile-container']} ${styles['Border-round']} ${styles['Flex-container']}`}
         >

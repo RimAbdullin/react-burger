@@ -5,6 +5,7 @@ import {
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { API_DATA } from '../../data';
 
 function BurgerConstructor() {
   const [state, setState] = useState({
@@ -18,9 +19,7 @@ function BurgerConstructor() {
     const getBurgerData = async () => {
       setState({ ...state, loading: true });
       try {
-        const res = await fetch(
-          `https://norma.nomoreparties.space/api/ingredients`
-        );
+        const res = await fetch(API_DATA);
 
         const data = await res.json();
 
@@ -45,7 +44,7 @@ function BurgerConstructor() {
       ) : (
         !state.loading && (
           <>
-            <section className={`mt-25 ${styles['Burger-components']}`}>
+            <section className={`mt-25`}>
               <ListBurgerConstructor
                 data={state.burgerData}
                 bun={state.bun[0]}
