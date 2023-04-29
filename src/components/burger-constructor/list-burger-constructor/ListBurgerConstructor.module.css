@@ -1,8 +1,4 @@
-.List-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex: none;
-
-  gap: 16px;
+.Scroll-area {
+  height: 464px;
+  overflow-y: scroll;
 }

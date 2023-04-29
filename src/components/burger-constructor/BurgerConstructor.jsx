@@ -12,8 +12,6 @@ function BurgerConstructor() {
     burgerData: null,
     loading: true,
     bun: null,
-    main: null,
-    sauce: null,
   });
 
   useEffect(() => {
@@ -27,7 +25,9 @@ function BurgerConstructor() {
         const data = await res.json();
 
         setState({
-          burgerData: data.data,
+          ...state,
+          burgerData: data.data.filter((bun) => bun.type !== 'bun'),
+          bun: data.data.filter((bun) => bun.name === 'Краторная булка N-200i'),
           loading: false,
         });
       } catch (err) {
@@ -39,29 +39,26 @@ function BurgerConstructor() {
   }, []);
 
   return (
-    <section className={`${styles.Container}`}>
+    <section className={`${styles['Burger-constructor']}`}>
       {state.error ? (
         <h1 style={{ textAlign: 'center' }}>Данные не найдены.</h1>
       ) : (
         !state.loading && (
           <>
-            <section className={`mt-25 custom-scroll ${styles['Scroll-area']}`}>
+            <section className={`mt-25 ${styles['Burger-components']}`}>
               <ListBurgerConstructor
                 data={state.burgerData}
+                bun={state.bun[0]}
               ></ListBurgerConstructor>
             </section>
             {/* Информация. */}
             <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
-              <div
-                className={`${styles['Info-price-container']} ${styles['Card-border']}`}
-              >
+              <div className={`${styles['Info-price-container']}`}>
                 <span className={`mr-2 text_type_digits-medium`}>610</span>
 
                 <CurrencyIcon type="primary" />
               </div>
-              <div
-                className={`ml-10 ${styles['Info-price-container ']} ${styles['Card-border']}`}
-              >
+              <div className={`ml-10 ${styles['Info-price-container ']}`}>
                 <Button htmlType="button" type="primary" size="large">
                   Оформить заказ
                 </Button>

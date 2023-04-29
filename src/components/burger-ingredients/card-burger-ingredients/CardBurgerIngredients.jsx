@@ -27,40 +27,24 @@ function CardBurgerIngredients(props) {
 
   return (
     <>
-      {/* <div style={{ overflow: 'hidden' }}> */}
-      {/* <button onClick={handleOpenModal}>Открыть модальное окно</button>
-        {visible && modal} */}
-      {/* </div> */}
-      <div
-        className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']} ${styles['Card-border']}`}
+      <section
+        className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={handleOpenModal}
       >
-        <Counter
-          count={1}
-          size="default"
-          extraClass={`m-0 ${styles['Counter']} ${styles['Card-border']}`}
-        />
-        <div
-          className={`mr-4 ml-4 ${styles['Illustration']} ${styles['Card-border']}`}
-        >
+        <Counter count={1} size="default" />
+        <div className={`mr-4 ml-4 ${styles['Illustration']}`}>
           <img src={props.children.image} alt="" />
         </div>
-        <div className={`mt-1 mb-1 ${styles.Price} ${styles['Card-border']}`}>
-          <div>
-            <span className={`text_type_digits-default`}>
-              {props.children.price}
-            </span>
-          </div>
-          <div className={`${styles['Icon']}`}>
-            <CurrencyIcon type="primary" />
-          </div>
-        </div>
-        <div className={`${styles.Name} ${styles['Card-border']}`}>
-          <span className={`text_type_main-default`}>
-            {props.children.name}
+        <div className={`mt-1 mb-1 ${styles.Price}`}>
+          <span className={`mr-2 text_type_digits-default`}>
+            {props.children.price}
           </span>
+          <CurrencyIcon type="primary" />
         </div>
-      </div>
+        <span className={`text_type_main-default ${styles.Name}`}>
+          {props.children.name}
+        </span>
+      </section>
       {visible && modal}
     </>
   );
@@ -70,8 +54,17 @@ export default CardBurgerIngredients;
 
 CardBurgerIngredients.propTypes = {
   children: PropTypes.shape({
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string,
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
   }),
 };

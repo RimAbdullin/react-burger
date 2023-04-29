@@ -7,8 +7,6 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const modalRoot = document.getElementById('react-modals');
 // const modalRoot = ReactDOM.createRoot(document.getElementById('react-modals'));
 
-console.log(modalRoot);
-
 const Modal = ({ children, header, onClose }) => {
   return PortalReactDOM.createPortal(
     <>

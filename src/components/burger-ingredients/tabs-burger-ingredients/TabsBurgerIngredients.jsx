@@ -11,7 +11,7 @@ function TabsBurgerIngredients(props) {
   };
 
   return (
-    <div className={`text text_type_main-default ${styles.Tabs}`}>
+    <section className={`text text_type_main-default ${styles.Tabs}`}>
       <Tab value="id-bun" active={current === 'id-bun'} onClick={scrollElement}>
         Булки
       </Tab>
@@ -29,7 +29,7 @@ function TabsBurgerIngredients(props) {
       >
         Начинки
       </Tab>
-    </div>
+    </section>
   );
 }
 
