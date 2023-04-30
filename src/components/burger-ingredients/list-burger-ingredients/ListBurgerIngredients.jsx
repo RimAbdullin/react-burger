@@ -3,8 +3,6 @@ import CardBurgerIngredients from '../card-burger-ingredients/CardBurgerIngredie
 import PropTypes from 'prop-types';
 
 const ListBurgerIngredients = (props) => {
-  console.log(props);
-
   return (
     <section>
       <div className={`mt-10 text text_type_main-medium text_color_primary`}>
