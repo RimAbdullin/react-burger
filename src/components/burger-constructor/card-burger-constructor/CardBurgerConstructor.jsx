@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styles from './CardBurgerConstructor.module.css';
 import {
   ConstructorElement,
@@ -6,22 +7,46 @@ import {
 import PropTypes from 'prop-types';
 
 function CardBurgerConstructor(props) {
+  const [state, setState] = useState({
+    name: '',
+    loading: true,
+  });
+
+  useEffect(() => {
+    setState({ ...state, loading: true });
+
+    let nameDescription = '';
+    if (props.type === 'top') {
+      nameDescription = ' (верх)';
+    } else if (props.type === 'bottom') {
+      nameDescription = ' (низ)';
+    }
+
+    setState({
+      ...state,
+      loading: false,
+      name: props.children.name + nameDescription,
+    });
+  }, []);
+
   const handleClose = () => {};
 
   return (
-    <section className={`ml-4  ${styles['Card-ingredients']}`}>
-      {!props.type && <DragIcon type="primary" />}
-      <ConstructorElement
-        extraClass={'ml-10 mr-2 ' + props.extraClass}
-        key={props.children._id}
-        type={props.type}
-        isLocked={props.isLocked}
-        handleClose={handleClose}
-        text={props.children.name}
-        price={props.children.price}
-        thumbnail={props.children.image}
-      />
-    </section>
+    !state.loading && (
+      <section className={`ml-4  ${styles['Card-ingredients']}`}>
+        {!props.type && <DragIcon type="primary" />}
+        <ConstructorElement
+          extraClass={'ml-10 mr-2 ' + props.extraClass}
+          key={props.children._id}
+          type={props.type}
+          isLocked={props.isLocked}
+          handleClose={handleClose}
+          text={state.name}
+          price={props.children.price}
+          thumbnail={props.children.image}
+        />
+      </section>
+    )
   );
 }
 

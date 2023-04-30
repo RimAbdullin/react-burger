@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { API_DATA_URL } from '../../data/data';
+import { getIngredients } from '../../utils/burger-api';
 
 function App() {
   const [state, setState] = useState({
@@ -16,9 +16,7 @@ function App() {
     const getBurgerData = async () => {
       setState({ ...state, loading: true });
       try {
-        const res = await fetch(API_DATA_URL);
-
-        const data = await res.json();
+        const data = await getIngredients();
 
         setState({
           burgerData: data.data,
@@ -28,7 +26,6 @@ function App() {
         setState({ ...state, error: true });
       }
     };
-
     getBurgerData();
   }, []);
 

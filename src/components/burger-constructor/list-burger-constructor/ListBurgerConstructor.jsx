@@ -19,6 +19,7 @@ const ListBurgerConstructor = (props) => {
           <CardBurgerConstructor
             extraClass={index !== props.data.length - 1 ? 'mb-4' : ''}
             key={item._id}
+            type={undefined}
             isLocked={false}
           >
             {item}
