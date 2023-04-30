@@ -1,12 +1,13 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import styles from './TabsBurgerIngredients.module.css';
+import PropTypes from 'prop-types';
 
-function TabsBurgerIngredients(props) {
+function TabsBurgerIngredients({ click }) {
   const [current, setCurrent] = React.useState('id-bun');
 
   const scrollElement = (v) => {
-    props.click(v);
+    click(v);
     setCurrent(v);
   };
 
@@ -34,3 +35,7 @@ function TabsBurgerIngredients(props) {
 }
 
 export default TabsBurgerIngredients;
+
+TabsBurgerIngredients.propTypes = {
+  click: PropTypes.func.isRequired,
+};

@@ -3,8 +3,9 @@ import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
 import PropTypes from 'prop-types';
+import { burgerIngredientsObject } from '../../utils/prop-types';
 
-function BurgerIngredients(props) {
+function BurgerIngredients({ data }) {
   const [state, setState] = useState({
     bun: null,
     main: null,
@@ -16,9 +17,9 @@ function BurgerIngredients(props) {
     setState({ ...state, loading: true });
     setState({
       ...state,
-      bun: props.data.filter((bun) => bun.type == 'bun'),
-      main: props.data.filter((bun) => bun.type == 'main'),
-      sauce: props.data.filter((bun) => bun.type == 'sauce'),
+      bun: data.filter((bun) => bun.type == 'bun'),
+      main: data.filter((bun) => bun.type == 'main'),
+      sauce: data.filter((bun) => bun.type == 'sauce'),
       loading: false,
     });
   }, []);
@@ -65,19 +66,6 @@ export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    })
-  ),
+    PropTypes.shape({ ...burgerIngredientsObject }).isRequired
+  ).isRequired,
 };
