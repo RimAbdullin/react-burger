@@ -11,7 +11,7 @@ export function getIngredients() {
 /**
  * Проверка response.
  * @param {*} res - response.
- * @returns json || err
+ * @returns Promise<json> || Promise<err>
  */
 const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
