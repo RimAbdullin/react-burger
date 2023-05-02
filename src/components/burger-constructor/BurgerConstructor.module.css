@@ -1,0 +1,22 @@
+.Burger-constructor {
+  width: 600px;
+  height: 912px;
+}
+
+.Info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  width: 568px;
+  height: 64px;
+  margin-left: auto;
+}
+
+.Info-price-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+  height: 64px;
+}

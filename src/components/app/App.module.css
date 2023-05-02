@@ -1,0 +1,25 @@
+.Main-container {
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+  left: 380px;
+  right: 0%;
+  top: 128px;
+  gap: 40px;
+  width: 1240px;
+}
+
+.Error-container {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+}

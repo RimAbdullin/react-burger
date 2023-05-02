@@ -1,0 +1,8 @@
+.Tabs {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  width: 600px;
+  height: 56px;
+}
