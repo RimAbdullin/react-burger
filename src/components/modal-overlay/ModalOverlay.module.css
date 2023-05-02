@@ -3,5 +3,11 @@
   justify-content: center;
   align-items: center;
 
-  background-color: rgb(149, 226, 181);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background: rgba(0, 0, 0, 0.6);
 }

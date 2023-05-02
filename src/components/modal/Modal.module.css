@@ -3,27 +3,15 @@
   justify-content: center;
   align-items: center;
 
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  width: 720px;
+  height: 718px;
 
-  /* z-index: 1; */
-
-  min-width: 350px;
-  min-height: 350px;
-}
-
-.Modal.active {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #1c1c21;
 }
 
 .Modal-content {
   padding: 25px;
 
-  min-width: 350px;
-  min-height: 350px;
+  min-width: 720px;
+  min-height: 718px;
 }

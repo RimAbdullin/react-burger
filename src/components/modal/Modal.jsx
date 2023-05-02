@@ -8,15 +8,15 @@ const modalRoot = document.getElementById('react-modals');
 
 const Modal = ({ children, title, onClose }) => {
   return PortalReactDOM.createPortal(
-    <section className={`${styles.Modal}`}>
-      <ModalOverlay>
-        <div className={`${styles['Modal-content']}`}>
-          <div>{title}</div>
-          {children}
-          <button onClick={onClose}>закрыть</button>
-        </div>
-      </ModalOverlay>
-    </section>,
+    <ModalOverlay>
+      <section className={`${styles.Modal}`}>
+        {/* <div className={`${styles['Modal-content']}`}> */}
+        <div>{title}</div>
+        {children}
+        <button onClick={onClose}>закрыть</button>
+        {/* </div> */}
+      </section>
+    </ModalOverlay>,
     modalRoot
   );
 };
