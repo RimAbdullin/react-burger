@@ -42,8 +42,7 @@ const ListBurgerConstructor = ({ data, bun }) => {
 export default ListBurgerConstructor;
 
 ListBurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ ...burgerIngredientsObject }).isRequired
-  ).isRequired,
-  bun: PropTypes.shape({ ...burgerIngredientsObject }).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+    .isRequired,
+  bun: PropTypes.shape(burgerIngredientsObject).isRequired,
 };

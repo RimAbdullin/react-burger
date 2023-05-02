@@ -22,8 +22,7 @@ export default ListBurgerIngredients;
 
 ListBurgerIngredients.propTypes = {
   id: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ ...burgerIngredientsObject }).isRequired
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+    .isRequired,
   title: PropTypes.string.isRequired,
 };

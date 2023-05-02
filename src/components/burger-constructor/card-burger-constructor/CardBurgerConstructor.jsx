@@ -57,5 +57,5 @@ CardBurgerConstructor.propTypes = {
   type: PropTypes.string || undefined,
   isLocked: PropTypes.bool.isRequired,
   extraClass: PropTypes.string.isRequired,
-  children: PropTypes.shape({ ...burgerIngredientsObject }).isRequired,
+  children: PropTypes.shape(burgerIngredientsObject).isRequired,
 };

@@ -65,7 +65,6 @@ function BurgerIngredients({ data }) {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ ...burgerIngredientsObject }).isRequired
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+    .isRequired,
 };

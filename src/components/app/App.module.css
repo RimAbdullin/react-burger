@@ -4,8 +4,10 @@
 
   position: relative;
   left: 380px;
+  right: 0%;
   top: 128px;
   gap: 40px;
+  width: 1240px;
 }
 
 .Error-container {
