@@ -1,8 +1,8 @@
-import styles from './IngredientDetails.module.css';
+import styles from './OrderDetails.module.css';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 
-const IngredientDetails = ({ children }) => {
+const OrderDetails = ({ children }) => {
   return (
     <section className={`${styles['Modal-content']}`}>
       {/* Изображение. */}
@@ -71,8 +71,8 @@ const IngredientDetails = ({ children }) => {
   );
 };
 
-export default IngredientDetails;
+export default OrderDetails;
 
-IngredientDetails.propTypes = {
+OrderDetails.propTypes = {
   children: PropTypes.shape(burgerIngredientsObject).isRequired,
 };

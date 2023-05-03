@@ -7,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../utils/prop-types';
+import BurgerConstructorModal from './burger-constructor-modal/BurgerConstructorModal';
 
 function BurgerConstructor({ data }) {
   const [state, setState] = useState({
@@ -25,32 +26,54 @@ function BurgerConstructor({ data }) {
     });
   }, []);
 
-  return (
-    <section className={`${styles['Burger-constructor']}`}>
-      {!state.loading && (
-        <>
-          <section className={`mt-25`}>
-            <ListBurgerConstructor
-              data={state.burgerData}
-              bun={state.bun[0]}
-            ></ListBurgerConstructor>
-          </section>
-          {/* Информация. */}
-          <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
-            <div className={`${styles['Info-price-container']}`}>
-              <span className={`mr-2 text_type_digits-medium`}>610</span>
+  const [visible, setVisible] = useState(false);
 
-              <CurrencyIcon type="primary" />
-            </div>
-            <div className={`ml-10 ${styles['Info-price-container ']}`}>
-              <Button htmlType="button" type="primary" size="large">
-                Оформить заказ
-              </Button>
-            </div>
-          </section>
-        </>
-      )}
-    </section>
+  const handleOpenModal = () => {
+    setVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
+
+  const modal = (
+    <BurgerConstructorModal onClose={handleCloseModal}></BurgerConstructorModal>
+  );
+
+  return (
+    <>
+      <section className={`${styles['Burger-constructor']}`}>
+        {!state.loading && (
+          <>
+            <section className={`mt-25`}>
+              <ListBurgerConstructor
+                data={state.burgerData}
+                bun={state.bun[0]}
+              ></ListBurgerConstructor>
+            </section>
+            {/* Информация. */}
+            <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
+              <div className={`${styles['Info-price-container']}`}>
+                <span className={`mr-2 text_type_digits-medium`}>610</span>
+
+                <CurrencyIcon type="primary" />
+              </div>
+              <div className={`ml-10 ${styles['Info-price-container ']}`}>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="large"
+                  onClick={handleOpenModal}
+                >
+                  Оформить заказ
+                </Button>
+              </div>
+            </section>
+          </>
+        )}
+      </section>
+      {visible && modal}
+    </>
   );
 }
 

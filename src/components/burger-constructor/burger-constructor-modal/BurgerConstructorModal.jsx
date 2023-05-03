@@ -1,15 +1,15 @@
 import PortalReactDOM from 'react-dom';
 
-import styles from './BurgerIngredientsModal.module.css';
+import styles from './BurgerConstructorModal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../../modal-overlay/ModalOverlay';
-import IngredientDetails from '../ingredient-details/IngredientDetails';
+import OrderDetails from '../order-details/OrderDetails';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 
 const modalRoot = document.getElementById('react-modals');
 
-const BurgerIngredientsModal = ({ children, onClose }) => {
+const BurgerConstructorModal = ({ children, onClose }) => {
   return PortalReactDOM.createPortal(
     <ModalOverlay>
       <section className={`${styles.Modal}`}>
@@ -25,16 +25,16 @@ const BurgerIngredientsModal = ({ children, onClose }) => {
             <CloseIcon />
           </section>
         </section>
-        <IngredientDetails>{children}</IngredientDetails>
+        <OrderDetails>{children}</OrderDetails>
       </section>
     </ModalOverlay>,
     modalRoot
   );
 };
 
-export default BurgerIngredientsModal;
+export default BurgerConstructorModal;
 
-BurgerIngredientsModal.propTypes = {
+BurgerConstructorModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.shape(burgerIngredientsObject).isRequired,
 };
