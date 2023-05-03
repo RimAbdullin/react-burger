@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
-import Modal from '../../modal/Modal';
+import BurgerIngredientsModal from '../burger-ingredients-modal/BurgerIngredientsModal';
 
 function CardBurgerIngredients({ children }) {
   const [visible, setVisible] = useState(false);
@@ -20,10 +20,9 @@ function CardBurgerIngredients({ children }) {
   };
 
   const modal = (
-    <Modal title="Внимание!" onClose={handleCloseModal}>
-      <p>Спасибо за внимание!</p>
-      <p>Открывай меня, если станет скучно :)</p>
-    </Modal>
+    <BurgerIngredientsModal onClose={handleCloseModal}>
+      {children}
+    </BurgerIngredientsModal>
   );
 
   return (
