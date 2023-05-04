@@ -53,12 +53,6 @@ a {
   text-decoration: none;
 }
 
-.Border-round {
-  box-sizing: border-box;
-  border: 1px dashed #4c4cff;
-  border-radius: 40px;
-}
-
 .Logo {
   display: flex;
   flex-direction: row;

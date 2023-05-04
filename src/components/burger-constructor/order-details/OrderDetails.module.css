@@ -7,42 +7,31 @@
   justify-content: center;
 }
 
-.Image {
+.Order_id_container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: none;
 
   align-items: center;
   justify-content: center;
 
   width: 520px;
-  height: 240px;
+  height: 120px;
 }
 
-.Illustration {
+.Title_id_container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: none;
 
   align-items: center;
   justify-content: center;
 
-  width: 480px;
-  height: 240px;
+  width: 520px;
+  height: 30px;
 }
 
-.Nutrition-container {
-  display: flex;
-  flex-direction: row;
-  flex: none;
-
-  align-items: center;
-
-  width: 516px;
-  height: 56px;
-}
-
-.Value-container-calories {
+.Icon_container {
   display: flex;
   flex-direction: column;
   flex: none;
@@ -51,10 +40,10 @@
   justify-content: center;
 
   width: 120px;
-  height: 56px;
+  height: 120px;
 }
 
-.Value-container {
+.Info_container {
   display: flex;
   flex-direction: column;
   flex: none;
@@ -62,30 +51,6 @@
   align-items: center;
   justify-content: center;
 
-  width: 112px;
-  height: 56px;
-}
-
-.Value-calories {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
-  height: 24px;
-}
-
-.Value {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
+  width: 520px;
   height: 24px;
 }

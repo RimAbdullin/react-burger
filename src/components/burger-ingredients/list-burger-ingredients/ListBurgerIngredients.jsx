@@ -1,5 +1,5 @@
-import styles from './ListBurgerIngredients.module.css';
 import CardBurgerIngredients from '../card-burger-ingredients/CardBurgerIngredients';
+import styles from './ListBurgerIngredients.module.css';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 

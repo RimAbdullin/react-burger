@@ -1,5 +1,4 @@
 import PortalReactDOM from 'react-dom';
-
 import styles from './BurgerIngredientsModal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../../modal-overlay/ModalOverlay';
@@ -11,8 +10,11 @@ const modalRoot = document.getElementById('react-modals');
 
 const BurgerIngredientsModal = ({ children, onClose }) => {
   return PortalReactDOM.createPortal(
-    <ModalOverlay>
-      <section className={`${styles.Modal}`}>
+    <ModalOverlay onClose={onClose}>
+      <section
+        className={`${styles.Modal}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Заголовок. */}
         <section className={`mt-10 ml-10 ${styles['Title-button']}`}>
           <section className={`${styles['Title']}`}>
