@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
-import BurgerIngredientsModal from '../burger-ingredients-modal/BurgerIngredientsModal';
+import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 function CardBurgerIngredients({ children }) {
   const [visible, setVisible] = useState(false);
@@ -15,19 +15,21 @@ function CardBurgerIngredients({ children }) {
     setVisible(true);
   };
 
-  const handleCloseModal = () => {
-    setVisible(false);
-  };
+  // const handleCloseModal = () => {
+  //   setVisible(false);
+  // };
 
-  const modal = (
-    <BurgerIngredientsModal onClose={handleCloseModal}>
-      {children}
-    </BurgerIngredientsModal>
-  );
+  // const modal = (
+  // <BurgerIngredientsModal onClose={handleCloseModal}>
+  //   {children}
+  // </BurgerIngredientsModal>
+  // <IngredientDetails>{children}</IngredientDetails>
+  // );
 
   return (
     <>
       <section
+        style={{ overflow: 'hidden' }}
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={handleOpenModal}
       >
@@ -44,8 +46,8 @@ function CardBurgerIngredients({ children }) {
         <span className={`text_type_main-default ${styles.Name}`}>
           {children.name}
         </span>
+        {visible && <IngredientDetails>{children}</IngredientDetails>}
       </section>
-      {visible && modal}
     </>
   );
 }

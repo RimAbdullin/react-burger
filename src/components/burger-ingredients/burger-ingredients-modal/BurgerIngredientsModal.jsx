@@ -9,34 +9,59 @@ import { burgerIngredientsObject } from '../../../utils/prop-types';
 const modalRoot = document.getElementById('react-modals');
 
 const BurgerIngredientsModal = ({ children, onClose }) => {
+  console.log('=== BurgerIngredientsModal');
+
   return PortalReactDOM.createPortal(
-    <ModalOverlay onClose={onClose}>
-      <section
-        className={`${styles.Modal}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Заголовок. */}
-        <section className={`mt-10 ml-10 ${styles['Title-button']}`}>
-          <section className={`${styles['Title']}`}>
-            <span className="text text_type_main-large text_color_primary">
-              Детали ингредиента
-            </span>
+    <>
+      <ModalOverlay>
+        <section
+          style={{ overflow: 'hidden' }}
+          className={`${styles.Modal}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Заголовок. */}
+          <section className={`mt-10 ml-10 ${styles['Title-button']}`}>
+            <section className={`${styles['Title']}`}>
+              <span className="text text_type_main-large text_color_primary">
+                Детали ингредиента
+              </span>
+            </section>
+            {/* Иконка закрытия. */}
+            <section className={styles['Button-close']} onClick={onClose}>
+              <CloseIcon />
+            </section>
           </section>
-          {/* Иконка закрытия. */}
-          <section className={styles['Button-close']} onClick={onClose}>
-            <CloseIcon />
-          </section>
+          {/* <IngredientDetails>{children}</IngredientDetails> */}
         </section>
-        <IngredientDetails>{children}</IngredientDetails>
-      </section>
-    </ModalOverlay>,
+      </ModalOverlay>
+      {children}
+    </>,
     modalRoot
   );
+
+  // PortalReactDOM.createPortal(
+  //   <section className={`${styles.Modal}`} onClick={(e) => e.stopPropagation()}>
+  //     {/* Заголовок. */}
+  //     <section className={`mt-10 ml-10 ${styles['Title-button']}`}>
+  //       <section className={`${styles['Title']}`}>
+  //         <span className="text text_type_main-large text_color_primary">
+  //           Детали ингредиента
+  //         </span>
+  //       </section>
+  //       {/* Иконка закрытия. */}
+  //       <section className={styles['Button-close']} onClick={onClose}>
+  //         <CloseIcon />
+  //       </section>
+  //     </section>
+  //     {/* <IngredientDetails>{children}</IngredientDetails> */}
+  //   </section>,
+  //   modalRoot
+  // );
 };
 
 export default BurgerIngredientsModal;
 
-BurgerIngredientsModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.shape(burgerIngredientsObject).isRequired,
-};
+// BurgerIngredientsModal.propTypes = {
+//   onClose: PropTypes.func.isRequired,
+//   children: PropTypes.shape(burgerIngredientsObject).isRequired,
+// };
