@@ -4,10 +4,12 @@ import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstruct
 import {
   CurrencyIcon,
   Button,
+  CloseIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../utils/prop-types';
-import BurgerConstructorModal from './burger-constructor-modal/BurgerConstructorModal';
+import Modal from '../modal/Modal';
+import OrderDetails from './order-details/OrderDetails';
 
 function BurgerConstructor({ data }) {
   const [state, setState] = useState({
@@ -36,8 +38,27 @@ function BurgerConstructor({ data }) {
     setVisible(false);
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    handleCloseModal();
+  };
+
   const modal = (
-    <BurgerConstructorModal onClose={handleCloseModal}></BurgerConstructorModal>
+    <Modal onClose={handleCloseModal}>
+      <section className={`${styles['Container']}`}>
+        {/* Заголовок. */}
+        <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
+          {/* Иконка закрытия. */}
+          <section
+            className={styles['Button-close']}
+            onClick={handleCloseModal}
+          >
+            <CloseIcon />
+          </section>
+        </section>
+        <OrderDetails></OrderDetails>
+      </section>
+    </Modal>
   );
 
   return (

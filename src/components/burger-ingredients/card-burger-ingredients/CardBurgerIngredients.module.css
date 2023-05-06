@@ -1,3 +1,8 @@
+.Container {
+  width: 720px;
+  height: 539px;
+}
+
 .Card-ingredients {
   display: flex;
   flex-direction: column;
@@ -29,4 +34,40 @@
 
   width: 270px;
   height: 52px;
+}
+
+.Title-button {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+
+  width: 640px;
+  height: 64px;
+}
+
+.Title {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+
+  width: 580px;
+  height: 64px;
+}
+
+.Button-close {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: end;
+
+  width: 60px;
+  height: 64px;
+
+  cursor: pointer;
 }

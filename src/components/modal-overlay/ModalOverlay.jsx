@@ -1,34 +1,7 @@
 import styles from './ModalOverlay.module.css';
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 
 const ModalOverlay = () => {
-  // { onClose }
-  // const closeModal = (e) => {
-  //   if (e.keyCode == 27) {
-  //     onClose();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('keydown', closeModal);
-
-  //   return () => {
-  //     window.removeEventListener('keydown', closeModal);
-  //   };
-  // }, []);
-
-  return (
-    <section
-      style={{ overflow: 'hidden' }}
-      className={`${styles['Modal-overlay']}`}
-      // onClick={onClose}
-    ></section>
-  );
+  return <section className={`${styles['Modal-overlay']}`}></section>;
 };
 
 export default ModalOverlay;
-
-// ModalOverlay.propTypes = {
-//   onClose: PropTypes.func.isRequired,
-// };
