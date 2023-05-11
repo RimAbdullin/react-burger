@@ -4,9 +4,12 @@ import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstruct
 import {
   CurrencyIcon,
   Button,
+  CloseIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../utils/prop-types';
+import Modal from '../modal/Modal';
+import OrderDetails from './order-details/OrderDetails';
 
 function BurgerConstructor({ data }) {
   const [state, setState] = useState({
@@ -25,32 +28,73 @@ function BurgerConstructor({ data }) {
     });
   }, []);
 
-  return (
-    <section className={`${styles['Burger-constructor']}`}>
-      {!state.loading && (
-        <>
-          <section className={`mt-25`}>
-            <ListBurgerConstructor
-              data={state.burgerData}
-              bun={state.bun[0]}
-            ></ListBurgerConstructor>
-          </section>
-          {/* Информация. */}
-          <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
-            <div className={`${styles['Info-price-container']}`}>
-              <span className={`mr-2 text_type_digits-medium`}>610</span>
+  const [visible, setVisible] = useState(false);
 
-              <CurrencyIcon type="primary" />
-            </div>
-            <div className={`ml-10 ${styles['Info-price-container ']}`}>
-              <Button htmlType="button" type="primary" size="large">
-                Оформить заказ
-              </Button>
-            </div>
+  const handleOpenModal = () => {
+    setVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    handleCloseModal();
+  };
+
+  const modal = (
+    <Modal onClose={handleCloseModal}>
+      <section className={`${styles['Container']}`}>
+        {/* Заголовок. */}
+        <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
+          {/* Иконка закрытия. */}
+          <section
+            className={styles['Button-close']}
+            onClick={handleCloseModal}
+          >
+            <CloseIcon />
           </section>
-        </>
-      )}
-    </section>
+        </section>
+        <OrderDetails></OrderDetails>
+      </section>
+    </Modal>
+  );
+
+  return (
+    <>
+      <section className={`${styles['Burger-constructor']}`}>
+        {!state.loading && (
+          <>
+            <section className={`mt-25`}>
+              <ListBurgerConstructor
+                data={state.burgerData}
+                bun={state.bun[0]}
+              ></ListBurgerConstructor>
+            </section>
+            {/* Информация. */}
+            <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
+              <div className={`${styles['Info-price-container']}`}>
+                <span className={`mr-2 text_type_digits-medium`}>610</span>
+
+                <CurrencyIcon type="primary" />
+              </div>
+              <div className={`ml-10 ${styles['Info-price-container ']}`}>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="large"
+                  onClick={handleOpenModal}
+                >
+                  Оформить заказ
+                </Button>
+              </div>
+            </section>
+          </>
+        )}
+      </section>
+      {visible && modal}
+    </>
   );
 }
 

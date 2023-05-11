@@ -1,0 +1,56 @@
+.Modal-content {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.Order_id_container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 520px;
+  height: 120px;
+}
+
+.Title_id_container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 520px;
+  height: 30px;
+}
+
+.Icon_container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 120px;
+}
+
+.Info_container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 520px;
+  height: 24px;
+}

@@ -11,7 +11,7 @@ function AppHeader() {
     <nav className={`${styles['App-header']}`}>
       <div className={`mt-4 mb-4 ${styles['Content']}`}>
         <div
-          className={`${styles['Constructor-container']} ${styles['Border-round']} ${styles['Flex-container']}`}
+          className={`${styles['Constructor-container']} ${styles['Flex-container']}`}
         >
           <BurgerIcon />
           <a
@@ -22,7 +22,7 @@ function AppHeader() {
           </a>
         </div>
         <div
-          className={`ml-2 ${styles['Order-feed-container']} ${styles['Border-round']} ${styles['Flex-container']}`}
+          className={`ml-2 ${styles['Order-feed-container']} ${styles['Flex-container']}`}
         >
           <ListIcon />
           <a
@@ -36,7 +36,7 @@ function AppHeader() {
           <Logo />
         </div>
         <div
-          className={`${styles['Profile-container']} ${styles['Border-round']} ${styles['Flex-container']}`}
+          className={`${styles['Profile-container']} ${styles['Flex-container']}`}
         >
           <ProfileIcon />
           <a
