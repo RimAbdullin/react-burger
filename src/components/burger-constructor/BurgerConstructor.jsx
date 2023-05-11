@@ -10,12 +10,16 @@ import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../utils/prop-types';
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
+import { getOrder } from '../../utils/burger-api';
 
 function BurgerConstructor({ data }) {
   const [state, setState] = useState({
+    error: false,
     burgerData: null,
-    bun: null,
     loading: true,
+    bun: null,
+    constructorData: null,
+    loadingOrder: true,
   });
 
   useEffect(() => {
@@ -27,6 +31,27 @@ function BurgerConstructor({ data }) {
       loading: false,
     });
   }, []);
+
+  // Получаем список заказа для конструктора.
+  useEffect(() => {
+    const getConstructorData = async () => {
+      setState({ ...state, loadingOrder: true });
+      try {
+        const data = await getOrder();
+
+        console.log(data);
+
+        setState({ ...state, constructorData: data.data, loadingOrder: false });
+      } catch (err) {
+        setState({ ...state, error: true });
+      }
+    };
+    getConstructorData();
+  }, []);
+
+  if (state.loadingOrder) {
+    console.log(state.constructorData);
+  }
 
   const [visible, setVisible] = useState(false);
 
