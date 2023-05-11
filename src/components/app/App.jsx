@@ -3,15 +3,17 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { getIngredients } from '../../utils/burger-api';
+import { getIngredients, getOrder } from '../../utils/burger-api';
 
 function App() {
   const [state, setState] = useState({
     error: false,
-    burgerData: null,
     loading: true,
+    burgerData: null,
+    constructorData: null,
   });
 
+  // Получаем список ингредиентов.
   useEffect(() => {
     const getBurgerData = async () => {
       setState({ ...state, loading: true });
@@ -28,6 +30,28 @@ function App() {
     };
     getBurgerData();
   }, []);
+
+  // Получаем список заказа для конструктора.
+  useEffect(() => {
+    const getConstructorData = async () => {
+      setState({ ...state, loading: true });
+      try {
+        const data = await getOrder();
+
+        setState({
+          constructorData: data.data,
+          loading: false,
+        });
+      } catch (err) {
+        setState({ ...state, error: true });
+      }
+    };
+    getConstructorData();
+  }, []);
+
+  if (!state.loading) {
+    console.log(state.constructorData);
+  }
 
   return (
     <>
