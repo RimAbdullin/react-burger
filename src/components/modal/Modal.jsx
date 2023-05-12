@@ -8,7 +8,7 @@ const modalRoot = document.getElementById('react-modals');
 
 const Modal = ({ children, onClose }) => {
   const closeModal = (e) => {
-    if (e.keyCode == 27) {
+    if (e.key === 'Escape') {
       onClose();
     }
   };

@@ -35,9 +35,7 @@ function App() {
 
   return (
     <>
-      <header>
-        <AppHeader />
-      </header>
+      <AppHeader />
       <main>
         {state.error ? (
           <section className={styles['Error-container']}>
@@ -46,13 +44,13 @@ function App() {
         ) : (
           !state.loading && (
             <section className={styles[`Main-container`]}>
-              <BurgerIngredients ingredients={state.ingredients} />
               <IngredientsContext.Provider
                 value={{
                   ingredients: state.ingredients,
                   bunName: state.bunName,
                 }}
               >
+                <BurgerIngredients />
                 <BurgerConstructor />
               </IngredientsContext.Provider>
             </section>
