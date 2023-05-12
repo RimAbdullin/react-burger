@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styles from './BurgerConstructor.module.css';
 import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstructor';
 import {
@@ -23,22 +23,21 @@ function BurgerConstructor() {
     loadingOrder: true,
     ingredientsPrice: null,
     bunPrice: null,
-    totalPrice: null,
   });
 
   // Определяем состояние для модального окна.
   const [visible, setVisible] = useState(false);
 
   // Получаем из контекста массив объектов ингредиентов.
-  const { ingredients } = useContext(IngredientsContext);
+  const { ingredients, bunName } = useContext(IngredientsContext);
 
-  // При первоначальном монтировании получаем булку.
+  // Обновляем состояния.
   useEffect(() => {
     setState({ ...state, loading: true });
     setState({
       ...state,
       ingredients: ingredients.filter((item) => item.type !== 'bun'),
-      bun: ingredients.filter((item) => item.name === 'Краторная булка N-200i'),
+      bun: ingredients.filter((item) => item.name === bunName),
 
       ingredientsPrice: ingredients.reduce((sum, record) => {
         if (record.type !== 'bun') {
@@ -48,26 +47,11 @@ function BurgerConstructor() {
         }
       }, 0),
 
-      bunPrice: ingredients.filter(
-        (item) => item.name === 'Краторная булка N-200i'
-      )[0].price,
-
-      totalPrice: state.ingredientsPrice + state.bunPrice,
+      bunPrice: ingredients.filter((item) => item.name === bunName)[0].price,
 
       loading: false,
     });
   }, [ingredients]);
-
-  // Расчет итоговой стоимости.
-  // Запускается при изменении в контексте списка ингредиентов полученных из API.
-  // useEffect(() => {
-  //   let total = 0;
-  //   // Получаем сумму всех ингредиентов без булок.
-  //   state.ingredients.map((item) => (total += item.price));
-  //   // Добавляем стоимость выбранной булки.
-  //   // total += state.bunPrice;
-  //   setTotalPrice(total);
-  // }, [ingredients]);
 
   // Получаем объект для body запроса с id ингредиентов.
   const getBody = () => {
@@ -144,7 +128,7 @@ function BurgerConstructor() {
             <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
               <div className={`${styles['Info-price-container']}`}>
                 <span className={`mr-2 text_type_digits-medium`}>
-                  {state.totalPrice}
+                  {state.ingredientsPrice + state.bunPrice}
                 </span>
 
                 <CurrencyIcon type="primary" />
