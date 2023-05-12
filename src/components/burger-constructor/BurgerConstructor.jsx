@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useState, useEffect, useContext } from 'react';
 import styles from './BurgerConstructor.module.css';
 import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstructor';
 import {
@@ -6,59 +6,96 @@ import {
   Button,
   CloseIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { burgerIngredientsObject } from '../../utils/prop-types';
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
+import { IngredientsContext } from '../../services/appContext';
+import { OrderNumberContext } from '../../services/appContext';
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor() {
+  // Определяем объект состояния компонента.
   const [state, setState] = useState({
     error: false,
     burgerData: null,
     loading: true,
     bun: null,
-    constructorData: null,
+    orderNumber: null,
     loadingOrder: true,
+    ingredientsPrice: null,
+    bunPrice: null,
+    totalPrice: null,
   });
 
+  // Определяем состояние для модального окна.
+  const [visible, setVisible] = useState(false);
+
+  // Получаем из контекста массив объектов ингредиентов.
+  const { ingredients } = useContext(IngredientsContext);
+
+  // При первоначальном монтировании получаем булку.
   useEffect(() => {
     setState({ ...state, loading: true });
     setState({
       ...state,
-      burgerData: data.filter((bun) => bun.type !== 'bun'),
-      bun: data.filter((bun) => bun.name === 'Краторная булка N-200i'),
+      ingredients: ingredients.filter((item) => item.type !== 'bun'),
+      bun: ingredients.filter((item) => item.name === 'Краторная булка N-200i'),
+
+      ingredientsPrice: ingredients.reduce((sum, record) => {
+        if (record.type !== 'bun') {
+          return sum + record.price;
+        } else {
+          return sum;
+        }
+      }, 0),
+
+      bunPrice: ingredients.filter(
+        (item) => item.name === 'Краторная булка N-200i'
+      )[0].price,
+
+      totalPrice: state.ingredientsPrice + state.bunPrice,
+
       loading: false,
     });
-  }, []);
+  }, [ingredients]);
 
-  // Получаем список заказа для конструктора.
-  useEffect(() => {
-    const getConstructorData = async () => {
-      setState({ ...state, loadingOrder: true });
-      try {
-        const data = await getOrder();
+  // Расчет итоговой стоимости.
+  // Запускается при изменении в контексте списка ингредиентов полученных из API.
+  // useEffect(() => {
+  //   let total = 0;
+  //   // Получаем сумму всех ингредиентов без булок.
+  //   state.ingredients.map((item) => (total += item.price));
+  //   // Добавляем стоимость выбранной булки.
+  //   // total += state.bunPrice;
+  //   setTotalPrice(total);
+  // }, [ingredients]);
 
-        console.log(data);
-
-        setState({ ...state, constructorData: data.data, loadingOrder: false });
-      } catch (err) {
-        setState({ ...state, error: true });
-      }
+  // Получаем объект для body запроса с id ингредиентов.
+  const getBody = () => {
+    return {
+      ingredients: state.ingredients.map((item) => {
+        return item._id;
+      }),
     };
-    getConstructorData();
-  }, []);
-
-  if (state.loadingOrder) {
-    console.log(state.constructorData);
-  }
-
-  const [visible, setVisible] = useState(false);
-
-  const handleOpenModal = () => {
-    setVisible(true);
   };
 
+  // Получаем номер заказа для конструктора и открываем модальное окно.
+  const handleOpenModal = async () => {
+    try {
+      setState({ ...state, loadingOrder: true });
+
+      const data = await getOrder(getBody());
+      setState({
+        ...state,
+        orderNumber: data.order.number,
+        loadingOrder: false,
+      });
+      setVisible(true);
+    } catch (err) {
+      setState({ ...state, error: true });
+    }
+  };
+
+  // Закрытие модального окна.
   const handleCloseModal = () => {
     setVisible(false);
   };
@@ -81,7 +118,13 @@ function BurgerConstructor({ data }) {
             <CloseIcon />
           </section>
         </section>
-        <OrderDetails></OrderDetails>
+        {!state.loadingOrder && (
+          <OrderNumberContext.Provider
+            value={{ orderNumber: state.orderNumber }}
+          >
+            <OrderDetails></OrderDetails>
+          </OrderNumberContext.Provider>
+        )}
       </section>
     </Modal>
   );
@@ -93,14 +136,16 @@ function BurgerConstructor({ data }) {
           <>
             <section className={`mt-25`}>
               <ListBurgerConstructor
-                data={state.burgerData}
+                data={state.ingredients}
                 bun={state.bun[0]}
               ></ListBurgerConstructor>
             </section>
             {/* Информация. */}
             <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
               <div className={`${styles['Info-price-container']}`}>
-                <span className={`mr-2 text_type_digits-medium`}>610</span>
+                <span className={`mr-2 text_type_digits-medium`}>
+                  {state.totalPrice}
+                </span>
 
                 <CurrencyIcon type="primary" />
               </div>
@@ -124,8 +169,3 @@ function BurgerConstructor({ data }) {
 }
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
-    .isRequired,
-};

@@ -12,10 +12,7 @@ export function getIngredients() {
  * Получить массив объектов (список ингредиентов бургера).
  * @returns Promise<data>
  */
-export function getOrder() {
-  const data = {
-    ingredients: ['643d69a5c3f7b9001cfa0941', '643d69a5c3f7b9001cfa0942'],
-  };
+export function getOrder(data) {
   return fetch(`${NORMA_API}/orders`, {
     method: 'POST',
     headers: {

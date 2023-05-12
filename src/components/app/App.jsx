@@ -4,30 +4,33 @@ import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import { getIngredients } from '../../utils/burger-api';
+import { IngredientsContext } from '../../services/appContext';
+
+// const ingredientsInitialState = { ingredients: null };
 
 function App() {
   const [state, setState] = useState({
     error: false,
     loading: true,
-    burgerData: null,
+    ingredients: null,
   });
 
   // Получаем список ингредиентов.
   useEffect(() => {
-    const getBurgerData = async () => {
+    const getIngredientsData = async () => {
       setState({ ...state, loading: true });
       try {
         const data = await getIngredients();
 
         setState({
-          burgerData: data.data,
+          ingredients: data.data,
           loading: false,
         });
       } catch (err) {
         setState({ ...state, error: true });
       }
     };
-    getBurgerData();
+    getIngredientsData();
   }, []);
 
   return (
@@ -43,8 +46,12 @@ function App() {
         ) : (
           !state.loading && (
             <section className={styles[`Main-container`]}>
-              <BurgerIngredients data={state.burgerData} />
-              <BurgerConstructor data={state.burgerData} />
+              <BurgerIngredients ingredients={state.ingredients} />
+              <IngredientsContext.Provider
+                value={{ ingredients: state.ingredients }}
+              >
+                <BurgerConstructor />
+              </IngredientsContext.Provider>
             </section>
           )
         )}
