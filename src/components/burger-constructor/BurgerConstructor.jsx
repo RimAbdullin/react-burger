@@ -4,13 +4,12 @@ import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstruct
 import {
   CurrencyIcon,
   Button,
-  CloseIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
 import { IngredientsContext } from '../../services/appContext';
-import { OrderNumberContext } from '../../services/appContext';
+import { useModal } from '../../hooks/useModal';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -25,8 +24,7 @@ function BurgerConstructor() {
     bunPrice: null,
   });
 
-  // Определяем состояние для модального окна.
-  const [visible, setVisible] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   // Получаем из контекста массив объектов ингредиентов.
   const { ingredients, bunName } = useContext(IngredientsContext);
@@ -73,43 +71,27 @@ function BurgerConstructor() {
         orderNumber: data.order.number,
         loadingOrder: false,
       });
-      setVisible(true);
+      openModal();
     } catch (err) {
       setState({ ...state, error: true });
     }
   };
 
   // Закрытие модального окна.
-  const handleCloseModal = () => {
-    setVisible(false);
-  };
+  // const handleCloseModal = () => {
+  //   setVisible(false);
+  // };
 
   const handleClick = (e) => {
     e.stopPropagation();
-    handleCloseModal();
+    closeModal();
   };
 
   const modal = (
-    <Modal onClose={handleCloseModal}>
-      <section className={`${styles['Container']}`}>
-        {/* Заголовок. */}
-        <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
-          {/* Иконка закрытия. */}
-          <section
-            className={styles['Button-close']}
-            onClick={handleCloseModal}
-          >
-            <CloseIcon />
-          </section>
-        </section>
-        {!state.loadingOrder && (
-          <OrderNumberContext.Provider
-            value={{ orderNumber: state.orderNumber }}
-          >
-            <OrderDetails></OrderDetails>
-          </OrderNumberContext.Provider>
-        )}
-      </section>
+    <Modal onClose={closeModal} title={''}>
+      {!state.loadingOrder && (
+        <OrderDetails orderNumber={state.orderNumber}></OrderDetails>
+      )}
     </Modal>
   );
 
@@ -147,7 +129,7 @@ function BurgerConstructor() {
           </>
         )}
       </section>
-      {visible && modal}
+      {isModalOpen && modal}
     </>
   );
 }

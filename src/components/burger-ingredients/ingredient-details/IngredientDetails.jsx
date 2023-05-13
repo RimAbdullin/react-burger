@@ -8,14 +8,16 @@ const IngredientDetails = ({ children }) => {
       <section className={`${styles['Modal-content']}`}>
         {/* Изображение. */}
         <section className={`${styles['Image']}`}>
-          <section className={`${styles['Illustration']}`}>
-            <img src={children.image} alt=""></img>
-          </section>
+          <img
+            className={`${styles['Illustration']}`}
+            src={children.image}
+            alt=""
+          ></img>
         </section>
         {/* Наименование */}
         <span className="mt-4 text_type_main-medium">{children.name}</span>
         {/* Питание. */}
-        <section className={`mt-8 ${styles['Nutrition-container']}`}>
+        <section className={`mt-8 mb-15 ${styles['Nutrition-container']}`}>
           <section className={`mr-5 ${styles['Value-container-calories']}`}>
             <section className={`mb-2 ${styles['Value-calories']}`}>
               <span className="text text_type_main-default text_color_inactive">

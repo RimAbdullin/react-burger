@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <section className={styles.Page}>
       <AppHeader />
       <main>
         {state.error ? (
@@ -57,7 +57,7 @@ function App() {
           )
         )}
       </main>
-    </>
+    </section>
   );
 }
 
