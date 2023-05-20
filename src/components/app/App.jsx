@@ -17,12 +17,6 @@ function App() {
   });
 
   const dispatch = useDispatch();
-  const order = useSelector((store) => store.order.number);
-  const ingredients = useSelector((store) => store.ingredients.items);
-  console.log(order);
-
-  dispatch(getItems());
-  console.log(ingredients);
 
   useEffect(() => {
     dispatch(getItems());

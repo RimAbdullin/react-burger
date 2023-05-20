@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
-import { IngredientsContext } from '../../services/appContext';
+import { useSelector } from 'react-redux';
 
 function BurgerIngredients() {
   const [state, setState] = useState({
@@ -12,16 +12,18 @@ function BurgerIngredients() {
     loading: true,
   });
 
-  // Получаем из контекста массив объектов ингредиентов.
-  const { ingredients } = useContext(IngredientsContext);
+  // Вытаскиваем селектором нужные данные из хранилища
+  const { items, itemsRequest, itemsFailed } = useSelector(
+    (state) => state.ingredients
+  );
 
   useEffect(() => {
     setState({ ...state, loading: true });
     setState({
       ...state,
-      bun: ingredients.filter((bun) => bun.type == 'bun'),
-      main: ingredients.filter((bun) => bun.type == 'main'),
-      sauce: ingredients.filter((bun) => bun.type == 'sauce'),
+      bun: items.filter((bun) => bun.type == 'bun'),
+      main: items.filter((bun) => bun.type == 'main'),
+      sauce: items.filter((bun) => bun.type == 'sauce'),
       loading: false,
     });
   }, []);

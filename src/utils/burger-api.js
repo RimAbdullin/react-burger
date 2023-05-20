@@ -8,10 +8,6 @@ export function getIngredients() {
   return fetch(`${NORMA_API}/ingredients`).then(checkResponse);
 }
 
-export async function getIngredientsAsync() {
-  return await fetch(`${NORMA_API}/ingredients`);
-}
-
 /**
  * Получить массив объектов (список ингредиентов бургера).
  * @returns Promise<data>

@@ -10,6 +10,7 @@ import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
 import { IngredientsContext } from '../../services/appContext';
 import { useModal } from '../../hooks/useModal';
+import { useDispatch, useSelector } from 'react-redux';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -23,6 +24,12 @@ function BurgerConstructor() {
     ingredientsPrice: null,
     bunPrice: null,
   });
+
+  const order = useSelector((store) => store.order.number);
+  // Вытаскиваем селектором нужные данные из хранилища
+  const { items, itemsRequest, itemsFailed } = useSelector(
+    (state) => state.ingredients
+  );
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
