@@ -5,6 +5,8 @@ import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import { getIngredients } from '../../utils/burger-api';
 import { IngredientsContext } from '../../services/appContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from '../../services/actions/ingredients';
 
 function App() {
   const [state, setState] = useState({
@@ -13,6 +15,18 @@ function App() {
     ingredients: null,
     bunName: 'Краторная булка N-200i',
   });
+
+  const dispatch = useDispatch();
+  const order = useSelector((store) => store.order.number);
+  const ingredients = useSelector((store) => store.ingredients.items);
+  console.log(order);
+
+  dispatch(getItems());
+  console.log(ingredients);
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
 
   // Получаем список ингредиентов.
   useEffect(() => {
