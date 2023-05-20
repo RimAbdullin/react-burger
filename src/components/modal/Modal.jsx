@@ -3,12 +3,13 @@ import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById('react-modals');
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ title, children, onClose }) => {
   const closeModal = (e) => {
-    if (e.keyCode == 27) {
+    if (e.key === 'Escape') {
       onClose();
     }
   };
@@ -33,6 +34,17 @@ const Modal = ({ children, onClose }) => {
           className={`${styles.Modal}`}
           onClick={(e) => e.stopPropagation()}
         >
+          <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
+            <section className={`${styles['Title']}`}>
+              <span className="text text_type_main-large text_color_primary">
+                {title}
+              </span>
+            </section>
+            {/* Иконка закрытия. */}
+            <section className={styles['Button-close']} onClick={handleClick}>
+              <CloseIcon />
+            </section>
+          </section>
           {children}
         </section>
       </section>
@@ -45,6 +57,7 @@ const Modal = ({ children, onClose }) => {
 export default Modal;
 
 Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

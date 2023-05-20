@@ -9,6 +9,20 @@ export function getIngredients() {
 }
 
 /**
+ * Получить массив объектов (список ингредиентов бургера).
+ * @returns Promise<data>
+ */
+export function getOrder(data) {
+  return fetch(`${NORMA_API}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(checkResponse);
+}
+
+/**
  * Проверка response.
  * @param {*} res - response.
  * @returns Promise<json> || Promise<err>
