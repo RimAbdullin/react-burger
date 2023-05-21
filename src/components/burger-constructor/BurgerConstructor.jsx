@@ -8,7 +8,6 @@ import {
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
-import { IngredientsContext } from '../../services/appContext';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,43 +24,49 @@ function BurgerConstructor() {
     bunPrice: null,
   });
 
-  const order = useSelector((store) => store.order.number);
-  // Вытаскиваем селектором нужные данные из хранилища
-  const { items, itemsRequest, itemsFailed } = useSelector(
-    (state) => state.ingredients
-  );
+  // Получаем данные из хранилища redux.
+  // Список выбранных ингредиентов для конструктора.
+  // const { currentBun, items } = useSelector((state) => state.constructor);
+  const test = useSelector((state) => state.constructor);
 
+  // console.log(currentBun);
+  // console.log(items);
+
+  console.log(test);
+
+  // Номер заказа.
+  const order = useSelector((store) => store.order.number);
+  console.log(order);
+
+  // Для модального окна.
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  // Получаем из контекста массив объектов ингредиентов.
-  const { ingredients, bunName } = useContext(IngredientsContext);
-
   // Обновляем состояния.
-  useEffect(() => {
-    setState({ ...state, loading: true });
-    setState({
-      ...state,
-      ingredients: ingredients.filter((item) => item.type !== 'bun'),
-      bun: ingredients.filter((item) => item.name === bunName),
+  // useEffect(() => {
+  //   setState({ ...state, loading: true });
+  //   setState({
+  //     ...state,
+  //     ingredients: items,
+  //     bun: items.filter((item) => item.name === currentBun),
 
-      ingredientsPrice: ingredients.reduce((sum, record) => {
-        if (record.type !== 'bun') {
-          return sum + record.price;
-        } else {
-          return sum;
-        }
-      }, 0),
+  //     ingredientsPrice: items.reduce((sum, record) => {
+  //       if (record.type !== 'bun') {
+  //         return sum + record.price;
+  //       } else {
+  //         return sum;
+  //       }
+  //     }, 0),
 
-      bunPrice: ingredients.filter((item) => item.name === bunName)[0].price,
+  //     bunPrice: items.filter((item) => item.name === currentBun)[0].price,
 
-      loading: false,
-    });
-  }, [ingredients]);
+  //     loading: false,
+  //   });
+  // }, [items]);
 
   // Получаем объект для body запроса с id ингредиентов.
   const getBody = () => {
     return {
-      ingredients: state.ingredients.map((item) => {
+      items: state.ingredients.map((item) => {
         return item._id;
       }),
     };
