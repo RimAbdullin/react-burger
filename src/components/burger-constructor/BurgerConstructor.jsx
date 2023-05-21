@@ -27,12 +27,12 @@ function BurgerConstructor() {
   // Получаем данные из хранилища redux.
   // Список выбранных ингредиентов для конструктора.
   // const { currentBun, items } = useSelector((state) => state.constructor);
-  const test = useSelector((state) => state.constructor);
+  const items = useSelector((store) => store.constructor.items);
 
   // console.log(currentBun);
   // console.log(items);
 
-  console.log(test);
+  console.log('=== items', items);
 
   // Номер заказа.
   const order = useSelector((store) => store.order.number);
@@ -110,6 +110,7 @@ function BurgerConstructor() {
   return (
     <>
       <section className={`${styles['Burger-constructor']}`}>
+        {/* {items.length > 0 ? <div>1</div> : <div>2</div>} */}
         {!state.loading && (
           <>
             <section className={`mt-25`}>

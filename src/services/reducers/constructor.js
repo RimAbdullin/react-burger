@@ -14,7 +14,7 @@ const initialState = {
 export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEM: {
-      return state;
+      return { ...state };
     }
     case INCREASE_ITEM: {
       return {
@@ -45,7 +45,7 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBun: action.currentBun,
-        items: [],
+        // items: [],
       };
     }
     default: {
