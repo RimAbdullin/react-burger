@@ -9,7 +9,7 @@ export const DECREASE_ITEM = 'DECREASE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 
 // thunk
-export function getItems() {
+export function getIngredientsItems() {
   return function (dispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST,
@@ -20,6 +20,7 @@ export function getItems() {
           type: GET_ITEMS_SUCCESS,
           items: data.data,
         });
+        return data.data;
       })
       .catch((err) => {
         dispatch({

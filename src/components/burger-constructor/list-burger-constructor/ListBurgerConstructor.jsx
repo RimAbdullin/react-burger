@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 
 const ListBurgerConstructor = ({ data, bun }) => {
+  console.log('*****************************');
+  console.log('=== data', data);
+  console.log('=== bun', bun);
+  console.log('-----------------------------');
   return (
     <section>
       {/* Первый элемент булки. */}
@@ -41,8 +45,8 @@ const ListBurgerConstructor = ({ data, bun }) => {
 
 export default ListBurgerConstructor;
 
-ListBurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
-    .isRequired,
-  bun: PropTypes.shape(burgerIngredientsObject).isRequired,
-};
+// ListBurgerConstructor.propTypes = {
+//   data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+//     .isRequired,
+//   bun: PropTypes.shape(burgerIngredientsObject).isRequired,
+// };

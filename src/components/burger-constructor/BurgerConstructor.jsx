@@ -10,6 +10,7 @@ import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
+import { setBun } from '../../services/actions/cartIngredients';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -17,7 +18,6 @@ function BurgerConstructor() {
     error: false,
     burgerData: null,
     loading: true,
-    bun: null,
     orderNumber: null,
     loadingOrder: true,
     ingredientsPrice: null,
@@ -25,18 +25,22 @@ function BurgerConstructor() {
   });
 
   // Получаем данные из хранилища redux.
+  const bun = useSelector((store) => store.ingredients.bun);
+
+  const dispatch = useDispatch();
+  // Устанавливаем булку по умолчанию для конструктора ингредиентов.
+  useEffect(() => {
+    dispatch(setBun('Краторная булка N-200i', bun));
+  }, [bun]);
+
   // Список выбранных ингредиентов для конструктора.
-  // const { currentBun, items } = useSelector((state) => state.constructor);
-  const items = useSelector((store) => store.constructor.items);
-
-  // console.log(currentBun);
-  // console.log(items);
-
-  console.log('=== items', items);
+  const { currentBun, itemsCartIngredients } = useSelector(
+    (store) => store.cartIngredients
+  );
+  console.log('=== currentBun', currentBun);
 
   // Номер заказа.
-  const order = useSelector((store) => store.order.number);
-  console.log(order);
+  // const order = useSelector((store) => store.order.number);
 
   // Для модального окна.
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -110,13 +114,12 @@ function BurgerConstructor() {
   return (
     <>
       <section className={`${styles['Burger-constructor']}`}>
-        {/* {items.length > 0 ? <div>1</div> : <div>2</div>} */}
-        {!state.loading && (
+        {currentBun && (
           <>
             <section className={`mt-25`}>
               <ListBurgerConstructor
-                data={state.ingredients}
-                bun={state.bun[0]}
+                data={itemsCartIngredients}
+                bun={currentBun}
               ></ListBurgerConstructor>
             </section>
             {/* Информация. */}

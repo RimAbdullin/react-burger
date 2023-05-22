@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 
 function BurgerIngredients() {
   // Получаем данные из хранилища redux.
-  const { bun, main, sauce, itemsFailed } = useSelector(
-    (state) => state.ingredients
+  const { bun, main, sauce, itemsFailed, itemsRequest } = useSelector(
+    (store) => store.ingredients
   );
 
   const scrollToElement = (v) => {
@@ -14,35 +14,39 @@ function BurgerIngredients() {
     elem.scrollIntoView();
   };
 
-  return (
+  return itemsRequest ? (
+    <section className={styles['Info-container']}>
+      <p>Идет загрузка ...</p>
+    </section>
+  ) : itemsFailed ? (
+    <section className={styles['Info-container']}>
+      <h1>Данные не найдены.</h1>
+    </section>
+  ) : (
     <section className={`${styles.Container}`}>
-      {!itemsFailed && (
-        <>
-          <section
-            className={`mt-10 mb-5 text text_type_main-large text_color_primary ${styles.Title}`}
-          >
-            Соберите бургер
-          </section>
-          <TabsBurgerIngredients click={scrollToElement} />
-          <section className={`custom-scroll ${styles['Scroll-area']}`}>
-            <ListBurgerIngredients
-              id={'id-bun'}
-              title={'Булки'}
-              data={bun}
-            ></ListBurgerIngredients>
-            <ListBurgerIngredients
-              id={'id-sauce'}
-              title={'Соусы'}
-              data={sauce}
-            ></ListBurgerIngredients>
-            <ListBurgerIngredients
-              id={'id-main'}
-              title={'Начинка'}
-              data={main}
-            ></ListBurgerIngredients>
-          </section>
-        </>
-      )}
+      <section
+        className={`mt-10 mb-5 text text_type_main-large text_color_primary ${styles.Title}`}
+      >
+        Соберите бургер
+      </section>
+      <TabsBurgerIngredients click={scrollToElement} />
+      <section className={`custom-scroll ${styles['Scroll-area']}`}>
+        <ListBurgerIngredients
+          id={'id-bun'}
+          title={'Булки'}
+          data={bun}
+        ></ListBurgerIngredients>
+        <ListBurgerIngredients
+          id={'id-sauce'}
+          title={'Соусы'}
+          data={sauce}
+        ></ListBurgerIngredients>
+        <ListBurgerIngredients
+          id={'id-main'}
+          title={'Начинка'}
+          data={main}
+        ></ListBurgerIngredients>
+      </section>
     </section>
   );
 }
