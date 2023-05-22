@@ -2,14 +2,18 @@ import {
   GET_ITEMS_FAILED,
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
+  SET_BUN,
 } from '../actions/ingredients';
 
 const initialState = {
+  ingredients: [],
   bun: [],
   main: [],
   sauce: [],
   itemsRequest: false,
   itemsFailed: false,
+  cart: [],
+  currentBun: null,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -26,13 +30,22 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         itemsRequest: false,
         itemsFailed: false,
-        bun: action.items.filter((bun) => bun.type == 'bun'),
-        main: action.items.filter((bun) => bun.type == 'main'),
-        sauce: action.items.filter((bun) => bun.type == 'sauce'),
+        ingredients: [...action.items],
+        bun: [...action.items.filter((bun) => bun.type == 'bun')],
+        main: [...action.items.filter((bun) => bun.type == 'main')],
+        sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
       };
     }
     case GET_ITEMS_FAILED: {
       return { ...state, itemsFailed: true, itemsRequest: false };
+    }
+    case SET_BUN: {
+      return {
+        ...state,
+        currentBun: {
+          ...state.bun.filter((item) => item.name === action.bunName)[0],
+        },
+      };
     }
     default: {
       return state;

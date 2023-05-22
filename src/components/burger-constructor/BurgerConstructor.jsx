@@ -10,7 +10,10 @@ import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBun } from '../../services/actions/cartIngredients';
+import {
+  getIngredientsItems,
+  setBun,
+} from '../../services/actions/ingredients';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -24,19 +27,17 @@ function BurgerConstructor() {
     bunPrice: null,
   });
 
-  // Получаем данные из хранилища redux.
-  const bun = useSelector((store) => store.ingredients.bun);
-
   const dispatch = useDispatch();
-  // Устанавливаем булку по умолчанию для конструктора ингредиентов.
+
+  // Получаем данные из хранилища redux.
+  // Список выбранных ингредиентов для конструктора.
+  const { bun, currentBun } = useSelector((store) => store.ingredients);
+
   useEffect(() => {
-    dispatch(setBun('Краторная булка N-200i', bun));
+    dispatch(setBun('Краторная булка N-200i'));
   }, [bun]);
 
-  // Список выбранных ингредиентов для конструктора.
-  const { currentBun, itemsCartIngredients } = useSelector(
-    (store) => store.cartIngredients
-  );
+  console.log('==== bun', bun);
   console.log('=== currentBun', currentBun);
 
   // Номер заказа.
@@ -118,7 +119,7 @@ function BurgerConstructor() {
           <>
             <section className={`mt-25`}>
               <ListBurgerConstructor
-                data={itemsCartIngredients}
+                data={bun}
                 bun={currentBun}
               ></ListBurgerConstructor>
             </section>

@@ -8,6 +8,8 @@ export const INCREASE_ITEM = 'INCREASE_ITEM';
 export const DECREASE_ITEM = 'DECREASE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 
+export const SET_BUN = 'SET_BUN';
+
 // thunk
 export function getIngredientsItems() {
   return function (dispatch) {
@@ -27,5 +29,15 @@ export function getIngredientsItems() {
           type: GET_ITEMS_FAILED,
         });
       });
+  };
+}
+
+// Устанавливаем выбранную булку.
+export function setBun(bunName) {
+  return function (dispatch) {
+    dispatch({
+      type: SET_BUN,
+      bunName: bunName,
+    });
   };
 }

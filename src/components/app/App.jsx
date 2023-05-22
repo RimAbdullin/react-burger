@@ -3,9 +3,11 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { useDispatch } from 'react-redux';
-import { getIngredientsItems } from '../../services/actions/ingredients';
-import { setBun } from '../../services/actions/cartIngredients';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getIngredientsItems,
+  setBun,
+} from '../../services/actions/ingredients';
 
 // import { SET_BUN } from '../../services/actions/constructor';
 
@@ -14,10 +16,9 @@ function App() {
 
   useEffect(() => {
     // Получаем список ингредиентов.
-    const bun = dispatch(getIngredientsItems());
-    console.log(bun);
+    dispatch(getIngredientsItems());
 
-    dispatch(setBun('Краторная булка N-200i', bun));
+    // dispatch(setBun('Краторная булка N-200i'));
   }, [dispatch]);
 
   return (
@@ -26,7 +27,7 @@ function App() {
       <main>
         <section className={styles[`Main-container`]}>
           <BurgerIngredients />
-          {/* <BurgerConstructor /> */}
+          <BurgerConstructor />
         </section>
       </main>
     </section>
