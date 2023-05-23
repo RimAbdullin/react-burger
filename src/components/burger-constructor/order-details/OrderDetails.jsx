@@ -1,12 +1,19 @@
 import styles from './OrderDetails.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+  // Номер заказа.
+  const { orderNumber, orderRequest, orderFailed } = useSelector(
+    (store) => store.order
+  );
+
   return (
     <section className={`${styles['Modal-content']}`}>
       <section className={`mt-4 ${styles['Order_id_container']}`}>
-        <span className="text text_type_digits-large">{orderNumber}</span>
+        {!orderRequest && !orderFailed && (
+          <span className="text text_type_digits-large">{orderNumber}</span>
+        )}
       </section>
 
       <section className={`mt-8 ${styles['Title_id_container']}`}>
@@ -33,7 +40,3 @@ const OrderDetails = ({ orderNumber }) => {
 };
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};

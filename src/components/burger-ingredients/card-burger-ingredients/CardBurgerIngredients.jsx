@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './CardBurgerIngredients.module.css';
 import {
   CurrencyIcon,
@@ -29,8 +28,6 @@ function CardBurgerIngredients({ children }) {
   const dispatch = useDispatch();
   const addIngredients = () => {
     const ingredientConstructor = { id: Date.now(), ...children };
-    console.log('=== ingredientConstructor', ingredientConstructor);
-
     dispatch(addItem(ingredientConstructor));
   };
 

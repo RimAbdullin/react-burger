@@ -4,9 +4,11 @@ export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
 
-export const ADD_ITEM = 'ADD_ITEM';
-export const DECREASE_ITEM = 'DECREASE_ITEM';
-export const DELETE_ITEM = 'DELETE_ITEM';
+export const DELETE_ITEM_CONSTRUCTOR = 'DELETE_ITEM_CONSTRUCTOR';
+export const ADD_ITEM_CONSTRUCTOR = 'ADD_ITEM_CONSTRUCTOR';
+
+export const SELECT_ITEM = 'SELECT_ITEM';
+export const CLEAR_ITEM = 'CLEAR_ITEM';
 
 export const SET_BUN = 'SET_BUN';
 
@@ -47,7 +49,7 @@ export function setBun(bunName) {
 export function addItem(item) {
   return function (dispatch) {
     dispatch({
-      type: ADD_ITEM,
+      type: ADD_ITEM_CONSTRUCTOR,
       item: item,
     });
   };
@@ -58,8 +60,27 @@ export function deleteItem(item) {
   console.log('=== item', item);
   return function (dispatch) {
     dispatch({
-      type: DELETE_ITEM,
+      type: DELETE_ITEM_CONSTRUCTOR,
       item: item,
+    });
+  };
+}
+
+// Выбираем текущий ингредиент.
+export function selectItem(item) {
+  return function (dispatch) {
+    dispatch({
+      type: SELECT_ITEM,
+      item: item,
+    });
+  };
+}
+
+// Сбрасываем текущий ингредиент.
+export function clearItem() {
+  return function (dispatch) {
+    dispatch({
+      type: CLEAR_ITEM,
     });
   };
 }

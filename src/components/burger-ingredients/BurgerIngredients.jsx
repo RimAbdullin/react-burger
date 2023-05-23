@@ -9,6 +9,7 @@ function BurgerIngredients() {
     (store) => store.ingredients
   );
 
+  console.log('=== bun', bun);
   const scrollToElement = (v) => {
     const elem = document.getElementById(v);
     elem.scrollIntoView();
