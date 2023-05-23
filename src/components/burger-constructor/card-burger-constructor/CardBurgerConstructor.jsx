@@ -4,8 +4,10 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
+import { deleteItem } from '../../../services/actions/ingredients';
 
 function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
   const [state, setState] = useState({
@@ -28,9 +30,13 @@ function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
       loading: false,
       name: children.name + nameDescription,
     });
-  }, []);
+  }, [children]);
 
-  const handleClose = () => {};
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(deleteItem(children));
+  };
 
   return (
     !state.loading && (
@@ -53,9 +59,9 @@ function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
 
 export default CardBurgerConstructor;
 
-// CardBurgerConstructor.propTypes = {
-//   type: PropTypes.string || undefined,
-//   isLocked: PropTypes.bool.isRequired,
-//   extraClass: PropTypes.string.isRequired,
-//   children: PropTypes.shape(burgerIngredientsObject).isRequired,
-// };
+CardBurgerConstructor.propTypes = {
+  type: PropTypes.string || undefined,
+  isLocked: PropTypes.bool.isRequired,
+  extraClass: PropTypes.string.isRequired,
+  children: PropTypes.shape(burgerIngredientsObject).isRequired,
+};

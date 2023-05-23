@@ -9,6 +9,8 @@ import { burgerIngredientsObject } from '../../../utils/prop-types';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../../modal/Modal';
 import { useModal } from '../../../hooks/useModal';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../../services/actions/ingredients';
 
 function CardBurgerIngredients({ children }) {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -24,11 +26,20 @@ function CardBurgerIngredients({ children }) {
     </Modal>
   );
 
+  const dispatch = useDispatch();
+  const addIngredients = () => {
+    const ingredientConstructor = { id: Date.now(), ...children };
+    console.log('=== ingredientConstructor', ingredientConstructor);
+
+    dispatch(addItem(ingredientConstructor));
+  };
+
   return (
     <>
       <section
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={openModal}
+        onDoubleClick={addIngredients}
       >
         <Counter count={1} size="default" />
         <div className={`mr-4 ml-4 ${styles['Illustration']}`}>

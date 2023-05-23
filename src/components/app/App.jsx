@@ -15,10 +15,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Получаем список ингредиентов.
-    dispatch(getIngredientsItems());
-
-    // dispatch(setBun('Краторная булка N-200i'));
+    // инициализируем объекты с ингредиентами.
+    dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
 
   return (

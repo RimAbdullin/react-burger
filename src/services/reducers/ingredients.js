@@ -3,6 +3,8 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   SET_BUN,
+  ADD_ITEM,
+  DELETE_ITEM,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -12,7 +14,7 @@ const initialState = {
   sauce: [],
   itemsRequest: false,
   itemsFailed: false,
-  cart: [],
+  ingredientsConstructor: [],
   currentBun: null,
 };
 
@@ -34,6 +36,9 @@ export const ingredientsReducer = (state = initialState, action) => {
         bun: [...action.items.filter((bun) => bun.type == 'bun')],
         main: [...action.items.filter((bun) => bun.type == 'main')],
         sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
+        currentBun: {
+          ...action.items.filter((item) => item.name === action.bunName)[0],
+        },
       };
     }
     case GET_ITEMS_FAILED: {
@@ -45,6 +50,20 @@ export const ingredientsReducer = (state = initialState, action) => {
         currentBun: {
           ...state.bun.filter((item) => item.name === action.bunName)[0],
         },
+      };
+    }
+    case ADD_ITEM: {
+      return {
+        ...state,
+        ingredientsConstructor: [...state.ingredientsConstructor, action.item],
+      };
+    }
+    case DELETE_ITEM: {
+      return {
+        ...state,
+        ingredientsConstructor: state.ingredientsConstructor.filter(
+          (item) => item.id !== action.item.id
+        ),
       };
     }
     default: {

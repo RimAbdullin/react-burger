@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './BurgerConstructor.module.css';
 import ListBurgerConstructor from './list-burger-constructor/ListBurgerConstructor';
 import {
@@ -10,35 +10,20 @@ import OrderDetails from './order-details/OrderDetails';
 import { getOrder } from '../../utils/burger-api';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getIngredientsItems,
-  setBun,
-} from '../../services/actions/ingredients';
+import { addItem, setBun } from '../../services/actions/ingredients';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
   const [state, setState] = useState({
-    error: false,
-    burgerData: null,
-    loading: true,
     orderNumber: null,
     loadingOrder: true,
     ingredientsPrice: null,
     bunPrice: null,
   });
 
-  const dispatch = useDispatch();
-
   // Получаем данные из хранилища redux.
-  // Список выбранных ингредиентов для конструктора.
-  const { bun, currentBun } = useSelector((store) => store.ingredients);
-
-  useEffect(() => {
-    dispatch(setBun('Краторная булка N-200i'));
-  }, [bun]);
-
-  console.log('==== bun', bun);
-  console.log('=== currentBun', currentBun);
+  // Выбранную булку и список выбранных ингредиентов для конструктора.
+  const { currentBun } = useSelector((store) => store.ingredients);
 
   // Номер заказа.
   // const order = useSelector((store) => store.order.number);
@@ -115,36 +100,31 @@ function BurgerConstructor() {
   return (
     <>
       <section className={`${styles['Burger-constructor']}`}>
-        {currentBun && (
-          <>
-            <section className={`mt-25`}>
-              <ListBurgerConstructor
-                data={bun}
-                bun={currentBun}
-              ></ListBurgerConstructor>
-            </section>
-            {/* Информация. */}
-            <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
-              <div className={`${styles['Info-price-container']}`}>
-                <span className={`mr-2 text_type_digits-medium`}>
-                  {state.ingredientsPrice + state.bunPrice}
-                </span>
+        <>
+          <section className={`mt-25`}>
+            <ListBurgerConstructor />
+          </section>
+          {/* Информация. */}
+          <section className={`mt-10 mr-4 ${styles['Info-container']}`}>
+            <div className={`${styles['Info-price-container']}`}>
+              <span className={`mr-2 text_type_digits-medium`}>
+                {state.ingredientsPrice + state.bunPrice}
+              </span>
 
-                <CurrencyIcon type="primary" />
-              </div>
-              <div className={`ml-10 ${styles['Info-price-container ']}`}>
-                <Button
-                  htmlType="button"
-                  type="primary"
-                  size="large"
-                  onClick={handleOpenModal}
-                >
-                  Оформить заказ
-                </Button>
-              </div>
-            </section>
-          </>
-        )}
+              <CurrencyIcon type="primary" />
+            </div>
+            <div className={`ml-10 ${styles['Info-price-container ']}`}>
+              <Button
+                htmlType="button"
+                type="primary"
+                size="large"
+                onClick={handleOpenModal}
+              >
+                Оформить заказ
+              </Button>
+            </div>
+          </section>
+        </>
       </section>
       {isModalOpen && modal}
     </>
