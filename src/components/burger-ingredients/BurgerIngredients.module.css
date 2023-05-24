@@ -9,6 +9,7 @@
 }
 
 .Scroll-area {
+  /* position: relative; */
   width: 600px;
   height: 756px;
   overflow-y: scroll;
@@ -19,4 +20,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.target {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 1000px;
+  height: 200px;
+  background: aqua;
+  z-index: 100;
 }

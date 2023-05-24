@@ -21,14 +21,11 @@ function BurgerConstructor() {
 
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
-  // const { currentBun } = useSelector((store) => store.ingredients);
   const dispatch = useDispatch();
 
   const { ingredientsConstructor, currentBun } = useSelector(
     (store) => store.ingredients
   );
-
-  console.log('=== currentBun', currentBun);
 
   // Для модального окна.
   const { isModalOpen, openModal, closeModal } = useModal();

@@ -61,7 +61,7 @@ export function deleteItem(item) {
   return function (dispatch) {
     dispatch({
       type: DELETE_ITEM_CONSTRUCTOR,
-      item: item,
+      item: { ...item },
     });
   };
 }

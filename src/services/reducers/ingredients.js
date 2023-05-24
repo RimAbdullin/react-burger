@@ -79,7 +79,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case CLEAR_ITEM: {
       return {
         ...state,
-        ingredientsConstructor: null,
+        currentIngredient: null,
       };
     }
 

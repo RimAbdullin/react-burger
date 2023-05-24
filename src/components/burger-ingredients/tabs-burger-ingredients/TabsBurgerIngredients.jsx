@@ -1,15 +1,19 @@
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './TabsBurgerIngredients.module.css';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-function TabsBurgerIngredients({ click }) {
-  const [current, setCurrent] = React.useState('id-bun');
+function TabsBurgerIngredients({ click, selectedTab }) {
+  const [current, setCurrent] = useState('id-bun');
 
   const scrollElement = (v) => {
     click(v);
     setCurrent(v);
   };
+
+  useEffect(() => {
+    setCurrent(selectedTab);
+  }, [selectedTab]);
 
   return (
     <section className={`text text_type_main-default ${styles.Tabs}`}>

@@ -9,23 +9,33 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../../modal/Modal';
 import { useModal } from '../../../hooks/useModal';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../../../services/actions/ingredients';
+import {
+  addItem,
+  clearItem,
+  selectItem,
+} from '../../../services/actions/ingredients';
 
 function CardBurgerIngredients({ children }) {
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleClick = (e) => {
-    e.stopPropagation();
+  const dispatch = useDispatch();
+
+  const handleClickOpenModal = () => {
+    dispatch(selectItem(children));
+    openModal();
+  };
+
+  const handleClickCloseModal = () => {
+    dispatch(clearItem());
     closeModal();
   };
 
   const modal = (
-    <Modal onClose={closeModal} title={'Детали ингредиента'}>
+    <Modal onClose={handleClickCloseModal} title={'Детали ингредиента'}>
       <IngredientDetails>{children}</IngredientDetails>
     </Modal>
   );
 
-  const dispatch = useDispatch();
   const addIngredients = () => {
     const ingredientConstructor = { id: Date.now(), ...children };
     dispatch(addItem(ingredientConstructor));
@@ -35,7 +45,7 @@ function CardBurgerIngredients({ children }) {
     <>
       <section
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
-        onClick={openModal}
+        onClick={handleClickOpenModal}
         onDoubleClick={addIngredients}
       >
         <Counter count={1} size="default" />
