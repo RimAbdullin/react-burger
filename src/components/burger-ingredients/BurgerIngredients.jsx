@@ -61,26 +61,16 @@ function BurgerIngredients() {
       observerMain.current.disconnect();
     }
     const callback = function (entries, observer) {
-      // if (entries[0].intersectionRect.top < 500) {
-      //   // console.log('достигли начинки');
-      //   // console.log(entries[0].intersectionRect);
-      //   setSelectedTab('id-main');
-      // }
-
-      if (!entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && entries[0].intersectionRatio >= 1) {
         console.log('************************');
         console.log('достигли начинки');
-        console.log(entries[0].intersectionRect.top);
+        console.log(entries[0].intersectionRatio);
         setSelectedTab('id-main');
-        // if (entries[0].intersectionRect.top < 20) {
-        //   console.log('достигли начинки');
-        //   setSelectedTab('id-main');
-        // }
       }
     };
     const options = {
       root: null,
-      rootMargin: '-300px -300px',
+      rootMargin: '0px',
       // threshold: [0.1, 0.25, 0.5, 0.6, 0.75, 0.9, 1.0],
       threshold: 1.0,
     };
@@ -176,3 +166,86 @@ function BurgerIngredients() {
 }
 
 export default BurgerIngredients;
+
+function ready(fn) {
+  document.addEventListener('DOMContentLoaded', fn, false);
+}
+
+ready(() => {
+  const TableOfContents = {
+    container: document.querySelector('.js-toc'),
+    links: null,
+    headings: null,
+    intersectionOptions: {
+      rootMargin: '0px',
+      threshold: 1,
+    },
+    previousSection: null,
+    observer: null,
+
+    init() {
+      this.handleObserver = this.handleObserver.bind(this);
+
+      this.setUpObserver();
+      this.findLinksAndHeadings();
+      this.observeSections();
+    },
+
+    handleObserver(entries, observer) {
+      entries.forEach((entry) => {
+        let href = `#${entry.target.getAttribute('id')}`,
+          link = this.links.find((l) => l.getAttribute('href') === href);
+
+        if (entry.isIntersecting && entry.intersectionRatio >= 1) {
+          link.classList.add('is-visible');
+          this.previousSection = entry.target.getAttribute('id');
+        } else {
+          link.classList.remove('is-visible');
+        }
+
+        this.highlightFirstActive();
+      });
+    },
+
+    highlightFirstActive() {
+      let firstVisibleLink = this.container.querySelector('.is-visible');
+
+      this.links.forEach((link) => {
+        link.classList.remove('is-active');
+      });
+
+      if (firstVisibleLink) {
+        firstVisibleLink.classList.add('is-active');
+      }
+
+      if (!firstVisibleLink && this.previousSection) {
+        this.container
+          .querySelector(`a[href="#${this.previousSection}"]`)
+          .classList.add('is-active');
+      }
+    },
+
+    observeSections() {
+      this.headings.forEach((heading) => {
+        this.observer.observe(heading);
+      });
+    },
+
+    setUpObserver() {
+      this.observer = new IntersectionObserver(
+        this.handleObserver,
+        this.intersectionOptions
+      );
+    },
+
+    findLinksAndHeadings() {
+      this.links = [...this.container.querySelectorAll('a')];
+      this.headings = this.links.map((link) => {
+        let id = link.getAttribute('href');
+        return document.querySelector(id);
+      });
+    },
+  };
+
+  TableOfContents.init();
+});
