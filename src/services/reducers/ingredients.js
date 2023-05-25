@@ -10,7 +10,12 @@ import {
 } from '../actions/ingredients';
 
 const initialState = {
-  ingredients: [],
+  ingredients: [
+    {
+      ingredient: {},
+      count: 0,
+    },
+  ],
   currentIngredient: null,
   bun: [],
   main: [],
@@ -35,7 +40,12 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         itemsRequest: false,
         itemsFailed: false,
-        ingredients: [...action.items],
+        ingredients: [
+          ...action.items.map((item) => {
+            const ingredient = { ingredient: item, count: 0 };
+            return ingredient;
+          }),
+        ],
         bun: [...action.items.filter((bun) => bun.type == 'bun')],
         main: [...action.items.filter((bun) => bun.type == 'main')],
         sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
@@ -56,9 +66,20 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_ITEM_CONSTRUCTOR: {
+      console.log('=== action.item.id', action.item.id);
+      console.log(state.ingredients);
+
+      const filter = state.ingredients.filter(
+        (item) => item.ingredient._id === action.item.itemId
+      )[0];
+
+      console.log('=== filter', filter);
+      const result = { ...filter, id: action.item.id };
+
+      console.log('=== result', result);
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor, action.item],
+        ingredientsConstructor: [...state.ingredientsConstructor, result],
       };
     }
     case DELETE_ITEM_CONSTRUCTOR: {

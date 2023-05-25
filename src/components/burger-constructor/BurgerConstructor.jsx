@@ -10,6 +10,7 @@ import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
+import { addItem } from '../../services/actions/ingredients';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -30,14 +31,18 @@ function BurgerConstructor() {
     (store) => store.ingredients
   );
 
+  // Добавление ингредиента в конструктор.
   const handleDrop = (itemId) => {
-    console.log('dnd');
-    setElements([...elements.filter((element) => element.id !== itemId.id)]);
+    const ingredientConstructor = { id: Date.now(), itemId: itemId._id };
+    console.log('=== define element', ingredientConstructor);
+    dispatch(addItem(ingredientConstructor));
 
-    setDraggedElements([
-      ...draggedElements,
-      ...elements.filter((element) => element.id === itemId.id),
-    ]);
+    // setElements([...elements.filter((element) => element.id !== itemId.id)]);
+
+    // setDraggedElements([
+    //   ...draggedElements,
+    //   ...elements.filter((element) => element.id === itemId.id),
+    // ]);
   };
 
   // Для модального окна.
@@ -50,7 +55,7 @@ function BurgerConstructor() {
     setState({
       ...state,
       ingredientsPrice: ingredientsConstructor.reduce((sum, record) => {
-        return sum + record.price;
+        return sum + record.ingredient.price;
       }, 0),
 
       bunPrice: currentBun?.price ? currentBun.price : 0,
@@ -78,11 +83,6 @@ function BurgerConstructor() {
       openModal();
     }
   };
-
-  // Закрытие модального окна.
-  // const handleCloseModal = () => {
-  //   setVisible(false);
-  // };
 
   const handleClick = (e) => {
     e.stopPropagation();

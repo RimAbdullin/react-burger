@@ -57,7 +57,6 @@ export function addItem(item) {
 
 // Удаляем ингредиент из конструктора.
 export function deleteItem(item) {
-  console.log('=== item', item);
   return function (dispatch) {
     dispatch({
       type: DELETE_ITEM_CONSTRUCTOR,

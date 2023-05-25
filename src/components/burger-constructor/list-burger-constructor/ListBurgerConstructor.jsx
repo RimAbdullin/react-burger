@@ -46,7 +46,7 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
               type={undefined}
               isLocked={false}
             >
-              {item}
+              {item.ingredient}
             </CardBurgerConstructor>
           ))}
         </section>

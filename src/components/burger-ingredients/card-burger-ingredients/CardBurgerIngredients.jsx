@@ -1,8 +1,8 @@
-import styles from './CardBurgerIngredients.module.css';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './CardBurgerIngredients.module.css';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
@@ -14,8 +14,6 @@ import {
   clearItem,
   selectItem,
 } from '../../../services/actions/ingredients';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDrag } from 'react-dnd';
 
 function CardBurgerIngredients({ children }) {
@@ -28,8 +26,6 @@ function CardBurgerIngredients({ children }) {
       isDrag: monitor.isDragging(),
     }),
   });
-
-  console.log(isDrag);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -51,23 +47,20 @@ function CardBurgerIngredients({ children }) {
     </Modal>
   );
 
-  const addIngredients = () => {
-    const ingredientConstructor = { id: Date.now(), ...children };
-    dispatch(addItem(ingredientConstructor));
-  };
-
   return (
     <>
-      {/* <DndProvider backend={HTML5Backend}> */}
       <section
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={handleClickOpenModal}
-        onDoubleClick={addIngredients}
-        ref={dragRef}
       >
-        <Counter count={1} size="default" />
+        <Counter extraClass={`${styles['Counter']}`} count={1} size="default" />
         <div className={`mr-4 ml-4 ${styles['Illustration']}`}>
-          <img src={children.image} alt="" />
+          <img
+            ref={dragRef}
+            src={children.image}
+            className={`ml-4 mb-10 mt-6 ${styles['Image']}`}
+            alt=""
+          />
         </div>
         <div className={`mt-1 mb-1 ${styles.Price}`}>
           <span className={`mr-2 text_type_digits-default`}>
@@ -80,7 +73,6 @@ function CardBurgerIngredients({ children }) {
         </span>
         {isModalOpen && modal}
       </section>
-      {/* </DndProvider> */}
     </>
   );
 }
