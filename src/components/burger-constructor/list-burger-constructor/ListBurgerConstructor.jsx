@@ -1,13 +1,24 @@
 import styles from './ListBurgerConstructor.module.css';
 import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstructor';
 import { useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
-const ListBurgerConstructor = () => {
+const ListBurgerConstructor = ({ onDropHandler }) => {
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
   const { ingredientsConstructor, currentBun } = useSelector(
     (store) => store.ingredients
   );
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredients',
+    drop(itemId) {
+      onDropHandler(itemId);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
 
   return (
     ingredientsConstructor &&
@@ -21,7 +32,10 @@ const ListBurgerConstructor = () => {
         >
           {currentBun}
         </CardBurgerConstructor>
-        <section className={`mb-4 custom-scroll ${styles['Scroll-area']}`}>
+        <section
+          className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
+          ref={dropTarget}
+        >
           {/* Список ингредиентов. */}
           {ingredientsConstructor.map((item, index) => (
             <CardBurgerConstructor

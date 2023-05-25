@@ -14,8 +14,23 @@ import {
   clearItem,
   selectItem,
 } from '../../../services/actions/ingredients';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDrag } from 'react-dnd';
 
 function CardBurgerIngredients({ children }) {
+  const { _id } = children;
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: 'ingredients',
+    item: { _id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
+  console.log(isDrag);
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const dispatch = useDispatch();
@@ -43,10 +58,12 @@ function CardBurgerIngredients({ children }) {
 
   return (
     <>
+      {/* <DndProvider backend={HTML5Backend}> */}
       <section
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={handleClickOpenModal}
         onDoubleClick={addIngredients}
+        ref={dragRef}
       >
         <Counter count={1} size="default" />
         <div className={`mr-4 ml-4 ${styles['Illustration']}`}>
@@ -63,6 +80,7 @@ function CardBurgerIngredients({ children }) {
         </span>
         {isModalOpen && modal}
       </section>
+      {/* </DndProvider> */}
     </>
   );
 }

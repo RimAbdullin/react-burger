@@ -19,6 +19,9 @@ function BurgerConstructor() {
     isCalculatingPrice: false,
   });
 
+  const [elements, setElements] = useState([]);
+  const [draggedElements, setDraggedElements] = useState([]);
+
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
   const dispatch = useDispatch();
@@ -26,6 +29,16 @@ function BurgerConstructor() {
   const { ingredientsConstructor, currentBun } = useSelector(
     (store) => store.ingredients
   );
+
+  const handleDrop = (itemId) => {
+    console.log('dnd');
+    setElements([...elements.filter((element) => element.id !== itemId.id)]);
+
+    setDraggedElements([
+      ...draggedElements,
+      ...elements.filter((element) => element.id === itemId.id),
+    ]);
+  };
 
   // Для модального окна.
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -89,7 +102,7 @@ function BurgerConstructor() {
       <section className={`${styles['Burger-constructor']}`}>
         <>
           <section className={`mt-25`}>
-            <ListBurgerConstructor />
+            <ListBurgerConstructor onDropHandler={handleDrop} />
           </section>
           {/* Информация. */}
           <section className={`mt-10 mr-4 ${styles['Info-container']}`}>

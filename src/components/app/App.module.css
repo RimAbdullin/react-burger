@@ -1,5 +1,6 @@
 .Page {
-  margin: 0 auto;
+  margin-left: 40px;
+  margin-top: 40px;
   max-width: 1280px;
 }
 
@@ -7,10 +8,5 @@
   display: flex;
   flex-direction: row;
 
-  position: relative;
-  left: 380px;
-  right: 0%;
-  top: 128px;
   gap: 40px;
-  width: 1240px;
 }
