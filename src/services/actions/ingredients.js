@@ -24,7 +24,10 @@ export function getIngredientsItems(bunName) {
           type: GET_ITEMS_SUCCESS,
           items: data.data,
         });
-        dispatch(setBun(bunName));
+        dispatch({
+          type: SET_BUN,
+          bunName: bunName,
+        });
         return data.data;
       })
       .catch((err) => {
@@ -32,54 +35,5 @@ export function getIngredientsItems(bunName) {
           type: GET_ITEMS_FAILED,
         });
       });
-  };
-}
-
-// Устанавливаем выбранную булку.
-export function setBun(bunName) {
-  return function (dispatch) {
-    dispatch({
-      type: SET_BUN,
-      bunName: bunName,
-    });
-  };
-}
-
-// Добавляем новый ингредиент в конструктор.
-export function addItem(item) {
-  return function (dispatch) {
-    dispatch({
-      type: ADD_ITEM_CONSTRUCTOR,
-      item: item,
-    });
-  };
-}
-
-// Удаляем ингредиент из конструктора.
-export function deleteItem(item) {
-  return function (dispatch) {
-    dispatch({
-      type: DELETE_ITEM_CONSTRUCTOR,
-      item: { ...item },
-    });
-  };
-}
-
-// Выбираем текущий ингредиент.
-export function selectItem(item) {
-  return function (dispatch) {
-    dispatch({
-      type: SELECT_ITEM,
-      item: item,
-    });
-  };
-}
-
-// Сбрасываем текущий ингредиент.
-export function clearItem() {
-  return function (dispatch) {
-    dispatch({
-      type: CLEAR_ITEM,
-    });
   };
 }

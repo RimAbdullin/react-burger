@@ -10,7 +10,8 @@ import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
-import { addItem } from '../../services/actions/ingredients';
+import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredients.js';
+import { useDrop } from 'react-dnd';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -20,8 +21,15 @@ function BurgerConstructor() {
     isCalculatingPrice: false,
   });
 
-  const [elements, setElements] = useState([]);
-  const [draggedElements, setDraggedElements] = useState([]);
+  const [, dropTargetConstructor] = useDrop({
+    accept: 'ingredientConstructor',
+    drop(itemId) {
+      // onDropHandler(itemId);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
 
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
@@ -32,17 +40,11 @@ function BurgerConstructor() {
   );
 
   // Добавление ингредиента в конструктор.
-  const handleDrop = (itemId) => {
-    const ingredientConstructor = { id: Date.now(), itemId: itemId._id };
-    console.log('=== define element', ingredientConstructor);
-    dispatch(addItem(ingredientConstructor));
-
-    // setElements([...elements.filter((element) => element.id !== itemId.id)]);
-
-    // setDraggedElements([
-    //   ...draggedElements,
-    //   ...elements.filter((element) => element.id === itemId.id),
-    // ]);
+  const handleDrop = (item) => {
+    dispatch({
+      type: ADD_ITEM_CONSTRUCTOR,
+      item: { id: Date.now(), itemId: item._id },
+    });
   };
 
   // Для модального окна.
@@ -55,10 +57,10 @@ function BurgerConstructor() {
     setState({
       ...state,
       ingredientsPrice: ingredientsConstructor.reduce((sum, record) => {
-        return sum + record.ingredient.price;
+        return sum + record.price;
       }, 0),
 
-      bunPrice: currentBun?.price ? currentBun.price : 0,
+      bunPrice: currentBun?.price ? currentBun.price * 2 : 0,
 
       isCalculatingPrice: false,
     });
@@ -99,7 +101,10 @@ function BurgerConstructor() {
 
   return (
     <>
-      <section className={`${styles['Burger-constructor']}`}>
+      <section
+        className={`${styles['Burger-constructor']}`}
+        ref={dropTargetConstructor}
+      >
         <>
           <section className={`mt-25`}>
             <ListBurgerConstructor onDropHandler={handleDrop} />

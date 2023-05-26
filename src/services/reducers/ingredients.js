@@ -10,12 +10,7 @@ import {
 } from '../actions/ingredients';
 
 const initialState = {
-  ingredients: [
-    {
-      ingredient: {},
-      count: 0,
-    },
-  ],
+  ingredients: [],
   currentIngredient: null,
   bun: [],
   main: [],
@@ -40,12 +35,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         itemsRequest: false,
         itemsFailed: false,
-        ingredients: [
-          ...action.items.map((item) => {
-            const ingredient = { ingredient: item, count: 0 };
-            return ingredient;
-          }),
-        ],
+        ingredients: action.items.map((item) => ({ ...item, count: 0 })),
         bun: [...action.items.filter((bun) => bun.type == 'bun')],
         main: [...action.items.filter((bun) => bun.type == 'main')],
         sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
@@ -61,26 +51,65 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBun: {
+          id: Date.now(),
           ...state.bun.filter((item) => item.name === action.bunName)[0],
         },
+        ingredients: [
+          ...state.ingredients.map((item) => {
+            if (item.name === action.bunName) {
+              return { ...item, count: item.count + 1 };
+            } else {
+              return { ...item };
+            }
+          }),
+        ],
       };
     }
     case ADD_ITEM_CONSTRUCTOR: {
-      console.log('=== action.item.id', action.item.id);
-      console.log(state.ingredients);
-
+      // Находим перетаскиваемый ингредиент.
       const filter = state.ingredients.filter(
-        (item) => item.ingredient._id === action.item.itemId
+        (item) => item._id === action.item.itemId
       )[0];
 
-      console.log('=== filter', filter);
-      const result = { ...filter, id: action.item.id };
+      // Если перетаскиваем ингредиенты с типом 'булка' то меняем верх и низ конструктора.
+      if (filter.type === 'bun') {
+        const test = [
+          ...state.ingredients.map((item) => ({
+            ...item,
+            count:
+              item._id === action.item.itemId && item.type === 'bun' ? 1 : 0,
+          })),
+        ];
 
-      console.log('=== result', result);
-      return {
-        ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor, result],
-      };
+        console.log('=== test', test);
+
+        return {
+          ...state,
+          currentBun: {
+            id: Date.now(),
+            ...filter,
+          },
+          ingredients: [...test],
+        };
+      } else {
+        // Если перетаскиваем ингредиенты с типом не 'булка' то добавляем в список конструктора.
+        return {
+          ...state,
+          ingredientsConstructor: [
+            ...state.ingredientsConstructor,
+            { ...filter, id: action.item.id, count: filter.count + 1 },
+          ],
+          ingredients: [
+            ...state.ingredients.map((item) => {
+              if (item._id === action.item.itemId) {
+                return { ...item, count: item.count + 1 };
+              } else {
+                return { ...item };
+              }
+            }),
+          ],
+        };
+      }
     }
     case DELETE_ITEM_CONSTRUCTOR: {
       return {
@@ -88,6 +117,15 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsConstructor: state.ingredientsConstructor.filter(
           (item) => item.id !== action.item.id
         ),
+        ingredients: [
+          ...state.ingredients.map((item) => {
+            if (item._id === action.item._id) {
+              return { ...item, count: item.count - 1 };
+            } else {
+              return { ...item };
+            }
+          }),
+        ],
       };
     }
 

@@ -18,7 +18,7 @@ const ListBurgerIngredients = ({ data }) => {
 
 export default ListBurgerIngredients;
 
-ListBurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
-    .isRequired,
-};
+// ListBurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+//     .isRequired,
+// };

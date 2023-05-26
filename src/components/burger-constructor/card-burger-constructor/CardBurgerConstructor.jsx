@@ -7,12 +7,23 @@ import {
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
-import { deleteItem } from '../../../services/actions/ingredients';
+import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredients';
+import { useDrop, useDrag } from 'react-dnd';
 
 function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
   const [state, setState] = useState({
     name: '',
     loading: true,
+  });
+
+  const { id } = children;
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: 'ingredientConstructor',
+    item: { id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
   });
 
   useEffect(() => {
@@ -35,12 +46,16 @@ function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    dispatch(deleteItem(children));
+    dispatch({
+      type: DELETE_ITEM_CONSTRUCTOR,
+      item: { ...children },
+    });
   };
 
   return (
-    !state.loading && (
-      <section className={`ml-4  ${styles['Card-ingredients']}`}>
+    !state.loading &&
+    !isDrag && (
+      <section className={`ml-4  ${styles['Card-ingredients']}`} ref={dragRef}>
         {!type && <DragIcon type="primary" />}
         <ConstructorElement
           extraClass={'ml-10 mr-2 ' + extraClass}

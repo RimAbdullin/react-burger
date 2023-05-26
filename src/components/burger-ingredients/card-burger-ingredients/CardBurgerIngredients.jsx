@@ -9,15 +9,25 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../../modal/Modal';
 import { useModal } from '../../../hooks/useModal';
 import { useDispatch } from 'react-redux';
-import {
-  addItem,
-  clearItem,
-  selectItem,
-} from '../../../services/actions/ingredients';
 import { useDrag } from 'react-dnd';
+import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 function CardBurgerIngredients({ children }) {
   const { _id } = children;
+
+  const [count, setCount] = useState(0);
+
+  // Получаем данные из хранилища redux.
+  // Значение счетчика выбранного ингредиента.
+  const { ingredients } = useSelector((store) => store.ingredients);
+
+  // Изменяем количество выбранных ингредиентов.
+  useEffect(() => {
+    const count = ingredients.filter((item) => item._id === _id)[0].count;
+    setCount(count);
+  }, [ingredients]);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredients',
@@ -32,12 +42,17 @@ function CardBurgerIngredients({ children }) {
   const dispatch = useDispatch();
 
   const handleClickOpenModal = () => {
-    dispatch(selectItem(children));
+    dispatch({
+      type: SELECT_ITEM,
+      item: children,
+    });
     openModal();
   };
 
   const handleClickCloseModal = () => {
-    dispatch(clearItem());
+    dispatch({
+      type: CLEAR_ITEM,
+    });
     closeModal();
   };
 
@@ -53,7 +68,11 @@ function CardBurgerIngredients({ children }) {
         className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
         onClick={handleClickOpenModal}
       >
-        <Counter extraClass={`${styles['Counter']}`} count={1} size="default" />
+        <Counter
+          extraClass={`${styles['Counter']}`}
+          count={count}
+          size="default"
+        />
         <div className={`mr-4 ml-4 ${styles['Illustration']}`}>
           <img
             ref={dragRef}
@@ -79,6 +98,6 @@ function CardBurgerIngredients({ children }) {
 
 export default CardBurgerIngredients;
 
-CardBurgerIngredients.propTypes = {
-  children: PropTypes.shape(burgerIngredientsObject).isRequired,
-};
+// CardBurgerIngredients.propTypes = {
+//   children: PropTypes.shape(burgerIngredientsObject).isRequired,
+// };
