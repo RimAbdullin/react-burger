@@ -73,23 +73,23 @@ export const ingredientsReducer = (state = initialState, action) => {
 
       // Если перетаскиваем ингредиенты с типом 'булка' то меняем верх и низ конструктора.
       if (filter.type === 'bun') {
-        const test = [
-          ...state.ingredients.map((item) => ({
-            ...item,
-            count:
-              item._id === action.item.itemId && item.type === 'bun' ? 1 : 0,
-          })),
-        ];
-
-        console.log('=== test', test);
-
         return {
           ...state,
           currentBun: {
             id: Date.now(),
             ...filter,
           },
-          ingredients: [...test],
+          ingredients: [
+            ...state.ingredients.map((item) => ({
+              ...item,
+              count:
+                item.type === 'bun'
+                  ? item._id === action.item.itemId
+                    ? 1
+                    : 0
+                  : item.count,
+            })),
+          ],
         };
       } else {
         // Если перетаскиваем ингредиенты с типом не 'булка' то добавляем в список конструктора.
