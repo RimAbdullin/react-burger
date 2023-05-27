@@ -1,9 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './ListBurgerConstructor.module.css';
 import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstructor';
 import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 const ListBurgerConstructor = ({ onDropHandler }) => {
   // Получаем данные из хранилища redux.
@@ -22,9 +24,12 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     }),
   });
 
-  console.log('=== ingredientsConstructor', ingredientsConstructor);
   //************************************************************ */
-  const [cards, setCards] = useState(ingredientsConstructor);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    setCards(ingredientsConstructor);
+  }, [ingredientsConstructor]);
 
   const moveCard = useCallback((dragIndex, hoverIndex) => {
     setCards((prevCards) =>
@@ -37,20 +42,22 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     );
   }, []);
 
-  const renderCard = useCallback((card, index) => {
+  const renderCard = useCallback((ingredientsConstructor, index) => {
     return (
-      <CardBurgerConstructor
-        extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
-        key={card.id}
-        index={index}
-        id={card.id}
-        text={card.text}
-        type={undefined}
-        isLocked={false}
-        moveCard={moveCard}
-      >
-        {card}
-      </CardBurgerConstructor>
+      ingredientsConstructor && (
+        <CardBurgerConstructor
+          extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
+          key={ingredientsConstructor.id}
+          index={index}
+          id={ingredientsConstructor.id}
+          text={ingredientsConstructor.text}
+          type={undefined}
+          isLocked={false}
+          moveCard={moveCard}
+        >
+          {ingredientsConstructor}
+        </CardBurgerConstructor>
+      )
     );
   }, []);
 
@@ -59,44 +66,41 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     currentBun && (
       <section>
         {/* Первый элемент булки. */}
-        <CardBurgerConstructor
-          extraClass={'mb-4 ml-15'}
-          type={'top'}
-          isLocked={true}
-        >
-          {currentBun}
-        </CardBurgerConstructor>
+        <section className={`ml-4  ${styles['Card-ingredients']}`}>
+          <ConstructorElement
+            extraClass={'mb-4 ml-15'}
+            type={'top'}
+            isLocked={true}
+            text={currentBun.name + ' (верх)'}
+            price={currentBun.price}
+            thumbnail={currentBun.image}
+          />
+        </section>
         <section
           className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
           ref={dropTarget}
         >
           {/* Список ингредиентов. */}
           {cards.map((card, i) => renderCard(card, i))}
-          {/* {ingredientsConstructor.map((item, index) => (
-            <CardBurgerConstructor
-              extraClass={
-                index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''
-              }
-              key={item.id}
-              type={undefined}
-              isLocked={false}
-              moveCard={moveCard}
-            >
-              {item}
-            </CardBurgerConstructor>
-          ))} */}
         </section>
         {/* Последний элемент булки. */}
-        <CardBurgerConstructor
-          extraClass={'ml-15'}
-          type={'bottom'}
-          isLocked={true}
-        >
-          {currentBun}
-        </CardBurgerConstructor>
+        <section className={`ml-4  ${styles['Card-ingredients']}`}>
+          <ConstructorElement
+            extraClass={'ml-15'}
+            type={'bottom'}
+            isLocked={true}
+            text={currentBun.name + ' (низ)'}
+            price={currentBun.price}
+            thumbnail={currentBun.image}
+          />
+        </section>
       </section>
     )
   );
 };
 
 export default ListBurgerConstructor;
+
+ListBurgerConstructor.propTypes = {
+  onDropHandler: PropTypes.func.isRequired,
+};

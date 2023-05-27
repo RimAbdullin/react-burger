@@ -1,4 +1,3 @@
-import { useRef, useEffect } from 'react';
 import styles from './ListBurgerIngredients.module.css';
 import CardBurgerIngredients from '../card-burger-ingredients/CardBurgerIngredients';
 import PropTypes from 'prop-types';
@@ -18,7 +17,7 @@ const ListBurgerIngredients = ({ data }) => {
 
 export default ListBurgerIngredients;
 
-// ListBurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
-//     .isRequired,
-// };
+ListBurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
+    .isRequired,
+};

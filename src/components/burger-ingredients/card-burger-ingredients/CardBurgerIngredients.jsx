@@ -98,6 +98,6 @@ function CardBurgerIngredients({ children }) {
 
 export default CardBurgerIngredients;
 
-// CardBurgerIngredients.propTypes = {
-//   children: PropTypes.shape(burgerIngredientsObject).isRequired,
-// };
+CardBurgerIngredients.propTypes = {
+  children: PropTypes.shape(burgerIngredientsObject).isRequired,
+};

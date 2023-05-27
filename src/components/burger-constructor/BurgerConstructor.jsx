@@ -11,7 +11,6 @@ import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
 import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredients.js';
-import { useDrop } from 'react-dnd';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -19,16 +18,6 @@ function BurgerConstructor() {
     ingredientsPrice: null,
     bunPrice: null,
     isCalculatingPrice: false,
-  });
-
-  const [, dropTargetConstructor] = useDrop({
-    accept: 'ingredientConstructor',
-    drop(itemId) {
-      // onDropHandler(itemId);
-    },
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
   });
 
   // Получаем данные из хранилища redux.
@@ -101,10 +90,7 @@ function BurgerConstructor() {
 
   return (
     <>
-      <section
-        className={`${styles['Burger-constructor']}`}
-        ref={dropTargetConstructor}
-      >
+      <section className={`${styles['Burger-constructor']}`}>
         <>
           <section className={`mt-25`}>
             <ListBurgerConstructor onDropHandler={handleDrop} />
