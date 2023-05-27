@@ -3,21 +3,15 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   SET_BUN,
-  ADD_ITEM_CONSTRUCTOR,
-  DELETE_ITEM_CONSTRUCTOR,
-  SELECT_ITEM,
-  CLEAR_ITEM,
 } from '../actions/ingredients';
 
 const initialState = {
   ingredients: [],
-  currentIngredient: null,
   bun: [],
   main: [],
   sauce: [],
   itemsRequest: false,
   itemsFailed: false,
-  ingredientsConstructor: [],
   currentBun: null,
 };
 
@@ -65,83 +59,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ],
       };
     }
-    case ADD_ITEM_CONSTRUCTOR: {
-      // Находим перетаскиваемый ингредиент.
-      const filter = state.ingredients.filter(
-        (item) => item._id === action.item.itemId
-      )[0];
-
-      // Если перетаскиваем ингредиенты с типом 'булка' то меняем верх и низ конструктора.
-      if (filter.type === 'bun') {
-        return {
-          ...state,
-          currentBun: {
-            id: Date.now(),
-            ...filter,
-          },
-          ingredients: [
-            ...state.ingredients.map((item) => ({
-              ...item,
-              count:
-                item.type === 'bun'
-                  ? item._id === action.item.itemId
-                    ? 1
-                    : 0
-                  : item.count,
-            })),
-          ],
-        };
-      } else {
-        // Если перетаскиваем ингредиенты с типом не 'булка' то добавляем в список конструктора.
-        return {
-          ...state,
-          ingredientsConstructor: [
-            ...state.ingredientsConstructor,
-            { ...filter, id: action.item.id, count: filter.count + 1 },
-          ],
-          ingredients: [
-            ...state.ingredients.map((item) => {
-              if (item._id === action.item.itemId) {
-                return { ...item, count: item.count + 1 };
-              } else {
-                return { ...item };
-              }
-            }),
-          ],
-        };
-      }
-    }
-    case DELETE_ITEM_CONSTRUCTOR: {
-      return {
-        ...state,
-        ingredientsConstructor: state.ingredientsConstructor.filter(
-          (item) => item.id !== action.item.id
-        ),
-        ingredients: [
-          ...state.ingredients.map((item) => {
-            if (item._id === action.item._id) {
-              return { ...item, count: item.count - 1 };
-            } else {
-              return { ...item };
-            }
-          }),
-        ],
-      };
-    }
-
-    case SELECT_ITEM: {
-      return {
-        ...state,
-        currentIngredient: action.item,
-      };
-    }
-    case CLEAR_ITEM: {
-      return {
-        ...state,
-        currentIngredient: null,
-      };
-    }
-
     default: {
       return state;
     }

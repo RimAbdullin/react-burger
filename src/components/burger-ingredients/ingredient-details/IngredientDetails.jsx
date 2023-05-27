@@ -4,7 +4,7 @@ import styles from './IngredientDetails.module.css';
 const IngredientDetails = () => {
   // Получаем данные из хранилища redux.
   // Выбранный ингредиент для отображения детальных данных.
-  const { currentIngredient } = useSelector((store) => store.ingredients);
+  const { currentIngredient } = useSelector((store) => store.modal);
 
   return (
     currentIngredient && (

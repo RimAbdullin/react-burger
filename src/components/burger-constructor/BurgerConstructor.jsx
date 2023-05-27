@@ -10,7 +10,7 @@ import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
-import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredients.js';
+import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -57,11 +57,13 @@ function BurgerConstructor() {
 
   // Получаем объект для body запроса с id ингредиентов.
   const getBody = () => {
-    return {
+    const body = {
       ingredients: ingredientsConstructor.map((item) => {
         return item._id;
       }),
     };
+    body.ingredients.push(currentBun._id);
+    return body;
   };
 
   // Получаем номер заказа для конструктора и открываем модальное окно.

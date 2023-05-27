@@ -7,7 +7,7 @@ import {
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { burgerIngredientsConstructorObject } from '../../../utils/prop-types';
-import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredients';
+import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
 import { useDrop, useDrag } from 'react-dnd';
 
 function CardBurgerConstructor({ index, children, moveCard, extraClass }) {

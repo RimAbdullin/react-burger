@@ -4,12 +4,6 @@ export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
 
-export const DELETE_ITEM_CONSTRUCTOR = 'DELETE_ITEM_CONSTRUCTOR';
-export const ADD_ITEM_CONSTRUCTOR = 'ADD_ITEM_CONSTRUCTOR';
-
-export const SELECT_ITEM = 'SELECT_ITEM';
-export const CLEAR_ITEM = 'CLEAR_ITEM';
-
 export const SET_BUN = 'SET_BUN';
 
 // thunk

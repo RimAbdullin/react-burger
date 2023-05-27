@@ -10,7 +10,7 @@ import Modal from '../../modal/Modal';
 import { useModal } from '../../../hooks/useModal';
 import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/ingredients';
+import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/modal';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 
