@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
@@ -18,94 +18,29 @@ function BurgerIngredients() {
     elem.scrollIntoView();
   };
 
-  const scrollRef = useRef();
-
   // Устанавливаем наблюдатель за булками.
-  const observerBun = useRef();
   const bunRef = useRef();
-
-  useEffect(() => {
-    if (itemsRequest) {
-      return;
-    }
-    if (observerBun.current) {
-      observerBun.current.disconnect();
-    }
-    const callback = function (entries, observer) {
-      if (entries[0].isIntersecting) {
-        if (entries[0].intersectionRect.top < 20) {
-          console.log('достигли булки');
-          setSelectedTab('id-bun');
-        }
-      }
-    };
-    const options = {
-      root: scrollRef.current,
-      rootMargin: '0px',
-      // threshold: [0.25, 0.5, 0.75, 1.0],
-      threshold: 0,
-    };
-    observerBun.current = new IntersectionObserver(callback, options);
-    observerBun.current.observe(bunRef.current);
-  }, [itemsRequest]);
-
-  // Устанавливаем наблюдатель за начинкой.
   const mainRef = useRef();
-  const observerMain = useRef();
-
-  useEffect(() => {
-    if (itemsRequest) {
-      return;
-    }
-    if (observerMain.current) {
-      observerMain.current.disconnect();
-    }
-    const callback = function (entries, observer) {
-      if (entries[0].isIntersecting && entries[0].intersectionRatio >= 1) {
-        console.log('************************');
-        console.log('достигли начинки');
-        console.log(entries[0].intersectionRatio);
-        setSelectedTab('id-main');
-      }
-    };
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      // threshold: [0.1, 0.25, 0.5, 0.6, 0.75, 0.9, 1.0],
-      threshold: 1.0,
-    };
-    observerMain.current = new IntersectionObserver(callback, options);
-    observerMain.current.observe(mainRef.current);
-  }, [itemsRequest]);
-
-  // Устанавливаем наблюдатель за соусами.
-  const observerSauce = useRef();
   const sauceRef = useRef();
 
-  useEffect(() => {
-    if (itemsRequest) {
-      return;
+  // Переключение табов в зависимости от позиции прокрутки списка.
+  const scrollList = () => {
+    const topBun = bunRef.current.getBoundingClientRect().top;
+    const topMain = mainRef.current.getBoundingClientRect().top;
+    const topSauce = sauceRef.current.getBoundingClientRect().top;
+
+    if (topBun < 350) {
+      setSelectedTab('id-bun');
     }
-    if (observerSauce.current) {
-      observerSauce.current.disconnect();
+
+    if (topSauce < 350) {
+      setSelectedTab('id-sauce');
     }
-    const callback = function (entries, observer) {
-      if (entries[0].isIntersecting) {
-        if (entries[0].intersectionRect.top < 20) {
-          console.log('достигли соусов');
-          setSelectedTab('id-sauce');
-        }
-      }
-    };
-    const options = {
-      root: scrollRef.current,
-      rootMargin: '0px',
-      // threshold: [0.25, 0.5, 0.75, 1.0],
-      threshold: 0,
-    };
-    observerSauce.current = new IntersectionObserver(callback, options);
-    observerSauce.current.observe(sauceRef.current);
-  }, [itemsRequest]);
+
+    if (topMain < 350) {
+      setSelectedTab('id-main');
+    }
+  };
 
   return itemsRequest ? (
     <section className={styles['Info-container']}>
@@ -127,8 +62,9 @@ function BurgerIngredients() {
         click={scrollToElement}
       />
       <section
-        ref={scrollRef.current}
+        // ref={scrollRef}
         className={`custom-scroll ${styles['Scroll-area']}`}
+        onScroll={scrollList}
       >
         <section>
           <div

@@ -24,7 +24,6 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     }),
   });
 
-  //************************************************************ */
   const [cards, setCards] = useState([]);
 
   useEffect(() => {

@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // инициализируем объекты с ингредиентами.
+    // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
 
