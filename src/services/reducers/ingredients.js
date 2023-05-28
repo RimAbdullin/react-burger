@@ -1,9 +1,12 @@
 import {
   GET_ITEMS_FAILED,
-  GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
+  GET_ITEMS_REQUEST,
   SET_BUN,
+  INCREASE_ITEM,
+  DECREASE_ITEM,
 } from '../actions/ingredients';
+import { v4 } from 'uuid';
 
 const initialState = {
   ingredients: [],
@@ -45,20 +48,46 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBun: {
-          id: Date.now(),
+          id: v4(),
           ...state.bun.filter((item) => item.name === action.bunName)[0],
         },
         ingredients: [
-          ...state.ingredients.map((item) => {
-            if (item.name === action.bunName) {
-              return { ...item, count: item.count + 1 };
-            } else {
-              return { ...item };
-            }
-          }),
+          ...state.ingredients.map((item) => ({
+            ...item,
+            count:
+              item.type === 'bun'
+                ? item.name === action.bunName
+                  ? 1
+                  : 0
+                : item.count,
+          })),
         ],
       };
     }
+    case INCREASE_ITEM: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients.map((item) => ({
+            ...item,
+            count: item._id === action.itemId ? item.count + 1 : item.count,
+          })),
+        ],
+      };
+    }
+
+    case DECREASE_ITEM: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients.map((item) => ({
+            ...item,
+            count: item._id === action.itemId ? item.count - 1 : item.count,
+          })),
+        ],
+      };
+    }
+
     default: {
       return state;
     }

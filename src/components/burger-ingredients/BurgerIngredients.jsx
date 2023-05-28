@@ -3,11 +3,12 @@ import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
 import { useSelector } from 'react-redux';
+import { getIngredientsSelector } from '../../services/selectors/selector';
 
 function BurgerIngredients() {
   // Получаем данные из хранилища redux.
   const { bun, main, sauce, itemsFailed, itemsRequest } = useSelector(
-    (store) => store.ingredients
+    getIngredientsSelector
   );
 
   const [selectedTab, setSelectedTab] = useState('id-bun');
@@ -52,21 +53,21 @@ function BurgerIngredients() {
     </section>
   ) : (
     <section className={`${styles.Container}`}>
-      <section
+      <div
         className={`mt-10 mb-5 text text_type_main-large text_color_primary ${styles.Title}`}
       >
         Соберите бургер
-      </section>
+      </div>
       <TabsBurgerIngredients
         selectedTab={selectedTab}
         click={scrollToElement}
       />
-      <section
+      <div
         // ref={scrollRef}
         className={`custom-scroll ${styles['Scroll-area']}`}
         onScroll={scrollList}
       >
-        <section>
+        <div>
           <div
             className={`mt-10 text text_type_main-medium text_color_primary`}
           >
@@ -75,8 +76,8 @@ function BurgerIngredients() {
             </a>
           </div>
           <ListBurgerIngredients data={bun}></ListBurgerIngredients>
-        </section>
-        <section>
+        </div>
+        <div>
           <div
             className={`mt-10 text text_type_main-medium text_color_primary`}
           >
@@ -85,8 +86,8 @@ function BurgerIngredients() {
             </a>
           </div>
           <ListBurgerIngredients data={sauce}></ListBurgerIngredients>
-        </section>
-        <section>
+        </div>
+        <div>
           <div
             className={`mt-10 text text_type_main-medium text_color_primary`}
           >
@@ -95,8 +96,8 @@ function BurgerIngredients() {
             </a>
           </div>
           <ListBurgerIngredients data={main}></ListBurgerIngredients>
-        </section>
-      </section>
+        </div>
+      </div>
     </section>
   );
 }

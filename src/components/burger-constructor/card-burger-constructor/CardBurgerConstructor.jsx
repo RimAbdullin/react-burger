@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { burgerIngredientsConstructorObject } from '../../../utils/prop-types';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
 import { useDrop, useDrag } from 'react-dnd';
+import { DECREASE_ITEM } from '../../../services/actions/ingredients';
 
 function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
   const dispatch = useDispatch();
@@ -17,6 +18,11 @@ function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
     dispatch({
       type: DELETE_ITEM_CONSTRUCTOR,
       item: { ...children },
+    });
+
+    dispatch({
+      type: DECREASE_ITEM,
+      itemId: children._id,
     });
   };
 

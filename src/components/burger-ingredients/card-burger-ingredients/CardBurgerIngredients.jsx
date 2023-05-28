@@ -13,6 +13,7 @@ import { useDrag } from 'react-dnd';
 import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/modal';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { getIngredientsSelector } from '../../../services/selectors/selector';
 
 function CardBurgerIngredients({ children }) {
   const { _id } = children;
@@ -21,7 +22,7 @@ function CardBurgerIngredients({ children }) {
 
   // Получаем данные из хранилища redux.
   // Значение счетчика выбранного ингредиента.
-  const { ingredients } = useSelector((store) => store.ingredients);
+  const { ingredients } = useSelector(getIngredientsSelector);
 
   // Изменяем количество выбранных ингредиентов.
   useEffect(() => {
@@ -31,7 +32,7 @@ function CardBurgerIngredients({ children }) {
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredients',
-    item: { _id },
+    item: children,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),

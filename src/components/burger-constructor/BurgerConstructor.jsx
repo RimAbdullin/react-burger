@@ -11,6 +11,12 @@ import { useModal } from '../../hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
 import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
+import { INCREASE_ITEM, SET_BUN } from '../../services/actions/ingredients';
+import { v4 } from 'uuid';
+import {
+  getIngredientsConstructorSelector,
+  getIngredientsSelector,
+} from '../../services/selectors/selector';
 
 function BurgerConstructor() {
   // Определяем объект состояния компонента.
@@ -24,16 +30,30 @@ function BurgerConstructor() {
   // Выбранную булку и список выбранных ингредиентов для конструктора.
   const dispatch = useDispatch();
 
-  const { ingredientsConstructor, currentBun } = useSelector(
-    (store) => store.ingredients
+  const { ingredientsConstructor } = useSelector(
+    getIngredientsConstructorSelector
   );
+
+  const { currentBun } = useSelector(getIngredientsSelector);
 
   // Добавление ингредиента в конструктор.
   const handleDrop = (item) => {
-    dispatch({
-      type: ADD_ITEM_CONSTRUCTOR,
-      item: { id: Date.now(), itemId: item._id },
-    });
+    if (item.type === 'bun') {
+      dispatch({
+        type: SET_BUN,
+        bunName: item.name,
+      });
+    } else {
+      dispatch({
+        type: ADD_ITEM_CONSTRUCTOR,
+        item: { id: v4(), ...item },
+      });
+
+      dispatch({
+        type: INCREASE_ITEM,
+        itemId: item._id,
+      });
+    }
   };
 
   // Для модального окна.
@@ -91,6 +111,8 @@ function BurgerConstructor() {
   );
 
   return (
+    // ingredientsConstructor &&
+    // currentBun && (
     <>
       <section className={`${styles['Burger-constructor']}`}>
         <>

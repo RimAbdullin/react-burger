@@ -6,13 +6,19 @@ import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import {
+  getIngredientsConstructorSelector,
+  getIngredientsSelector,
+} from '../../../services/selectors/selector';
 
 const ListBurgerConstructor = ({ onDropHandler }) => {
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
-  const { ingredientsConstructor, currentBun } = useSelector(
-    (store) => store.ingredients
+  const { ingredientsConstructor } = useSelector(
+    getIngredientsConstructorSelector
   );
+
+  const { currentBun } = useSelector(getIngredientsSelector);
 
   const [, dropTarget] = useDrop({
     accept: 'ingredients',
@@ -65,7 +71,7 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     currentBun && (
       <section>
         {/* Первый элемент булки. */}
-        <section className={`ml-4  ${styles['Card-ingredients']}`}>
+        <div className={`ml-4  ${styles['Card-ingredients']}`}>
           <ConstructorElement
             extraClass={'mb-4 ml-15'}
             type={'top'}
@@ -74,16 +80,16 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
             price={currentBun.price}
             thumbnail={currentBun.image}
           />
-        </section>
-        <section
+        </div>
+        <div
           className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
           ref={dropTarget}
         >
           {/* Список ингредиентов. */}
           {cards.map((card, i) => renderCard(card, i))}
-        </section>
+        </div>
         {/* Последний элемент булки. */}
-        <section className={`ml-4  ${styles['Card-ingredients']}`}>
+        <div className={`ml-4  ${styles['Card-ingredients']}`}>
           <ConstructorElement
             extraClass={'ml-15'}
             type={'bottom'}
@@ -92,7 +98,7 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
             price={currentBun.price}
             thumbnail={currentBun.image}
           />
-        </section>
+        </div>
       </section>
     )
   );
