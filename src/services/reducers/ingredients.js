@@ -6,7 +6,6 @@ import {
   INCREASE_ITEM,
   DECREASE_ITEM,
 } from '../actions/ingredients';
-import { v4 } from 'uuid';
 
 const initialState = {
   ingredients: [],
@@ -48,7 +47,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBun: {
-          id: v4(),
+          id: action.id,
           ...state.bun.filter((item) => item.name === action.bunName)[0],
         },
         ingredients: [

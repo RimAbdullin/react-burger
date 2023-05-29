@@ -42,6 +42,7 @@ function BurgerConstructor() {
       dispatch({
         type: SET_BUN,
         bunName: item.name,
+        id: v4(),
       });
     } else {
       dispatch({

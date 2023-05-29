@@ -1,4 +1,5 @@
 import { getIngredients } from '../../utils/burger-api';
+import { v4 } from 'uuid';
 
 export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
@@ -24,6 +25,7 @@ export function getIngredientsItems(bunName) {
         dispatch({
           type: SET_BUN,
           bunName: bunName,
+          id: v4(),
         });
         return data.data;
       })
