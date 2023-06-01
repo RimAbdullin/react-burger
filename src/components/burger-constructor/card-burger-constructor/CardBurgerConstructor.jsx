@@ -1,61 +1,113 @@
-import { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import styles from './CardBurgerConstructor.module.css';
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { burgerIngredientsObject } from '../../../utils/prop-types';
+import { burgerIngredientsConstructorObject } from '../../../utils/prop-types';
+import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
+import { useDrop, useDrag } from 'react-dnd';
+import { DECREASE_ITEM } from '../../../services/actions/ingredients';
 
-function CardBurgerConstructor({ type, children, isLocked, extraClass }) {
-  const [state, setState] = useState({
-    name: '',
-    loading: true,
+function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch({
+      type: DELETE_ITEM_CONSTRUCTOR,
+      item: { ...children },
+    });
+
+    dispatch({
+      type: DECREASE_ITEM,
+      itemId: children._id,
+    });
+  };
+
+  const { id } = children;
+
+  const ref = useRef(null);
+  const [{ handlerId }, drop] = useDrop({
+    accept: 'card',
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      const clientOffset = monitor.getClientOffset();
+
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      moveCard(dragIndex, hoverIndex);
+
+      item.index = hoverIndex;
+    },
+  });
+  const [{ isDragging }, drag] = useDrag({
+    type: 'card',
+    item: () => {
+      return { id, index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
-  useEffect(() => {
-    setState({ ...state, loading: true });
-
-    let nameDescription = '';
-    if (type === 'top') {
-      nameDescription = ' (верх)';
-    } else if (type === 'bottom') {
-      nameDescription = ' (низ)';
-    }
-
-    setState({
-      ...state,
-      loading: false,
-      name: children.name + nameDescription,
-    });
-  }, []);
-
-  const handleClose = () => {};
+  const opacity = isDragging ? 0 : 1;
+  drag(drop(ref));
 
   return (
-    !state.loading && (
-      <section className={`ml-4  ${styles['Card-ingredients']}`}>
-        {!type && <DragIcon type="primary" />}
-        <ConstructorElement
-          extraClass={'ml-10 mr-2 ' + extraClass}
-          key={children._id}
-          type={type}
-          isLocked={isLocked}
-          handleClose={handleClose}
-          text={state.name}
-          price={children.price}
-          thumbnail={children.image}
-        />
-      </section>
-    )
+    <section
+      className={`ml-4  ${styles['Card-ingredients']}`}
+      ref={ref}
+      data-handler-id={handlerId}
+    >
+      {<DragIcon type="primary" />}
+      <ConstructorElement
+        extraClass={'ml-10 mr-2 ' + extraClass}
+        key={children._id}
+        type={undefined}
+        isLocked={false}
+        handleClose={handleClose}
+        text={children.name}
+        price={children.price}
+        thumbnail={children.image}
+      />
+    </section>
   );
 }
 
 export default CardBurgerConstructor;
 
 CardBurgerConstructor.propTypes = {
-  type: PropTypes.string || undefined,
-  isLocked: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
   extraClass: PropTypes.string.isRequired,
-  children: PropTypes.shape(burgerIngredientsObject).isRequired,
+  children: PropTypes.shape(burgerIngredientsConstructorObject).isRequired,
+  moveCard: PropTypes.func.isRequired,
 };

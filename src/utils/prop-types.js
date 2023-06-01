@@ -14,3 +14,9 @@ export const burgerIngredientsObject = {
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
 };
+
+export const burgerIngredientsConstructorObject = {
+  ...burgerIngredientsObject,
+  id: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+};

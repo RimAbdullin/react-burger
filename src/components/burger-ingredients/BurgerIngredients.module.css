@@ -13,3 +13,10 @@
   height: 756px;
   overflow-y: scroll;
 }
+
+.Info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

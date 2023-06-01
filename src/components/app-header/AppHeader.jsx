@@ -10,7 +10,7 @@ function AppHeader() {
   return (
     <header>
       <nav className={`${styles['App-header']}`}>
-        <div className={`mt-4 mb-4 ${styles['Content']}`}>
+        <div className={`${styles['Content']}`}>
           <div
             className={`${styles['Constructor-container']} ${styles['Flex-container']}`}
           >
@@ -33,7 +33,7 @@ function AppHeader() {
               Лента заказов
             </a>
           </div>
-          <div className={`mt-2 mb-2 ${styles.Logo}`}>
+          <div className={`${styles.Logo}`}>
             <Logo />
           </div>
           <div

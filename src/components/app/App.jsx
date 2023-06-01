@@ -1,61 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { getIngredients } from '../../utils/burger-api';
-import { IngredientsContext } from '../../services/appContext';
+import { useDispatch } from 'react-redux';
+import { getIngredientsItems } from '../../services/actions/ingredients';
+
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-  const [state, setState] = useState({
-    error: false,
-    loading: true,
-    ingredients: null,
-    bunName: 'Краторная булка N-200i',
-  });
+  const dispatch = useDispatch();
 
-  // Получаем список ингредиентов.
   useEffect(() => {
-    const getIngredientsData = async () => {
-      setState({ ...state, loading: true });
-      try {
-        const data = await getIngredients();
-
-        setState({
-          ...state,
-          ingredients: data.data,
-          loading: false,
-        });
-      } catch (err) {
-        setState({ ...state, error: true });
-      }
-    };
-    getIngredientsData();
-  }, []);
+    // Инициализируем объекты с ингредиентами.
+    dispatch(getIngredientsItems('Краторная булка N-200i'));
+  }, [dispatch]);
 
   return (
     <section className={styles.Page}>
       <AppHeader />
       <main>
-        {state.error ? (
-          <section className={styles['Error-container']}>
-            <h1>Данные не найдены.</h1>
-          </section>
-        ) : (
-          !state.loading && (
-            <section className={styles[`Main-container`]}>
-              <IngredientsContext.Provider
-                value={{
-                  ingredients: state.ingredients,
-                  bunName: state.bunName,
-                }}
-              >
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </IngredientsContext.Provider>
-            </section>
-          )
-        )}
+        <section className={styles[`Main-container`]}>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        </section>
       </main>
     </section>
   );
