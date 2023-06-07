@@ -6,8 +6,11 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import { useDispatch } from 'react-redux';
 import { getIngredientsItems } from '../../services/actions/ingredients';
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { LoginPage } from '../../pages/login';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +22,11 @@ function App() {
 
   return (
     <section className={styles.Page}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
       <AppHeader />
       <main>
         <section className={styles[`Main-container`]}>
