@@ -5,6 +5,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './App-header.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 function AppHeader() {
   return (
@@ -40,12 +41,19 @@ function AppHeader() {
             className={`${styles['Profile-container']} ${styles['Flex-container']}`}
           >
             <ProfileIcon />
-            <a
+            <Link
+              to={'/login'}
+              className={`pl-2 text text_type_main-default text_color_inactive`}
+            >
+              Личный кабинет
+            </Link>
+
+            {/* <a
               className={`pl-2 text text_type_main-default text_color_inactive`}
               href="#"
             >
               Личный кабинет
-            </a>
+            </a> */}
           </div>
         </div>
       </nav>

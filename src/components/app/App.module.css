@@ -2,11 +2,7 @@
   margin-left: 40px;
   margin-top: 40px;
   max-width: 1280px;
-}
-
-.Main-container {
-  display: flex;
-  flex-direction: row;
-
-  gap: 40px;
+  max-height: 1040px;
+  width: 1280px;
+  height: 1040px;
 }
