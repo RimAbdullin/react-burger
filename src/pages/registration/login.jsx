@@ -1,39 +1,46 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './login.module.css';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { useAuth } from '../services/auth';
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { login } from '../../services/actions/login';
+import { getLoginSelector } from '../../services/selectors/selector';
 
 export function LoginPage() {
-  // let auth = useAuth();
-
   const [form, setValue] = useState({ email: '', password: '' });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  // let login = useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     // auth.signIn(form);
-  //   },
-  //   [auth, form]
-  // );
+  const navigate = useNavigate();
+  // const { success } = useSelector(getLoginSelector);
 
-  // if (auth.user) {
-  //   return <Navigate to={'/'} />;
-  // }
+  const dispatch = useDispatch();
+
+  const handleLogin = useCallback(
+    (e) => {
+      e.preventDefault();
+      // dispatch(login(form));
+    },
+    [dispatch, form]
+  );
+
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate('/login');
+  //   }
+  // }, [success]);
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <form className={styles.form}>
         <div className={`mb-6 ${styles['title-container']}`}>
           <span className={`text_type_main-medium`}>Вход</span>
@@ -54,7 +61,12 @@ export function LoginPage() {
         />
         <div className={`mb-20 ${styles['actions']}`}>
           <div className={`${styles['button-container']}`}>
-            <Button htmlType="button" type="primary" size="medium">
+            <Button
+              htmlType="button"
+              type="primary"
+              size="medium"
+              onClick={handleLogin}
+            >
               Войти
             </Button>
           </div>
@@ -82,6 +94,6 @@ export function LoginPage() {
           </Link>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

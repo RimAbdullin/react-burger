@@ -8,13 +8,12 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   Button,
   Input,
-  PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPasswordPage() {
   // let auth = useAuth();
 
-  const [form, setValue] = useState({ email: '', password: '' });
+  const [form, setValue] = useState({ email: '' });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -38,7 +37,7 @@ export function ForgotPasswordPage() {
     console.log(e.target);
     // e.preventDefault();
     console.log('123');
-    navigate('/forgot-password-reset');
+    navigate('/reset-password');
   };
 
   return (

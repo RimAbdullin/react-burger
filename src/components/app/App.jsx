@@ -9,7 +9,8 @@ import {
   LoginPage,
   RegistrationPage,
   ForgotPasswordPage,
-  ForgotPasswordResetPage,
+  ResetPasswordPage,
+  NotFoundPage,
 } from '../../pages/';
 
 function App() {
@@ -29,10 +30,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route
-            path="/forgot-password-reset"
-            element={<ForgotPasswordResetPage />}
-          />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </section>

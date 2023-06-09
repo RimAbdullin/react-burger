@@ -7,7 +7,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 export const HomePage = () => {
   return (
     <main>
-      <section className={styles[`Main-container`]}>
+      <section className={styles.container}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />

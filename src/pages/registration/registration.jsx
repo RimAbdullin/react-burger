@@ -1,36 +1,42 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './registration.module.css';
-import { Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Link, useLocation } from 'react-router-dom';
-
-// import { useAuth } from '../services/auth';
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useAuth } from '../../hooks/useAuth';
 
 export function RegistrationPage() {
-  // let auth = useAuth();
+  const auth = useAuth();
 
-  const [form, setValue] = useState({ userName: '', email: '', password: '' });
+  const [form, setValue] = useState({ name: '', email: '', password: '' });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  // let login = useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     // auth.signIn(form);
-  //   },
-  //   [auth, form]
-  // );
+  const navigate = useNavigate();
+  // const { success } = useSelector(getRegistrationSelector);
 
-  // if (auth.user) {
-  //   return <Navigate to={'/'} />;
-  // }
+  // const dispatch = useDispatch();
+
+  const handleRegistration = useCallback(
+    (e) => {
+      e.preventDefault();
+      auth.registration(form);
+      // dispatch(registration(form));
+    },
+    [auth, form]
+  );
+
+  useEffect(() => {
+    if (auth.isRegistered) {
+      navigate('/login');
+    }
+  }, [auth.isRegistered]);
 
   return (
     <section className={styles.container}>
@@ -41,8 +47,8 @@ export function RegistrationPage() {
           </div>
           <Input
             placeholder="Имя"
-            value={form.userName}
-            name="userName"
+            value={form.name}
+            name="name"
             onChange={onChange}
             extraClass="mb-6"
           />
@@ -62,7 +68,12 @@ export function RegistrationPage() {
           />
           <div className={`mb-20 ${styles['actions']}`}>
             <div className={`${styles['button-container']}`}>
-              <Button htmlType="button" type="primary" size="medium">
+              <Button
+                htmlType="button"
+                type="primary"
+                size="medium"
+                onClick={handleRegistration}
+              >
                 Зарегистрироваться
               </Button>
             </div>

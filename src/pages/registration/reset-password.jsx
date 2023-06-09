@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import styles from './forgot-password-reset.module.css';
+import styles from './reset-password.module.css';
 import { Navigate } from 'react-router-dom';
 
 import { Link, useLocation } from 'react-router-dom';
@@ -11,10 +11,10 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function ForgotPasswordResetPage() {
+export function ResetPasswordPage() {
   // let auth = useAuth();
 
-  const [form, setValue] = useState({ email: '', password: '' });
+  const [form, setValue] = useState({ password: '', code: '' });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -49,7 +49,7 @@ export function ForgotPasswordResetPage() {
 
         <Input
           placeholder="Введите код из письма"
-          value={form.password}
+          value={form.code}
           name="password"
           onChange={onChange}
           extraClass="mb-6"

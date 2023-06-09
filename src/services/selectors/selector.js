@@ -6,3 +6,5 @@ export const getIngredientsConstructorSelector = (store) =>
 export const getOrderSelector = (store) => store.order;
 
 export const getModalSelector = (store) => store.modal;
+
+export const getAuthSelector = (store) => store.login;
