@@ -51,6 +51,20 @@ export function userLogin(data) {
 }
 
 /**
+ * Обновление токена.
+ * @returns Promise<data>
+ */
+export function refreshToken(refreshToken) {
+  return fetch(`${NORMA_API}/auth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(refreshToken),
+  }).then(checkResponse);
+}
+
+/**
  * Проверка response.
  * @param {*} res - response.
  * @returns Promise<json> || Promise<err>

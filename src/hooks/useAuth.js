@@ -1,44 +1,62 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registrationUser } from '../services/actions/auth';
 import { getAuthSelector } from '../services/selectors/selector';
+import { loginUser, refreshTokenThunk } from '../services/actions/auth';
+import { SET_AUTH_STATUS } from '../services/actions/auth';
 
 export const useAuth = () => {
-  const { user, accessToken, refreshToken, isRegistered, isAuth } =
+  const { user, accessToken, refreshToken, isAuth } =
     useSelector(getAuthSelector);
 
   const dispatch = useDispatch();
 
-  const [state, setState] = useState({
-    user: { name: '', email: '' },
-    accessToken: null,
-    refreshToken: null,
-    isRegistered: false,
-    isAuth: false,
-  });
-
-  const registration = useCallback(
+  const login = useCallback(
     (form) => {
-      console.log('=== hook registration');
-      setState(true);
-      dispatch(registrationUser(form));
+      dispatch(loginUser(form));
     },
     [dispatch]
   );
 
-  const login = useCallback(() => {
-    setState(true);
-  }, []);
+  const refresh = useCallback(
+    // a1@a.ru.
+    (token) => {
+      dispatch(refreshTokenThunk(token));
+    },
+    [dispatch]
+  );
+
+  const checkAuth = useCallback(() => {
+    if (!isAuth) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        refresh(token);
+      }
+    }
+    // dispatch(loginUser(form));
+  }, [dispatch]);
 
   const logout = useCallback(() => {
-    setState(true);
+    dispatch({
+      type: SET_AUTH_STATUS,
+      value: false,
+      accessToken: null,
+    });
+    localStorage.removeItem('token');
   }, []);
 
+  useEffect(() => {
+    if (isAuth && refreshToken) {
+      localStorage.setItem('token', refreshToken);
+    }
+  }, [isAuth]);
+
   return {
-    isRegistered,
     isAuth,
-    registration,
     login,
     logout,
+    user,
+    accessToken,
+    refreshToken,
+    checkAuth,
   };
 };

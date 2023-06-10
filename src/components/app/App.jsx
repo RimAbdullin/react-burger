@@ -12,14 +12,24 @@ import {
   ResetPasswordPage,
   NotFoundPage,
 } from '../../pages/';
+import { ProfilePage } from '../../pages/profile';
+import { useAuth } from '../../hooks/useAuth';
 
 function App() {
+  const auth = useAuth();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      auth.checkAuth();
+    }
+  }, []);
 
   return (
     <section className={styles.Page}>
@@ -31,6 +41,7 @@ function App() {
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

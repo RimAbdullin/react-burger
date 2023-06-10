@@ -7,10 +7,10 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useAuth } from '../../hooks/useAuth';
+import { useRegistration } from '../../hooks/useRegistration';
 
 export function RegistrationPage() {
-  const auth = useAuth();
+  const registration = useRegistration();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
@@ -19,24 +19,20 @@ export function RegistrationPage() {
   };
 
   const navigate = useNavigate();
-  // const { success } = useSelector(getRegistrationSelector);
-
-  // const dispatch = useDispatch();
 
   const handleRegistration = useCallback(
     (e) => {
       e.preventDefault();
-      auth.registration(form);
-      // dispatch(registration(form));
+      registration.registration(form);
     },
-    [auth, form]
+    [form]
   );
 
   useEffect(() => {
-    if (auth.isRegistered) {
+    if (registration.isSuccess) {
       navigate('/login');
     }
-  }, [auth.isRegistered]);
+  }, [registration.isSuccess]);
 
   return (
     <section className={styles.container}>

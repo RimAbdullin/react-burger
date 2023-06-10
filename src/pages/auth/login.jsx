@@ -2,18 +2,18 @@ import { useCallback, useEffect, useState } from 'react';
 import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
 
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { login } from '../../services/actions/login';
-import { getLoginSelector } from '../../services/selectors/selector';
 
 export function LoginPage() {
+  const auth = useAuth();
+
   const [form, setValue] = useState({ email: '', password: '' });
 
   const onChange = (e) => {
@@ -21,23 +21,23 @@ export function LoginPage() {
   };
 
   const navigate = useNavigate();
-  // const { success } = useSelector(getLoginSelector);
-
-  const dispatch = useDispatch();
 
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      // dispatch(login(form));
+      auth.login(form);
     },
-    [dispatch, form]
+    [auth, form]
   );
 
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate('/login');
-  //   }
-  // }, [success]);
+  useEffect(() => {
+    if (auth.isAuth) {
+      console.log('=== auth.user', auth.user);
+      console.log('=== auth.accessToken', auth.accessToken);
+      console.log('=== auth.refreshToken', auth.refreshToken);
+      navigate('/');
+    }
+  }, [auth.isAuth]);
 
   return (
     <section className={styles.container}>

@@ -3,8 +3,8 @@ import { ingredientsReducer } from './ingredients';
 import { orderReducer } from './order';
 import { modalReducer } from './modal';
 import { ingredientsConstructorReducer } from './ingredientsConstructor';
-import { registrationReducer } from './auth';
-import { loginReducer } from './login';
+import { authReducer } from './auth';
+import { registrationReducer } from './registration';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -12,5 +12,5 @@ export const rootReducer = combineReducers({
   order: orderReducer,
   modal: modalReducer,
   registration: registrationReducer,
-  login: loginReducer,
+  auth: authReducer,
 });

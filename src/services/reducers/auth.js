@@ -1,44 +1,79 @@
 import {
-  POST_REGISTRATION_FAILED,
-  POST_REGISTRATION_SUCCESS,
-  POST_REGISTRATION_REQUEST,
+  POST_LOGIN_FAILED,
+  POST_LOGIN_SUCCESS,
+  POST_LOGIN_REQUEST,
+  SET_AUTH_STATUS,
+  POST_REFRESH_TOKEN_FAILED,
+  POST_REFRESH_TOKEN_SUCCESS,
+  POST_REFRESH_TOKEN_REQUEST,
 } from '../actions/auth';
 
 const initialState = {
-  name: null,
-  email: null,
+  user: { name: null, email: null },
   accessToken: null,
   refreshToken: null,
-  success: false,
-  registrationRequest: true,
-  registrationFailed: false,
+  loginRequest: true,
+  loginFailed: false,
+  isAuth: false,
+  tokenRequest: true,
+  tokenFailed: false,
 };
 
-export const registrationReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POST_REGISTRATION_REQUEST: {
+    case POST_LOGIN_REQUEST: {
       return {
         ...state,
-        registrationRequest: true,
-        registrationFailed: false,
+        loginRequest: true,
+        loginFailed: false,
       };
     }
-    case POST_REGISTRATION_SUCCESS: {
-      console.log('=== action', action);
+    case POST_LOGIN_SUCCESS: {
       return {
         ...state,
-        registrationRequest: false,
-        registrationFailed: false,
-        success: action.data.success,
-        name: action.data.user.name,
-        email: action.data.user.email,
+        loginRequest: false,
+        loginFailed: false,
+        isAuth: action.data.success,
+        user: {
+          ...action.data.user,
+          name: action.data.user.name,
+          email: action.data.user.email,
+        },
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
       };
     }
-    case POST_REGISTRATION_FAILED: {
-      return { ...state, registrationFailed: true, registrationRequest: false };
+    case POST_LOGIN_FAILED: {
+      return { ...state, loginFailed: true, loginRequest: false };
     }
+    case SET_AUTH_STATUS: {
+      return {
+        ...state,
+        isAuth: action.value,
+      };
+    }
+
+    case POST_REFRESH_TOKEN_REQUEST: {
+      return {
+        ...state,
+        tokenRequest: true,
+        tokenFailed: false,
+      };
+    }
+    case POST_REFRESH_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        tokenRequest: false,
+        tokenFailed: false,
+        isAuth: action.data.success,
+        accessToken: action.data.accessToken,
+        refreshToken: action.data.refreshToken,
+      };
+    }
+    case POST_REFRESH_TOKEN_FAILED: {
+      return { ...state, tokenFailed: true, tokenRequest: false };
+    }
+
     default: {
       return state;
     }

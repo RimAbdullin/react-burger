@@ -7,4 +7,6 @@ export const getOrderSelector = (store) => store.order;
 
 export const getModalSelector = (store) => store.modal;
 
-export const getAuthSelector = (store) => store.login;
+export const getRegistrationSelector = (store) => store.registration;
+
+export const getAuthSelector = (store) => store.auth;

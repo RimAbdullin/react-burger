@@ -5,9 +5,13 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './App-header.module.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthSelector } from '../../services/selectors/selector';
 
 function AppHeader() {
+  const { isAuth } = useSelector(getAuthSelector);
+
   return (
     <header>
       <nav className={`${styles['App-header']}`}>
@@ -42,7 +46,7 @@ function AppHeader() {
           >
             <ProfileIcon />
             <Link
-              to={'/login'}
+              to={isAuth ? '/profile' : '/login'}
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
               Личный кабинет
