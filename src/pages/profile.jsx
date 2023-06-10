@@ -33,6 +33,10 @@ export function ProfilePage() {
     }
   }, [auth.isAuth]);
 
+  useEffect(() => {
+    auth.getUser();
+  }, []);
+
   const handleSave = () => {};
 
   const handleCancel = () => {};

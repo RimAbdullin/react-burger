@@ -1,62 +1,45 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthSelector } from '../services/selectors/selector';
-import { loginUser, refreshTokenThunk } from '../services/actions/auth';
-import { SET_AUTH_STATUS } from '../services/actions/auth';
+import {
+  loginThunk,
+  logoutThunk,
+  refreshThunk,
+  getUserThunk,
+} from '../services/actions/auth';
 
 export const useAuth = () => {
-  const { user, accessToken, refreshToken, isAuth } =
-    useSelector(getAuthSelector);
+  const { user, isAuth } = useSelector(getAuthSelector);
 
   const dispatch = useDispatch();
 
   const login = useCallback(
     (form) => {
-      dispatch(loginUser(form));
+      dispatch(loginThunk(form));
     },
     [dispatch]
   );
 
-  const refresh = useCallback(
-    // a1@a.ru.
-    (token) => {
-      dispatch(refreshTokenThunk(token));
-    },
-    [dispatch]
-  );
-
-  const checkAuth = useCallback(() => {
-    if (!isAuth) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        refresh(token);
-      }
-    }
-    // dispatch(loginUser(form));
+  const refresh = useCallback(() => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    dispatch(refreshThunk(refreshToken));
   }, [dispatch]);
 
   const logout = useCallback(() => {
-    dispatch({
-      type: SET_AUTH_STATUS,
-      value: false,
-      accessToken: null,
-    });
-    localStorage.removeItem('token');
+    dispatch(logoutThunk(localStorage.getItem('refreshToken')));
   }, []);
 
-  useEffect(() => {
-    if (isAuth && refreshToken) {
-      localStorage.setItem('token', refreshToken);
-    }
-  }, [isAuth]);
+  const getUser = useCallback(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    dispatch(getUserThunk(accessToken));
+  }, [dispatch]);
 
   return {
     isAuth,
     login,
+    refresh,
     logout,
     user,
-    accessToken,
-    refreshToken,
-    checkAuth,
+    getUser,
   };
 };

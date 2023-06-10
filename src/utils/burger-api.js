@@ -26,7 +26,7 @@ export function getOrder(data) {
  * Регистрация пользователя в системе.
  * @returns Promise<data>
  */
-export function userRegistration(data) {
+export function registration(data) {
   return fetch(`${NORMA_API}/auth/register`, {
     method: 'POST',
     headers: {
@@ -40,7 +40,7 @@ export function userRegistration(data) {
  * Авторизация пользователя в системе.
  * @returns Promise<data>
  */
-export function userLogin(data) {
+export function login(data) {
   return fetch(`${NORMA_API}/auth/login`, {
     method: 'POST',
     headers: {
@@ -54,13 +54,44 @@ export function userLogin(data) {
  * Обновление токена.
  * @returns Promise<data>
  */
-export function refreshToken(refreshToken) {
+export function refresh(refreshToken) {
+  const body = { token: refreshToken };
   return fetch(`${NORMA_API}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(refreshToken),
+    body: JSON.stringify(body),
+  }).then(checkResponse);
+}
+
+/**
+ * Выход пользователя из системы.
+ * @returns Promise<data>
+ */
+export function logout(refreshToken) {
+  const body = { token: refreshToken };
+  console.log(body);
+  return fetch(`${NORMA_API}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  }).then(checkResponse);
+}
+
+/**
+ * Получить пользователя в системе.
+ * @returns Promise<data>
+ */
+export function getUser(accessToken) {
+  return fetch(`${NORMA_API}/auth/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: 'application/json',
+    },
   }).then(checkResponse);
 }
 

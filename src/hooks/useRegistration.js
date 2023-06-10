@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registrationUser } from '../services/actions/registration';
+import { registrationThunk } from '../services/actions/registration';
 import { getRegistrationSelector } from '../services/selectors/selector';
 
 export const useRegistration = () => {
@@ -13,7 +13,7 @@ export const useRegistration = () => {
   const registration = useCallback(
     (form) => {
       console.log('=== hook registration');
-      dispatch(registrationUser(form));
+      dispatch(registrationThunk(form));
     },
     [dispatch]
   );
