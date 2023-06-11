@@ -9,4 +9,10 @@ export const getModalSelector = (store) => store.modal;
 
 export const getRegistrationSelector = (store) => store.registration;
 
-export const getAuthSelector = (store) => store.auth;
+export const getLoginSelector = (store) => store.login;
+
+export const getRefreshSelector = (store) => store.refresh;
+
+export const getLogoutSelector = (store) => store.logout;
+
+export const userSelector = (store) => store.user;

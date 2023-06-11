@@ -27,21 +27,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (auth.user) {
-      console.log(auth.user);
-    }
-  }, [auth.user]);
-
-  useEffect(() => {
     // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     auth.checkAuth();
-  //   }
-  // }, []);
 
   return (
     <section className={styles.Page}>

@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import styles from './reset-password.module.css';
-import { Navigate } from 'react-router-dom';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 // import { useAuth } from '../services/auth';
 import {
@@ -12,7 +12,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ResetPasswordPage() {
-  // let auth = useAuth();
+  let auth = useAuth();
 
   const [form, setValue] = useState({ password: '', code: '' });
 
@@ -20,17 +20,13 @@ export function ResetPasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  // let login = useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     // auth.signIn(form);
-  //   },
-  //   [auth, form]
-  // );
+  const navigate = useNavigate();
 
-  // if (auth.user) {
-  //   return <Navigate to={'/'} />;
-  // }
+  const handlePasswordReset = (e) => {
+    e.preventDefault();
+    auth.passwordReset({ password: form.password, token: form.code });
+    navigate('/');
+  };
 
   return (
     <div className={styles.container}>
@@ -57,7 +53,12 @@ export function ResetPasswordPage() {
 
         <div className={`mb-20 ${styles['actions']}`}>
           <div className={`${styles['button-container']}`}>
-            <Button htmlType="button" type="primary" size="medium">
+            <Button
+              htmlType="button"
+              type="primary"
+              size="medium"
+              onClick={handlePasswordReset}
+            >
               Сохранить
             </Button>
           </div>

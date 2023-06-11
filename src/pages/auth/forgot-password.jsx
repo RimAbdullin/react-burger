@@ -1,8 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import styles from './forgot-password.module.css';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 // import { useAuth } from '../services/auth';
 import {
@@ -11,7 +12,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPasswordPage() {
-  // let auth = useAuth();
+  let auth = useAuth();
 
   const [form, setValue] = useState({ email: '' });
 
@@ -19,24 +20,11 @@ export function ForgotPasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  // let login = useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     // auth.signIn(form);
-  //   },
-  //   [auth, form]
-  // );
-
-  // if (auth.user) {
-  //   return <Navigate to={'/'} />;
-  // }
-
   const navigate = useNavigate();
 
   const handleClickRestore = (e) => {
-    console.log(e.target);
-    // e.preventDefault();
-    console.log('123');
+    e.preventDefault();
+    auth.forgotPassword(form);
     navigate('/reset-password');
   };
 

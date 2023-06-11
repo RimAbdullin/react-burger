@@ -32,9 +32,6 @@ export function LoginPage() {
 
   useEffect(() => {
     if (auth.isAuth) {
-      console.log('=== auth.user', auth.user);
-      console.log('=== auth.accessToken', auth.accessToken);
-      console.log('=== auth.refreshToken', auth.refreshToken);
       navigate('/');
     }
   }, [auth.isAuth]);

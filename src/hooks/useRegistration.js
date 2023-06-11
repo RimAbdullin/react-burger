@@ -12,7 +12,6 @@ export const useRegistration = () => {
 
   const registration = useCallback(
     (form) => {
-      console.log('=== hook registration');
       dispatch(registrationThunk(form));
     },
     [dispatch]

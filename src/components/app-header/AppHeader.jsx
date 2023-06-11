@@ -7,10 +7,10 @@ import {
 import styles from './App-header.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthSelector } from '../../services/selectors/selector';
+import { useAuth } from '../../hooks/useAuth';
 
 function AppHeader() {
-  const { isAuth } = useSelector(getAuthSelector);
+  const auth = useAuth();
 
   return (
     <header>
@@ -46,7 +46,7 @@ function AppHeader() {
           >
             <ProfileIcon />
             <Link
-              to={isAuth ? '/profile' : '/login'}
+              to={auth.isAuth ? '/profile' : '/login'}
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
               Личный кабинет

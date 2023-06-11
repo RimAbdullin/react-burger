@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './profile.module.css';
 import { useNavigate, NavLink } from 'react-router-dom';
 
@@ -14,8 +14,16 @@ export function ProfilePage() {
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
+  const [isChanged, setIsChanged] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    auth.getUser();
+  }, []);
+
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
+    setIsChanged(true);
   };
 
   const navigate = useNavigate();
@@ -23,23 +31,38 @@ export function ProfilePage() {
   const handleLogout = () => {
     if (auth.isAuth) {
       auth.logout();
-      navigate('/');
     }
   };
 
   useEffect(() => {
-    if (!auth.isAuth) {
+    if (!auth.isAuth && loading) {
       navigate('/');
     }
+    setLoading(true);
   }, [auth.isAuth]);
 
   useEffect(() => {
-    auth.getUser();
-  }, []);
+    if (auth.user) {
+      setValue({
+        ...form,
+        name: auth.user.name,
+        email: auth.user.email,
+      });
+    }
+  }, [auth.user]);
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    auth.updateUser(form);
+  };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    setValue({
+      ...form,
+      name: auth.user.name,
+      email: auth.user.email,
+      password: '',
+    });
+  };
 
   return (
     <section className={styles.container}>
@@ -72,50 +95,62 @@ export function ProfilePage() {
       </div>
       <div className={`ml-15 ${styles.content}`}>
         <form className={styles.form}>
-          <Input
-            placeholder="Имя"
-            value={form.name}
-            name="name"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <Input
-            placeholder="Логин"
-            value={form.email}
-            name="email"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <PasswordInput
-            placeholder="Пароль"
-            value={form.password}
-            name="password"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <div className={`${styles['actions']}`}>
-            <div className={`${styles['button-container']}`}>
-              <Button
-                htmlType="button"
-                type="primary"
-                size="medium"
-                onClick={handleCancel}
-              >
-                Отмена
-              </Button>
+          {form && auth.user && (
+            <div>
+              <Input
+                placeholder="Имя"
+                value={form.name}
+                name="name"
+                type="text"
+                onChange={onChange}
+                extraClass="mb-6"
+                icon="EditIcon"
+              />
+              <Input
+                placeholder="Логин"
+                value={form.email}
+                name="email"
+                type="email"
+                onChange={onChange}
+                extraClass="mb-6"
+                icon="EditIcon"
+              />
+              <PasswordInput
+                placeholder="Пароль"
+                value={form.password}
+                name="password"
+                type="password"
+                onChange={onChange}
+                extraClass="mb-6"
+                icon="EditIcon"
+              />
             </div>
+          )}
+          {isChanged && (
+            <div className={`${styles['actions']}`}>
+              <div className={`${styles['button-container']}`}>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="medium"
+                  onClick={handleCancel}
+                >
+                  Отмена
+                </Button>
+              </div>
 
-            <div className={`${styles['button-container']}`}>
-              <Button
-                htmlType="button"
-                type="primary"
-                size="medium"
-                onClick={handleSave}
-              >
-                Сохранить
-              </Button>
+              <div className={`${styles['button-container']}`}>
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  size="medium"
+                  onClick={handleSave}
+                >
+                  Сохранить
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </form>
       </div>
     </section>
