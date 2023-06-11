@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { LOGIN_RESET, loginThunk } from '../services/actions/login';
@@ -20,10 +20,12 @@ import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
 
 export const useAuth = () => {
-  const { user, isAuth } = useSelector(userSelector);
+  const { getUserFailed, user, isAuth } = useSelector(userSelector);
   const { successLogin } = useSelector(getLoginSelector);
   const { successRefresh } = useSelector(getRefreshSelector);
   const { successLogout } = useSelector(getLogoutSelector);
+
+  const [isRetry, setIsRetry] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -113,6 +115,18 @@ export const useAuth = () => {
     const token = localStorage.getItem('token');
     dispatch(getUserThunk(token));
   }, [dispatch]);
+
+  // Если получение данных пользователя не произошло, обновляем токены.
+  useEffect(() => {
+    setIsRetry(false);
+    if (getUserFailed && !isRetry) {
+      refresh();
+      if (successRefresh) {
+        getUser();
+      }
+      setIsRetry(true);
+    }
+  }, [getUserFailed, successRefresh]);
 
   // Обновление данных пользователя.
   const updateUser = useCallback(

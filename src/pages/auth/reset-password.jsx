@@ -46,7 +46,7 @@ export function ResetPasswordPage() {
         <Input
           placeholder="Введите код из письма"
           value={form.code}
-          name="password"
+          name="code"
           onChange={onChange}
           extraClass="mb-6"
         />

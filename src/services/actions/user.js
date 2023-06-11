@@ -27,6 +27,8 @@ export function getUserThunk(token) {
         return data;
       })
       .catch((err) => {
+        console.log('=== err', err);
+        // {"success":false,"message":"jwt expired"}
         dispatch({
           type: GET_USER_FAILED,
         });
