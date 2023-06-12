@@ -4,8 +4,6 @@ export const POST_FORGOT_PASSWORD_FAILED = 'POST_FORGOT_PASSWORD_FAILED';
 export const POST_FORGOT_PASSWORD_SUCCESS = 'POST_FORGOT_PASSWORD_SUCCESS';
 export const POST_FORGOT_PASSWORD_REQUEST = 'POST_FORGOT_PASSWORD_REQUEST';
 
-export const FORGOT_PASSWORD_RESET = 'FORGOT_PASSWORD_RESET';
-
 // thunk
 export function forgotPasswordThunk(form) {
   return function (dispatch) {
@@ -14,6 +12,14 @@ export function forgotPasswordThunk(form) {
     });
     forgotPassword(form)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: POST_FORGOT_PASSWORD_FAILED,
+          });
+          return;
+        }
+
         dispatch({
           type: POST_FORGOT_PASSWORD_SUCCESS,
           data: data,

@@ -2,13 +2,11 @@ import {
   POST_PASSWORD_RESET_FAILED,
   POST_PASSWORD_RESET_SUCCESS,
   POST_PASSWORD_RESET_REQUEST,
-  PASSWORD_RESET_RESET,
 } from '../actions/password-reset';
 
 const initialState = {
   passwordResetRequest: true,
   passwordResetFailed: false,
-  successPasswordReset: false,
 };
 
 export const passwordResetReducer = (state = initialState, action) => {
@@ -16,7 +14,6 @@ export const passwordResetReducer = (state = initialState, action) => {
     case POST_PASSWORD_RESET_REQUEST: {
       return {
         ...state,
-        successPasswordReset: false,
         passwordResetRequest: true,
         passwordResetFailed: false,
       };
@@ -26,7 +23,6 @@ export const passwordResetReducer = (state = initialState, action) => {
         ...state,
         passwordResetRequest: false,
         passwordResetFailed: false,
-        successPasswordReset: action.data.success,
       };
     }
     case POST_PASSWORD_RESET_FAILED: {
@@ -34,13 +30,6 @@ export const passwordResetReducer = (state = initialState, action) => {
         ...state,
         passwordResetFailed: true,
         passwordResetRequest: false,
-        successPasswordReset: false,
-      };
-    }
-    case PASSWORD_RESET_RESET: {
-      return {
-        ...state,
-        successPasswordReset: false,
       };
     }
     default: {

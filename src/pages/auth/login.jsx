@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import styles from './login.module.css';
-import { useNavigate } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 import {
@@ -20,8 +19,6 @@ export function LoginPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const navigate = useNavigate();
-
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
@@ -30,11 +27,19 @@ export function LoginPage() {
     [auth, form]
   );
 
-  useEffect(() => {
-    if (auth.isAuth) {
-      navigate('/');
-    }
-  }, [auth.isAuth]);
+  // Если еще выполняется запрос на авторизацию, то не ничего не выполняем.
+  // if (auth.isLoadingLogin) {
+  //   return null;
+  // } else {
+  //   console.log(auth.isAuth);
+  // }
+
+  const navigate = useNavigate();
+
+  // Если пользователь авторизован успешно, то переходим на главную страницу.
+  if (auth.isAuth) {
+    navigate('/');
+  }
 
   return (
     <section className={styles.container}>

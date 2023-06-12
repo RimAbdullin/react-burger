@@ -2,13 +2,11 @@ import {
   POST_REFRESH_TOKEN_FAILED,
   POST_REFRESH_TOKEN_SUCCESS,
   POST_REFRESH_TOKEN_REQUEST,
-  REFRESH_RESET,
 } from '../actions/refresh';
 
 const initialState = {
-  tokenRequest: true,
-  tokenFailed: false,
-  successRefresh: false,
+  refreshTokenRequest: true,
+  refreshTokenFailed: false,
 };
 
 export const refreshReducer = (state = initialState, action) => {
@@ -16,31 +14,22 @@ export const refreshReducer = (state = initialState, action) => {
     case POST_REFRESH_TOKEN_REQUEST: {
       return {
         ...state,
-        successRefresh: false,
-        tokenRequest: true,
-        tokenFailed: false,
+        refreshTokenRequest: true,
+        refreshTokenFailed: false,
       };
     }
     case POST_REFRESH_TOKEN_SUCCESS: {
       return {
         ...state,
-        successRefresh: action.data.success,
-        tokenRequest: false,
-        tokenFailed: false,
+        refreshTokenRequest: false,
+        refreshTokenFailed: false,
       };
     }
     case POST_REFRESH_TOKEN_FAILED: {
       return {
         ...state,
-        tokenFailed: true,
-        tokenRequest: false,
-        successRefresh: false,
-      };
-    }
-    case REFRESH_RESET: {
-      return {
-        ...state,
-        successRefresh: false,
+        refreshTokenRequest: false,
+        refreshTokenFailed: true,
       };
     }
     default: {

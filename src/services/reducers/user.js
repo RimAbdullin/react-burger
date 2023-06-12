@@ -5,13 +5,10 @@ import {
   UPDATE_USER_FAILED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_REQUEST,
-  SET_AUTH,
-  SET_USER,
 } from '../actions/user';
 
 const initialState = {
   user: { name: '', email: '' },
-  isAuth: false,
   getUserRequest: true,
   getUserFailed: false,
   updateUserRequest: true,
@@ -20,20 +17,6 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTH: {
-      return {
-        ...state,
-        isAuth: action.value,
-      };
-    }
-
-    case SET_USER: {
-      return {
-        ...state,
-        user: { ...action.user },
-      };
-    }
-
     case GET_USER_REQUEST: {
       return {
         ...state,

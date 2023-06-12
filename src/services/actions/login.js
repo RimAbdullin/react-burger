@@ -4,8 +4,6 @@ export const POST_LOGIN_FAILED = 'POST_LOGIN_FAILED';
 export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
 export const POST_LOGIN_REQUEST = 'POST_LOGIN_REQUEST';
 
-export const LOGIN_RESET = 'LOGIN_RESET';
-
 // thunk
 export function loginThunk(form) {
   return function (dispatch) {
@@ -14,6 +12,14 @@ export function loginThunk(form) {
     });
     login(form)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: POST_LOGIN_FAILED,
+          });
+          return;
+        }
+
         dispatch({
           type: POST_LOGIN_SUCCESS,
           data: data,

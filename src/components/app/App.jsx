@@ -14,6 +14,7 @@ import {
 } from '../../pages/';
 import { ProfilePage } from '../../pages/profile';
 import { useAuth } from '../../hooks/useAuth';
+import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
 
 function App() {
   const auth = useAuth();
@@ -21,15 +22,19 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      auth.refresh();
-    }
-  }, []);
-
-  useEffect(() => {
     // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      auth.checkAuth();
+    }
+  }, []);
+
+  if (auth.isLoadingCheckAuth) {
+    return null;
+  }
 
   return (
     <section className={styles.Page}>
@@ -39,9 +44,19 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/forgot-password"
+            element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
+          />
+          <Route
+            path="/reset-password"
+            element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
+          />
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<ProfilePage />} />}
+          />
+          {/* <Route path="/profile" element={<ProfilePage />} /> */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

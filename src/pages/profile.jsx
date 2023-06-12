@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './profile.module.css';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -13,9 +13,7 @@ export function ProfilePage() {
   const auth = useAuth();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
-
   const [isChanged, setIsChanged] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     auth.getUser();
@@ -26,20 +24,11 @@ export function ProfilePage() {
     setIsChanged(true);
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     if (auth.isAuth) {
       auth.logout();
     }
   };
-
-  useEffect(() => {
-    if (!auth.isAuth && loading) {
-      navigate('/');
-    }
-    setLoading(true);
-  }, [auth.isAuth]);
 
   useEffect(() => {
     if (auth.user) {
@@ -63,6 +52,20 @@ export function ProfilePage() {
       password: '',
     });
   };
+
+  const navigate = useNavigate();
+
+  // Если пользователь успешно вышел, то переходим на главную страницу.
+  useEffect(() => {
+    if (!auth.isAuth) {
+      navigate('/');
+    }
+  }, [auth.isLogout]);
+
+  // Если еще выполняется запрос на выход, то не ничего не выполняем.
+  // if (auth.isLoadingLogout) {
+  //   return null;
+  // }
 
   return (
     <section className={styles.container}>

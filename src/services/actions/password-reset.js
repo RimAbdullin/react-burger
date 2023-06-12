@@ -4,8 +4,6 @@ export const POST_PASSWORD_RESET_FAILED = 'POST_PASSWORD_RESET_FAILED';
 export const POST_PASSWORD_RESET_SUCCESS = 'POST_PASSWORD_RESET_SUCCESS';
 export const POST_PASSWORD_RESET_REQUEST = 'POST_PASSWORD_RESET_REQUEST';
 
-export const PASSWORD_RESET_RESET = 'PASSWORD_RESET_RESET';
-
 // thunk
 export function passwordResetThunk(form) {
   return function (dispatch) {
@@ -14,6 +12,14 @@ export function passwordResetThunk(form) {
     });
     passwordReset(form)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: POST_PASSWORD_RESET_FAILED,
+          });
+          return;
+        }
+
         dispatch({
           type: POST_PASSWORD_RESET_SUCCESS,
           data: data,

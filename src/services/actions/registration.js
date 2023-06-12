@@ -12,6 +12,14 @@ export function registrationThunk(form) {
     });
     registration(form)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: POST_REGISTRATION_FAILED,
+          });
+          return;
+        }
+
         dispatch({
           type: POST_REGISTRATION_SUCCESS,
           data: data,

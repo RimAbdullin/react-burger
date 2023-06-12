@@ -2,13 +2,11 @@ import {
   POST_LOGIN_FAILED,
   POST_LOGIN_SUCCESS,
   POST_LOGIN_REQUEST,
-  LOGIN_RESET,
 } from '../actions/login';
 
 const initialState = {
   loginRequest: true,
   loginFailed: false,
-  successLogin: false,
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -16,7 +14,6 @@ export const loginReducer = (state = initialState, action) => {
     case POST_LOGIN_REQUEST: {
       return {
         ...state,
-        successLogin: false,
         loginRequest: true,
         loginFailed: false,
       };
@@ -26,7 +23,6 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         loginRequest: false,
         loginFailed: false,
-        successLogin: action.data.success,
       };
     }
     case POST_LOGIN_FAILED: {
@@ -34,13 +30,6 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loginRequest: false,
-        successLogin: false,
-      };
-    }
-    case LOGIN_RESET: {
-      return {
-        ...state,
-        successLogin: false,
       };
     }
     default: {

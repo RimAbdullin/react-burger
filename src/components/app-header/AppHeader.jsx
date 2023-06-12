@@ -6,7 +6,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './App-header.module.css';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 
 function AppHeader() {
@@ -51,13 +50,6 @@ function AppHeader() {
             >
               Личный кабинет
             </Link>
-
-            {/* <a
-              className={`pl-2 text text_type_main-default text_color_inactive`}
-              href="#"
-            >
-              Личный кабинет
-            </a> */}
           </div>
         </div>
       </nav>

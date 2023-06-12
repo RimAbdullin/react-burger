@@ -5,7 +5,6 @@ import {
 } from '../actions/registration';
 
 const initialState = {
-  success: false,
   registrationRequest: true,
   registrationFailed: false,
 };
@@ -22,7 +21,6 @@ export const registrationReducer = (state = initialState, action) => {
     case POST_REGISTRATION_SUCCESS: {
       return {
         ...state,
-        success: action.data.success,
         registrationRequest: false,
         registrationFailed: false,
       };

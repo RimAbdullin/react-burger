@@ -8,9 +8,6 @@ export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 
-export const SET_AUTH = 'SET_AUTH';
-export const SET_USER = 'SET_USER';
-
 // thunk
 export function getUserThunk(token) {
   return function (dispatch) {
@@ -19,6 +16,14 @@ export function getUserThunk(token) {
     });
     getUser(token)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: GET_USER_FAILED,
+          });
+          return;
+        }
+
         dispatch({
           type: GET_USER_SUCCESS,
           data: data,
@@ -27,8 +32,6 @@ export function getUserThunk(token) {
         return data;
       })
       .catch((err) => {
-        console.log('=== err', err);
-        // {"success":false,"message":"jwt expired"}
         dispatch({
           type: GET_USER_FAILED,
         });
@@ -43,14 +46,18 @@ export function updateUserThunk(token, form) {
     });
     updateUser(token, form)
       .then((data) => {
+        // Проверяем внутренний статус ответа.
+        if (!data.success) {
+          dispatch({
+            type: UPDATE_USER_FAILED,
+          });
+
+          return;
+        }
+
         dispatch({
           type: UPDATE_USER_SUCCESS,
           data: data,
-        });
-
-        dispatch({
-          type: SET_USER,
-          user: data.user,
         });
         return data;
       })
