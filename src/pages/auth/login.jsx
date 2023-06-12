@@ -28,6 +28,7 @@ export function LoginPage() {
   );
 
   // Если еще выполняется запрос на авторизацию, то не ничего не выполняем.
+  // console.log(auth.isLoadingLogin);
   // if (auth.isLoadingLogin) {
   //   return null;
   // } else {
@@ -37,9 +38,12 @@ export function LoginPage() {
   const navigate = useNavigate();
 
   // Если пользователь авторизован успешно, то переходим на главную страницу.
-  if (auth.isAuth) {
-    navigate('/');
-  }
+
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate('/');
+    }
+  }, [auth.isAuth]);
 
   return (
     <section className={styles.container}>

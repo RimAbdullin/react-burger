@@ -21,6 +21,7 @@ import {
 import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
 import { SET_AUTH } from '../services/actions/auth';
+import { RESET_STATE } from '../services/actions/logout';
 
 export const useAuth = () => {
   const { registrationRequest, registrationFailed } = useSelector(
@@ -144,18 +145,29 @@ export const useAuth = () => {
 
   // Выход пользователя.
   const logout = useCallback(() => {
+    console.log('logout 1');
     setIsLoadingLogout(true);
     try {
       dispatch(logoutThunk(localStorage.getItem('refreshToken')));
     } catch (error) {
     } finally {
       setIsLoadingLogout(false);
+      dispatch({
+        type: SET_AUTH,
+        value: false,
+        caller: 'logout',
+      });
+      dispatch({
+        type: RESET_STATE,
+      });
     }
   }, [dispatch]);
 
   // Проверяем результаты запроса выхода пользователя.
   useEffect(() => {
+    console.log('logout 2');
     if (!isLoadingLogout && !logoutRequest && !logoutFailed) {
+      console.log('logout 3');
       // Если был сделан запрос logout и он завершен успешно
       // то в состоянии устанавливаем, что пользователь имеет статус не авторизован и произвел выход.
       // setIsAuth(false);
@@ -166,7 +178,8 @@ export const useAuth = () => {
       });
       setIsLogout(true);
     }
-  }, [dispatch, isLoadingLogout, logoutRequest, logoutFailed]);
+  }, [isLoadingLogout, logoutRequest, logoutFailed]);
+  // }, [dispatch, isLoadingLogout, logoutRequest, logoutFailed]);
 
   // Сброс пароля пользователя.
   const forgotPassword = useCallback(

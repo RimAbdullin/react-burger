@@ -99,7 +99,6 @@ export function getUser(token) {
  * @returns Promise<data>
  */
 export function updateUser(token, data) {
-  console.log('update');
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'PATCH',
     headers: {

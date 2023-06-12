@@ -2,6 +2,7 @@ import {
   POST_LOGOUT_FAILED,
   POST_LOGOUT_SUCCESS,
   POST_LOGOUT_REQUEST,
+  RESET_STATE,
 } from '../actions/logout';
 
 const initialState = {
@@ -30,6 +31,11 @@ export const logoutReducer = (state = initialState, action) => {
         ...state,
         logoutFailed: true,
         logoutRequest: false,
+      };
+    }
+    case RESET_STATE: {
+      return {
+        ...initialState,
       };
     }
     default: {

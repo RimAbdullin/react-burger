@@ -15,6 +15,7 @@ import {
 import { ProfilePage } from '../../pages/profile';
 import { useAuth } from '../../hooks/useAuth';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
+import { SET_AUTH } from '../../services/actions/auth';
 
 function App() {
   const auth = useAuth();
@@ -29,6 +30,11 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
       auth.checkAuth();
+      // dispatch({
+      //   type: SET_AUTH,
+      //   value: true,
+      //   caller: 'App',
+      // });
     }
   }, []);
 

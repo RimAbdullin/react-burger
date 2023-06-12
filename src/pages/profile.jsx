@@ -57,7 +57,9 @@ export function ProfilePage() {
 
   // Если пользователь успешно вышел, то переходим на главную страницу.
   useEffect(() => {
-    if (!auth.isAuth) {
+    console.log('=== auth.isLogout', auth.isLogout);
+    console.log('=== auth.isAuth', auth.isAuth);
+    if (auth.isLogout) {
       navigate('/');
     }
   }, [auth.isLogout]);
