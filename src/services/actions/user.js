@@ -28,8 +28,8 @@ export function getUserThunk(token) {
         dispatch({
           type: GET_USER_FAILED,
         });
-        console.log('=== err in thunk', err);
-        throw new Error('401');
+        // console.log('=== err in thunk', err);
+        // throw new Error('401');
       });
   };
 }

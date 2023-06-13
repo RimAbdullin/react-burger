@@ -45,7 +45,8 @@ function AppHeader() {
           >
             <ProfileIcon />
             <Link
-              to={auth.isAuth ? '/profile' : '/login'}
+              to={'/profile'}
+              // to={auth.isAuth ? '/profile' : '/login'}
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
               Личный кабинет

@@ -85,7 +85,7 @@ export function logout(refreshToken) {
  * @returns Promise<data>
  */
 export function getUser(token) {
-  return fetch(`${NORMA_API}/auth/user1`, {
+  return fetch(`${NORMA_API}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -143,6 +143,10 @@ export function passwordReset(data) {
  * @returns Promise<json> || Promise<err>
  */
 const checkResponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
+
+const checkResponse1 = (res) => {
   // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
   // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 

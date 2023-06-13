@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './profile.module.css';
-import { NavLink, useNavigate, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import {
   Button,
@@ -59,17 +59,10 @@ export function ProfilePage() {
     });
   };
 
-  const navigate = useNavigate();
-
-  // Если еще выполняется запрос на регистрацию, то не ничего не выполняем.
-  if (user.isLoading) {
-    return null;
-  }
-
-  // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
-  if (!auth.isAuth) {
-    return <Navigate to="/" replace />;
-  }
+  // Если еще выполняется запрос на получение данных пользователя, то не ничего не выполняем.
+  // if (user.isLoading) {
+  //   return null;
+  // }
 
   return (
     <section className={styles.container}>

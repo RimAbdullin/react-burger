@@ -1,12 +1,24 @@
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getAuthSelector } from '../../services/selectors/selector';
 
 export function ProtectedRouteElement({ element }) {
-  const auth = useAuth();
+  // const auth = useAuth();
 
-  // console.log('**********************');
-  // console.log('=== element', element);
-  // console.log('=== auth.isAuth', auth.isAuth);
+  const {
+    isAuth,
+    loginRequest,
+    loginFailed,
+    refreshTokenRequest,
+    refreshTokenFailed,
+    logoutRequest,
+    logoutFailed,
+  } = useSelector(getAuthSelector);
 
-  return auth.isAuth ? element : <Navigate to="/" replace />;
+  console.log('private');
+  console.log(isAuth);
+
+  return isAuth ? element : <Navigate to="/login" replace />;
 }
