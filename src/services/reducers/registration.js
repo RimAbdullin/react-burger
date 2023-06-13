@@ -2,6 +2,7 @@ import {
   POST_REGISTRATION_FAILED,
   POST_REGISTRATION_SUCCESS,
   POST_REGISTRATION_REQUEST,
+  RESET_STATE,
 } from '../actions/registration';
 
 const initialState = {
@@ -28,6 +29,14 @@ export const registrationReducer = (state = initialState, action) => {
     case POST_REGISTRATION_FAILED: {
       return { ...state, registrationFailed: true, registrationRequest: false };
     }
+
+    // reset all store.
+    case RESET_STATE: {
+      return {
+        ...initialState,
+      };
+    }
+
     default: {
       return state;
     }

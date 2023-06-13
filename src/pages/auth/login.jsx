@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import styles from './login.module.css';
 
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 import {
@@ -27,23 +27,15 @@ export function LoginPage() {
     [auth, form]
   );
 
-  // Если еще выполняется запрос на авторизацию, то не ничего не выполняем.
-  // console.log(auth.isLoadingLogin);
-  // if (auth.isLoadingLogin) {
-  //   return null;
-  // } else {
-  //   console.log(auth.isAuth);
-  // }
+  // Если еще выполняется запрос на регистрацию, то не ничего не выполняем.
+  if (auth.isLoadingLogin) {
+    return null;
+  }
 
-  const navigate = useNavigate();
-
-  // Если пользователь авторизован успешно, то переходим на главную страницу.
-
-  useEffect(() => {
-    if (auth.isAuth) {
-      navigate('/');
-    }
-  }, [auth.isAuth]);
+  // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
+  if (auth.isAuth) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <section className={styles.container}>

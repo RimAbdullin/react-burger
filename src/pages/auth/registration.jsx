@@ -8,10 +8,10 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useAuth } from '../../hooks/useAuth';
+import { useRegistration } from '../../hooks/useRegistration';
 
 export function RegistrationPage() {
-  const auth = useAuth();
+  const registration = useRegistration();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
@@ -22,18 +22,18 @@ export function RegistrationPage() {
   const handleRegistration = useCallback(
     (e) => {
       e.preventDefault();
-      auth.registration(form);
+      registration.registration(form);
     },
     [form]
   );
 
   // Если еще выполняется запрос на регистрацию, то не ничего не выполняем.
-  if (auth.isLoadingRegistration) {
+  if (registration.isLoading) {
     return null;
   }
 
   // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
-  if (auth.isRegistered) {
+  if (registration.isRegistered) {
     return <Navigate to="/" replace />;
   }
 

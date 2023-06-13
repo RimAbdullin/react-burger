@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './reset-password.module.css';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 // import { useAuth } from '../services/auth';
@@ -27,6 +27,14 @@ export function ResetPasswordPage() {
     auth.passwordReset({ password: form.password, token: form.code });
     navigate('/');
   };
+
+  // Проверяем, авторизован ли пользователь
+  if (auth.isAuth) {
+    return (
+      // Переадресовываем авторизованного пользователя на главную страницу
+      <Navigate to="/" replace />
+    );
+  }
 
   return (
     <div className={styles.container}>

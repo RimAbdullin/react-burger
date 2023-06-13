@@ -8,9 +8,5 @@ export function ProtectedRouteElement({ element }) {
   // console.log('=== element', element);
   // console.log('=== auth.isAuth', auth.isAuth);
 
-  // if (!auth.isAuth) {
-  //   return null;
-  // }
-
-  return auth.isAuth ? element : <Navigate to="/login" replace />;
+  return auth.isAuth ? element : <Navigate to="/" replace />;
 }

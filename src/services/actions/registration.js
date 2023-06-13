@@ -4,6 +4,8 @@ export const POST_REGISTRATION_FAILED = 'POST_REGISTRATION_FAILED';
 export const POST_REGISTRATION_SUCCESS = 'POST_REGISTRATION_SUCCESS';
 export const POST_REGISTRATION_REQUEST = 'POST_REGISTRATION_REQUEST';
 
+export const RESET_STATE = 'RESET_STATE';
+
 // thunk
 export function registrationThunk(form) {
   return function (dispatch) {
@@ -12,14 +14,6 @@ export function registrationThunk(form) {
     });
     registration(form)
       .then((data) => {
-        // Проверяем внутренний статус ответа.
-        if (!data.success) {
-          dispatch({
-            type: POST_REGISTRATION_FAILED,
-          });
-          return;
-        }
-
         dispatch({
           type: POST_REGISTRATION_SUCCESS,
           data: data,

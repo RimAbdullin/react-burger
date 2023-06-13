@@ -2,6 +2,7 @@ import {
   POST_FORGOT_PASSWORD_FAILED,
   POST_FORGOT_PASSWORD_SUCCESS,
   POST_FORGOT_PASSWORD_REQUEST,
+  RESET_STATE,
 } from '../actions/forgot-password';
 
 const initialState = {
@@ -32,6 +33,14 @@ export const forgotPasswordReducer = (state = initialState, action) => {
         forgotPasswordRequest: false,
       };
     }
+
+    // reset all store.
+    case RESET_STATE: {
+      return {
+        ...initialState,
+      };
+    }
+
     default: {
       return state;
     }

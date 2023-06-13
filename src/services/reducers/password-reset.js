@@ -2,6 +2,7 @@ import {
   POST_PASSWORD_RESET_FAILED,
   POST_PASSWORD_RESET_SUCCESS,
   POST_PASSWORD_RESET_REQUEST,
+  RESET_STATE,
 } from '../actions/password-reset';
 
 const initialState = {
@@ -32,6 +33,14 @@ export const passwordResetReducer = (state = initialState, action) => {
         passwordResetRequest: false,
       };
     }
+
+    // reset all store.
+    case RESET_STATE: {
+      return {
+        ...initialState,
+      };
+    }
+
     default: {
       return state;
     }

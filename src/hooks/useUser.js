@@ -6,17 +6,23 @@ import { getUserThunk, updateUserThunk } from '../services/actions/user';
 import { userSelector } from '../services/selectors/selector';
 
 export const useUser = () => {
-  const { refreshTokenRequest, refreshTokenFailed } = useSelector(
-    getRefreshTokenSelector
-  );
+  // const { refreshTokenRequest, refreshTokenFailed } = useSelector(
+  //   getRefreshTokenSelector
+  // );
 
-  const { getUserFailed, user } = useSelector(userSelector);
+  const {
+    getUserRequest,
+    getUserFailed,
+    updateUserRequest,
+    updateUserFailed,
+    user,
+  } = useSelector(userSelector);
 
   // const [isRetry, setIsRetry] = useState(false);
 
   const [isLoadingCheckAuth, setIsLoadingCheckAuth] = useState(false);
 
-  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -27,10 +33,21 @@ export const useUser = () => {
     try {
       dispatch(getUserThunk(token));
     } catch (error) {
+      console.log('=== error in useUser', error);
     } finally {
       setIsLoading(false);
     }
   }, [dispatch]);
+
+  // Проверяем получены ли данные пользователя.
+  // useEffect(() => {
+  //   if (!isLoading && !getUserRequest && !getUserFailed) {
+  //     // Если был сделан запрос login и он завершен успешно, то сбрасываем состояние.
+  //     dispatch({
+  //       type: RESET_STATE,
+  //     });
+  //   }
+  // }, [dispatch, isLoading, getUserRequest, getUserFailed]);
 
   // Если получение данных пользователя не произошло, обновляем токены.
   // useEffect(() => {
@@ -60,22 +77,7 @@ export const useUser = () => {
   );
 
   return {
-    isLoadingRegistration,
-    isLoadingLogin,
-    isLoadingCheckAuth,
-    isLoadingLogout,
-
-    isRegistered,
-    isAuth,
-
-    registration,
-    login,
-    checkAuth,
-    logout,
-
-    forgotPassword,
-    passwordReset,
-
+    isLoading,
     user,
     getUser,
     updateUser,

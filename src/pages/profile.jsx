@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './profile.module.css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Navigate } from 'react-router-dom';
 
 import {
   Button,
@@ -8,66 +8,68 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAuth } from '../hooks/useAuth';
+import { useUser } from '../hooks/useUser';
 
 export function ProfilePage() {
   const auth = useAuth();
+  const user = useUser();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
   const [isChanged, setIsChanged] = useState(false);
 
+  // Получаем данные пользователя.
   useEffect(() => {
-    auth.getUser();
+    user.getUser();
   }, []);
 
+  // При изменении поля показываем группу кнопок.
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
     setIsChanged(true);
   };
 
+  // При нажатии пункта меню "Выход" выходим из системы.
   const handleLogout = () => {
-    if (auth.isAuth) {
-      auth.logout();
-    }
+    auth.logout();
   };
 
+  // Устанавливаем значения полей на форме из полученных из запроса данных.
   useEffect(() => {
-    if (auth.user) {
+    if (user.user) {
       setValue({
         ...form,
-        name: auth.user.name,
-        email: auth.user.email,
+        name: user.user.name,
+        email: user.user.email,
       });
     }
-  }, [auth.user]);
+  }, [user.user]);
 
+  // Записываем данные пользователя.
   const handleSave = () => {
-    auth.updateUser(form);
+    user.updateUser(form);
   };
 
+  // Отменяем изменения на форме.
   const handleCancel = () => {
     setValue({
       ...form,
-      name: auth.user.name,
-      email: auth.user.email,
+      name: user.user.name,
+      email: user.user.email,
       password: '',
     });
   };
 
   const navigate = useNavigate();
 
-  // Если пользователь успешно вышел, то переходим на главную страницу.
-  useEffect(() => {
-    console.log('=== auth.isLogout', auth.isLogout);
-    console.log('=== auth.isAuth', auth.isAuth);
-    if (auth.isLogout) {
-      navigate('/');
-    }
-  }, [auth.isLogout]);
+  // Если еще выполняется запрос на регистрацию, то не ничего не выполняем.
+  if (user.isLoading) {
+    return null;
+  }
 
-  // Если еще выполняется запрос на выход, то не ничего не выполняем.
-  // if (auth.isLoadingLogout) {
-  //   return null;
-  // }
+  // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
+  if (!auth.isAuth) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <section className={styles.container}>
@@ -100,37 +102,35 @@ export function ProfilePage() {
       </div>
       <div className={`ml-15 ${styles.content}`}>
         <form className={styles.form}>
-          {form && auth.user && (
-            <div>
-              <Input
-                placeholder="Имя"
-                value={form.name}
-                name="name"
-                type="text"
-                onChange={onChange}
-                extraClass="mb-6"
-                icon="EditIcon"
-              />
-              <Input
-                placeholder="Логин"
-                value={form.email}
-                name="email"
-                type="email"
-                onChange={onChange}
-                extraClass="mb-6"
-                icon="EditIcon"
-              />
-              <PasswordInput
-                placeholder="Пароль"
-                value={form.password}
-                name="password"
-                type="password"
-                onChange={onChange}
-                extraClass="mb-6"
-                icon="EditIcon"
-              />
-            </div>
-          )}
+          <div>
+            <Input
+              placeholder="Имя"
+              value={form.name}
+              name="name"
+              type="text"
+              onChange={onChange}
+              extraClass="mb-6"
+              icon="EditIcon"
+            />
+            <Input
+              placeholder="Логин"
+              value={form.email}
+              name="email"
+              type="email"
+              onChange={onChange}
+              extraClass="mb-6"
+              icon="EditIcon"
+            />
+            <PasswordInput
+              placeholder="Пароль"
+              value={form.password}
+              name="password"
+              type="password"
+              onChange={onChange}
+              extraClass="mb-6"
+              icon="EditIcon"
+            />
+          </div>
           {isChanged && (
             <div className={`${styles['actions']}`}>
               <div className={`${styles['button-container']}`}>

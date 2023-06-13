@@ -9,6 +9,7 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 
 // thunk
+// get user.
 export function getUserThunk(token) {
   return function (dispatch) {
     dispatch({
@@ -16,14 +17,6 @@ export function getUserThunk(token) {
     });
     getUser(token)
       .then((data) => {
-        // Проверяем внутренний статус ответа.
-        if (!data.success) {
-          dispatch({
-            type: GET_USER_FAILED,
-          });
-          return;
-        }
-
         dispatch({
           type: GET_USER_SUCCESS,
           data: data,
@@ -35,10 +28,13 @@ export function getUserThunk(token) {
         dispatch({
           type: GET_USER_FAILED,
         });
+        console.log('=== err in thunk', err);
+        throw new Error('401');
       });
   };
 }
 
+// update user.
 export function updateUserThunk(token, form) {
   return function (dispatch) {
     dispatch({

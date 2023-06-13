@@ -15,7 +15,6 @@ import {
 import { ProfilePage } from '../../pages/profile';
 import { useAuth } from '../../hooks/useAuth';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
-import { SET_AUTH } from '../../services/actions/auth';
 
 function App() {
   const auth = useAuth();
@@ -30,11 +29,6 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
       auth.checkAuth();
-      // dispatch({
-      //   type: SET_AUTH,
-      //   value: true,
-      //   caller: 'App',
-      // });
     }
   }, []);
 
@@ -50,19 +44,14 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
-          <Route
-            path="/forgot-password"
-            element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
-          />
-          <Route
-            path="/reset-password"
-            element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
-          />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
-          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

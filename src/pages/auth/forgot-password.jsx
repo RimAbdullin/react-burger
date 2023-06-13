@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import styles from './forgot-password.module.css';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/useAuth';
 
-// import { useAuth } from '../services/auth';
 import {
   Button,
   Input,
@@ -24,9 +22,20 @@ export function ForgotPasswordPage() {
 
   const handleClickRestore = (e) => {
     e.preventDefault();
+    if (!form.email) {
+      return;
+    }
     auth.forgotPassword(form);
     navigate('/reset-password');
   };
+
+  // Проверяем, авторизован ли пользователь
+  if (auth.isAuth) {
+    return (
+      // Переадресовываем авторизованного пользователя на главную страницу
+      <Navigate to="/" replace />
+    );
+  }
 
   return (
     <div className={styles.container}>
