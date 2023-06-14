@@ -15,6 +15,7 @@ import {
 import { ProfilePage } from '../../pages/profile';
 import { useAuth } from '../../hooks/useAuth';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
+import IngredientDetails from '../burger-ingredients/ingredient-details/IngredientDetails';
 
 function App() {
   const auth = useAuth();
@@ -38,23 +39,22 @@ function App() {
 
   return (
     <section className={styles.Page}>
-      <BrowserRouter>
-        <AppHeader />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <AppHeader />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/ingredient/:id" element={<IngredientDetails />} />
 
-          <Route
-            path="/profile"
-            element={<ProtectedRouteElement element={<ProfilePage />} />}
-          />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<ProfilePage />} />}
+        />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </section>
   );
 }

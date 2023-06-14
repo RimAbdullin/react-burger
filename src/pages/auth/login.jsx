@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import styles from './login.module.css';
 
-import { Link, Navigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 import {
@@ -27,14 +27,19 @@ export function LoginPage() {
     [auth, form]
   );
 
-  // Если еще выполняется запрос на регистрацию, то не ничего не выполняем.
+  const location = useLocation();
+
+  // Если еще выполняется запрос на регистрацию, то ничего не выполняем.
   if (auth.isLoadingLogin) {
     return null;
   }
 
   // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
   if (auth.isAuth) {
-    return <Navigate to="/" replace />;
+    const redirectTo = location?.state?.redirectTo?.pathname
+      ? location.state.redirectTo.pathname
+      : '/';
+    return <Navigate to={redirectTo} replace />;
   }
 
   return (

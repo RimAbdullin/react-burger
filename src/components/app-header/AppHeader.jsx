@@ -46,10 +46,23 @@ function AppHeader() {
             <ProfileIcon />
             <Link
               to={'/profile'}
-              // to={auth.isAuth ? '/profile' : '/login'}
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
               Личный кабинет
+            </Link>
+
+            <Link
+              to={'/registration'}
+              className={`pl-2 text text_type_main-default text_color_inactive`}
+            >
+              Регистрация
+            </Link>
+
+            <Link
+              to={'/login'}
+              className={`pl-2 text text_type_main-default text_color_inactive`}
+            >
+              Вход
             </Link>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './forgot-password.module.css';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPasswordPage() {
+  console.log('ForgotPasswordPage');
   let auth = useAuth();
 
   const [form, setValue] = useState({ email: '' });
@@ -18,16 +19,26 @@ export function ForgotPasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const navigate = useNavigate();
-
-  const handleClickRestore = (e) => {
+  const handleRestore = (e) => {
     e.preventDefault();
     if (!form.email) {
       return;
     }
     auth.forgotPassword(form);
-    navigate('/reset-password');
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.isEmailSent) {
+      navigate('/reset-password');
+    }
+  }, [auth.isEmailSent]);
+
+  // Если еще выполняется запрос на регистрацию, то ничего не выполняем.
+  if (auth.isLoadingForgotPassword) {
+    return null;
+  }
 
   // Проверяем, авторизован ли пользователь
   if (auth.isAuth) {
@@ -56,7 +67,7 @@ export function ForgotPasswordPage() {
               htmlType="button"
               type="primary"
               size="medium"
-              onClick={handleClickRestore}
+              onClick={handleRestore}
             >
               Восстановить
             </Button>

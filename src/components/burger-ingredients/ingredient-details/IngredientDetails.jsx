@@ -7,6 +7,8 @@ const IngredientDetails = () => {
   // Выбранный ингредиент для отображения детальных данных.
   const { currentIngredient } = useSelector(getModalSelector);
 
+  console.log(currentIngredient);
+
   return (
     currentIngredient && (
       <>

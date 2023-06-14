@@ -3,9 +3,11 @@ import {
   POST_FORGOT_PASSWORD_SUCCESS,
   POST_FORGOT_PASSWORD_REQUEST,
   RESET_STATE,
+  SET_FORGOT_PASSWORD,
 } from '../actions/forgot-password';
 
 const initialState = {
+  isEmailSent: false,
   forgotPasswordRequest: true,
   forgotPasswordFailed: false,
 };
@@ -33,11 +35,17 @@ export const forgotPasswordReducer = (state = initialState, action) => {
         forgotPasswordRequest: false,
       };
     }
-
+    case SET_FORGOT_PASSWORD: {
+      return {
+        ...state,
+        isEmailSent: action.value,
+      };
+    }
     // reset all store.
     case RESET_STATE: {
       return {
         ...initialState,
+        isEmailSent: state.isEmailSent,
       };
     }
 

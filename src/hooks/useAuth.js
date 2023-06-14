@@ -16,6 +16,7 @@ import {
 import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
 import { RESET_STATE } from '../services/actions/auth';
+import { SET_FORGOT_PASSWORD } from '../services/actions/forgot-password';
 
 export const useAuth = () => {
   const {
@@ -28,9 +29,8 @@ export const useAuth = () => {
     logoutFailed,
   } = useSelector(getAuthSelector);
 
-  const { forgotPasswordRequest, forgotPasswordFailed } = useSelector(
-    getForgotPasswordSelector
-  );
+  const { isEmailSent, forgotPasswordRequest, forgotPasswordFailed } =
+    useSelector(getForgotPasswordSelector);
 
   const { passwordResetRequest, passwordResetFailed } = useSelector(
     getPasswordResetSelector
@@ -44,7 +44,7 @@ export const useAuth = () => {
   const [isLoadingPasswordReset, setIsLoadingPasswordReset] = useState(false);
 
   const [isLogout, setIsLogout] = useState(false);
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
+
   const [isPasswordReset, setIsPasswordReset] = useState(false);
 
   const dispatch = useDispatch();
@@ -64,7 +64,6 @@ export const useAuth = () => {
   // Проверяем результаты запроса проверки пользователя.
   useEffect(() => {
     if (!isLoadingCheckAuth && !refreshTokenRequest && !refreshTokenFailed) {
-      console.log('refresh');
       // Если был сделан запрос refreshToken и он завершен успешно, то сбрасываем состояние.
       dispatch({
         type: RESET_STATE,
@@ -110,7 +109,6 @@ export const useAuth = () => {
   // Проверяем результаты запроса выхода пользователя.
   useEffect(() => {
     if (!isLoadingLogout && !logoutRequest && !logoutFailed) {
-      console.log('logout');
       // Если был сделан запрос logout и он завершен успешно
       // то сбрасываем состояние.
       dispatch({
@@ -119,7 +117,6 @@ export const useAuth = () => {
       setIsLogout(true);
     }
   }, [dispatch, isLoadingLogout, logoutRequest, logoutFailed]);
-  // }, [dispatch, isLoadingLogout, logoutRequest, logoutFailed]);
 
   // Сброс пароля пользователя.
   const forgotPassword = useCallback(
@@ -142,11 +139,21 @@ export const useAuth = () => {
       !forgotPasswordRequest &&
       !forgotPasswordFailed
     ) {
-      // Если был сделан запрос forgot-password и он завершен успешно
-      // то в состоянии устанавливаем, что пользователь имеет статус авторизован.
-      setIsForgotPassword(true);
+      // Если был сделан запрос forgot-password и он завершен успешно.
+      dispatch({
+        type: RESET_STATE,
+      });
+      dispatch({
+        type: SET_FORGOT_PASSWORD,
+        value: true,
+      });
     }
-  }, [isLoadingForgotPassword, forgotPasswordRequest, forgotPasswordFailed]);
+  }, [
+    dispatch,
+    isLoadingForgotPassword,
+    forgotPasswordRequest,
+    forgotPasswordFailed,
+  ]);
 
   // Изменение пароля пользователя.
   const passwordReset = useCallback(
@@ -162,7 +169,7 @@ export const useAuth = () => {
     [dispatch]
   );
 
-  // Проверяем результаты запроса выхода пользователя.
+  // Проверяем результаты запроса изменения пароля пользователя.
   useEffect(() => {
     if (
       !isLoadingPasswordReset &&
@@ -172,17 +179,32 @@ export const useAuth = () => {
       // Если был сделан запрос refreshToken и он завершен успешно
       // то в состоянии устанавливаем, что пользователь имеет статус авторизован.
       setIsPasswordReset(true);
+      dispatch({
+        type: RESET_STATE,
+      });
+      dispatch({
+        type: SET_FORGOT_PASSWORD,
+        value: false,
+      });
+      setIsPasswordReset(true);
     }
-  }, [isLoadingPasswordReset, passwordResetRequest, passwordResetFailed]);
+  }, [
+    dispatch,
+    isLoadingPasswordReset,
+    passwordResetRequest,
+    passwordResetFailed,
+  ]);
 
   return {
     isLoadingLogin,
     isLoadingCheckAuth,
     isLoadingLogout,
+    isLoadingForgotPassword,
+    isLoadingPasswordReset,
 
     isAuth,
+    isEmailSent,
     isLogout,
-    isForgotPassword,
     isPasswordReset,
 
     login,

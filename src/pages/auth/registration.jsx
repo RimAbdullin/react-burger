@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './registration.module.css';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import {
   Button,
@@ -16,14 +16,6 @@ export function RegistrationPage() {
   const registration = useRegistration();
 
   const { isAuth } = useSelector(getAuthSelector);
-
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     navigate('/');
-  //   }
-  // });
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 

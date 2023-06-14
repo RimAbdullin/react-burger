@@ -1,24 +1,15 @@
 import { useAuth } from '../../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { getAuthSelector } from '../../services/selectors/selector';
+import { useLocation, Navigate } from 'react-router-dom';
 
 export function ProtectedRouteElement({ element }) {
-  // const auth = useAuth();
+  const auth = useAuth();
 
-  const {
-    isAuth,
-    loginRequest,
-    loginFailed,
-    refreshTokenRequest,
-    refreshTokenFailed,
-    logoutRequest,
-    logoutFailed,
-  } = useSelector(getAuthSelector);
+  const location = useLocation();
+  // console.log(location);
 
-  console.log('private');
-  console.log(isAuth);
-
-  return isAuth ? element : <Navigate to="/login" replace />;
+  return auth.isAuth ? (
+    element
+  ) : (
+    <Navigate to="/login" replace state={{ redirectTo: location }} />
+  );
 }
