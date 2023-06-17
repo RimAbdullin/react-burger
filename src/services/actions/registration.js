@@ -1,4 +1,5 @@
-import { registration } from '../../utils/burger-api';
+import { registrationRequest } from '../../utils/burger-api';
+import { saveTokens } from '../common/common';
 
 export const POST_REGISTRATION_FAILED = 'POST_REGISTRATION_FAILED';
 export const POST_REGISTRATION_SUCCESS = 'POST_REGISTRATION_SUCCESS';
@@ -12,12 +13,13 @@ export function registrationThunk(form) {
     dispatch({
       type: POST_REGISTRATION_REQUEST,
     });
-    registration(form)
+    registrationRequest(form)
       .then((data) => {
         dispatch({
           type: POST_REGISTRATION_SUCCESS,
           data: data,
         });
+        saveTokens(data.accessToken, data.refreshToken);
         return data;
       })
       .catch((err) => {

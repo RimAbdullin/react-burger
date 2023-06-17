@@ -1,4 +1,4 @@
-import { passwordReset } from '../../utils/burger-api';
+import { passwordResetRequest } from '../../utils/burger-api';
 
 export const POST_PASSWORD_RESET_FAILED = 'POST_PASSWORD_RESET_FAILED';
 export const POST_PASSWORD_RESET_SUCCESS = 'POST_PASSWORD_RESET_SUCCESS';
@@ -12,7 +12,7 @@ export function passwordResetThunk(form) {
     dispatch({
       type: POST_PASSWORD_RESET_REQUEST,
     });
-    passwordReset(form)
+    passwordResetRequest(form)
       .then((data) => {
         dispatch({
           type: POST_PASSWORD_RESET_SUCCESS,

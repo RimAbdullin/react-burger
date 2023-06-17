@@ -1,4 +1,10 @@
-import { getUser, updateUser } from '../../utils/burger-api';
+import {
+  getUserRequest,
+  updateUserRequest,
+  refreshTokenRequest,
+} from '../../utils/burger-api';
+
+import { saveTokens } from '../../services/common/common';
 
 export const GET_USER_FAILED = 'GET_USER_FAILED';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -8,14 +14,16 @@ export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 
+export const RESET_STATE = 'RESET_STATE';
+
 // thunk
 // get user.
-export function getUserThunk(token) {
+export function getUserThunk() {
   return function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });
-    getUser(token)
+    getUserRequest()
       .then((data) => {
         dispatch({
           type: GET_USER_SUCCESS,
@@ -25,32 +33,26 @@ export function getUserThunk(token) {
         return data;
       })
       .catch((err) => {
-        dispatch({
-          type: GET_USER_FAILED,
-        });
-        // console.log('=== err in thunk', err);
-        // throw new Error('401');
+        if (err.message === 'jwt expired') {
+          dispatch(refreshToken(getUserThunk()));
+        } else {
+          dispatch({
+            type: GET_USER_FAILED,
+            payload: err.message,
+          });
+        }
       });
   };
 }
 
 // update user.
-export function updateUserThunk(token, form) {
+export function updateUserThunk(form) {
   return function (dispatch) {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
-    updateUser(token, form)
+    updateUserRequest(form)
       .then((data) => {
-        // Проверяем внутренний статус ответа.
-        if (!data.success) {
-          dispatch({
-            type: UPDATE_USER_FAILED,
-          });
-
-          return;
-        }
-
         dispatch({
           type: UPDATE_USER_SUCCESS,
           data: data,
@@ -64,3 +66,10 @@ export function updateUserThunk(token, form) {
       });
   };
 }
+
+const refreshToken = (afterRefresh) => (dispatch) => {
+  refreshTokenRequest().then((res) => {
+    saveTokens(res.accessToken, res.refreshToken);
+    dispatch(afterRefresh);
+  });
+};

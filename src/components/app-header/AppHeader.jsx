@@ -5,11 +5,16 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './App-header.module.css';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useLocation, NavLink } from 'react-router-dom';
 
 function AppHeader() {
-  const auth = useAuth();
+  const { pathname } = useLocation();
+
+  const isConstructor = pathname === '/' ? true : false;
+
+  const isFeed = pathname === '/feed' ? true : false;
+
+  const isProfile = pathname === '/profile' ? true : false;
 
   return (
     <header>
@@ -18,24 +23,27 @@ function AppHeader() {
           <div
             className={`${styles['Constructor-container']} ${styles['Flex-container']}`}
           >
-            <BurgerIcon />
-            <a
-              className={`pl-2 text text_type_main-default text_color_primary`}
-              href="#"
+            <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
+            <NavLink
+              to={'/'}
+              className={`pl-2 text text_type_main-default ${
+                isConstructor ? 'text_color_primary' : 'text_color_inactive'
+              }`}
             >
               Конструктор
-            </a>
+            </NavLink>
           </div>
           <div
             className={`ml-2 ${styles['Order-feed-container']} ${styles['Flex-container']}`}
           >
-            <ListIcon />
-            <a
-              className={'pl-2 text text_type_main-default text_color_inactive'}
-              href="#"
+            <ListIcon type={isFeed ? 'primary' : 'secondary'} />
+            <NavLink
+              className={`pl-2 text text_type_main-default ${
+                isFeed ? 'text_color_primary' : 'text_color_inactive'
+              }`}
             >
               Лента заказов
-            </a>
+            </NavLink>
           </div>
           <div className={`${styles.Logo}`}>
             <Logo />
@@ -43,15 +51,17 @@ function AppHeader() {
           <div
             className={`${styles['Profile-container']} ${styles['Flex-container']}`}
           >
-            <ProfileIcon />
-            <Link
+            <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
+            <NavLink
               to={'/profile'}
-              className={`pl-2 text text_type_main-default text_color_inactive`}
+              className={`pl-2 text text_type_main-default ${
+                isProfile ? 'text_color_primary' : 'text_color_inactive'
+              }`}
             >
               Личный кабинет
-            </Link>
+            </NavLink>
 
-            <Link
+            {/* <Link
               to={'/registration'}
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
@@ -63,7 +73,7 @@ function AppHeader() {
               className={`pl-2 text text_type_main-default text_color_inactive`}
             >
               Вход
-            </Link>
+            </Link> */}
           </div>
         </div>
       </nav>

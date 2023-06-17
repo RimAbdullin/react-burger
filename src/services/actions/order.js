@@ -1,4 +1,4 @@
-import { getOrder } from '../../utils/burger-api';
+import { getOrderRequest } from '../../utils/burger-api';
 import { CLEAR_INGREDIENTS_CONSTRUCTOR } from '../actions/ingredientsConstructor';
 
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
@@ -13,7 +13,7 @@ export function getOrderNumber(data) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    getOrder(data)
+    getOrderRequest(data)
       .then((data) => {
         dispatch({
           type: GET_ORDER_SUCCESS,

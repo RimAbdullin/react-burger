@@ -12,8 +12,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ResetPasswordPage() {
-  console.log('ResetPasswordPage');
-
   let auth = useAuth();
 
   const [form, setValue] = useState({ password: '', code: '' });
@@ -22,9 +20,10 @@ export function ResetPasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  // const navigate = useNavigate();
-
   const handlePasswordReset = (e) => {
+    if (!form.password && !form.code) {
+      return;
+    }
     e.preventDefault();
     auth.passwordReset({ password: form.password, token: form.code });
   };

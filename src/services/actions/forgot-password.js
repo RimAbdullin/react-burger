@@ -1,4 +1,4 @@
-import { forgotPassword } from '../../utils/burger-api';
+import { forgotPasswordRequest } from '../../utils/burger-api';
 
 export const POST_FORGOT_PASSWORD_FAILED = 'POST_FORGOT_PASSWORD_FAILED';
 export const POST_FORGOT_PASSWORD_SUCCESS = 'POST_FORGOT_PASSWORD_SUCCESS';
@@ -14,7 +14,7 @@ export function forgotPasswordThunk(form) {
     dispatch({
       type: POST_FORGOT_PASSWORD_REQUEST,
     });
-    forgotPassword(form)
+    forgotPasswordRequest(form)
       .then((data) => {
         dispatch({
           type: POST_FORGOT_PASSWORD_SUCCESS,

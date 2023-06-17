@@ -1,13 +1,39 @@
 import { useSelector } from 'react-redux';
 import styles from './IngredientDetails.module.css';
-import { getModalSelector } from '../../../services/selectors/selector';
+import { useEffect } from 'react';
+import { getIngredientsSelector } from '../../../services/selectors/selector';
+import { useDispatch } from 'react-redux';
+import { getIngredientsItems } from '../../../services/actions/ingredients';
 
-const IngredientDetails = () => {
+import { useParams } from 'react-router-dom';
+import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/modal';
+import { GET_ITEM } from '../../../services/actions/ingredients';
+
+export const IngredientDetails = () => {
+  const params = useParams();
+
+  const { _id } = params;
+
   // Получаем данные из хранилища redux.
   // Выбранный ингредиент для отображения детальных данных.
-  const { currentIngredient } = useSelector(getModalSelector);
+  const { currentIngredient, ingredients } = useSelector(
+    getIngredientsSelector
+  );
 
-  console.log(currentIngredient);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!ingredients) {
+      dispatch(getIngredientsItems('Краторная булка N-200i'));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch({
+      type: GET_ITEM,
+      id: _id,
+    });
+  }, [dispatch, ingredients]);
 
   return (
     currentIngredient && (

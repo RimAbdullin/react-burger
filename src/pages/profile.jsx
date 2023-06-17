@@ -60,9 +60,9 @@ export function ProfilePage() {
   };
 
   // Если еще выполняется запрос на получение данных пользователя, то не ничего не выполняем.
-  // if (user.isLoading) {
-  //   return null;
-  // }
+  if (user.isLoading) {
+    return null;
+  }
 
   return (
     <section className={styles.container}>

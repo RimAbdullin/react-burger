@@ -5,7 +5,6 @@ export function ProtectedRouteElement({ element }) {
   const auth = useAuth();
 
   const location = useLocation();
-  // console.log(location);
 
   return auth.isAuth ? (
     element

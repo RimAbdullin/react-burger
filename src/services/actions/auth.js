@@ -1,4 +1,10 @@
-import { login, refresh, logout } from '../../utils/burger-api';
+import {
+  loginRequest,
+  refreshTokenRequest,
+  logoutRequest,
+} from '../../utils/burger-api';
+
+import { saveTokens } from '../common/common';
 
 export const POST_LOGIN_FAILED = 'POST_LOGIN_FAILED';
 export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
@@ -21,23 +27,14 @@ export function loginThunk(form) {
     dispatch({
       type: POST_LOGIN_REQUEST,
     });
-    login(form)
+    loginRequest(form)
       .then((data) => {
-        // Проверяем внутренний статус ответа.
-        if (!data.success) {
-          dispatch({
-            type: POST_LOGIN_FAILED,
-          });
-          return;
-        }
-
         dispatch({
           type: POST_LOGIN_SUCCESS,
           data: data,
         });
 
-        localStorage.setItem('token', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
+        saveTokens(data.accessToken, data.refreshToken);
 
         return data;
       })
@@ -50,20 +47,19 @@ export function loginThunk(form) {
 }
 
 // refresh.
-export function refreshThunk(refreshToken) {
+export function refreshTokenThunk() {
   return function (dispatch) {
     dispatch({
       type: POST_REFRESH_TOKEN_REQUEST,
     });
-    refresh(refreshToken)
+    refreshTokenRequest()
       .then((data) => {
         dispatch({
           type: POST_REFRESH_TOKEN_SUCCESS,
           data: data,
         });
 
-        localStorage.setItem('token', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
+        saveTokens(data.accessToken, data.refreshToken);
 
         return data;
       })
@@ -76,22 +72,13 @@ export function refreshThunk(refreshToken) {
 }
 
 // logout.
-export function logoutThunk(refreshToken) {
+export function logoutThunk() {
   return function (dispatch) {
     dispatch({
       type: POST_LOGOUT_REQUEST,
     });
-    logout(refreshToken)
+    logoutRequest()
       .then((data) => {
-        // Проверяем внутренний статус ответа.
-        if (!data.success) {
-          dispatch({
-            type: POST_LOGOUT_FAILED,
-          });
-          return;
-        }
-
-        localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
 
         dispatch({

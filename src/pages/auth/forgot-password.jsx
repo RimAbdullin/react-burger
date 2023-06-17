@@ -10,7 +10,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPasswordPage() {
-  console.log('ForgotPasswordPage');
   let auth = useAuth();
 
   const [form, setValue] = useState({ email: '' });

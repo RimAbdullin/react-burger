@@ -1,10 +1,11 @@
 import { NORMA_API } from '../data/data';
+import { getCookie } from '../services/common/common';
 
 /**
  * Получить массив объектов (список ингредиентов бургера).
  * @returns Promise<data>
  */
-export function getIngredients() {
+export function getIngredientsRequest() {
   return fetch(`${NORMA_API}/ingredients`).then(checkResponse);
 }
 
@@ -12,7 +13,7 @@ export function getIngredients() {
  * Получить массив объектов (список ингредиентов бургера).
  * @returns Promise<data>
  */
-export function getOrder(data) {
+export function getOrderRequest(data) {
   return fetch(`${NORMA_API}/orders`, {
     method: 'POST',
     headers: {
@@ -26,7 +27,7 @@ export function getOrder(data) {
  * Регистрация пользователя в системе.
  * @returns Promise<data>
  */
-export function registration(data) {
+export function registrationRequest(data) {
   return fetch(`${NORMA_API}/auth/register`, {
     method: 'POST',
     headers: {
@@ -40,7 +41,7 @@ export function registration(data) {
  * Авторизация пользователя в системе.
  * @returns Promise<data>
  */
-export function login(data) {
+export function loginRequest(data) {
   return fetch(`${NORMA_API}/auth/login`, {
     method: 'POST',
     headers: {
@@ -54,23 +55,24 @@ export function login(data) {
  * Обновление токена.
  * @returns Promise<data>
  */
-export function refresh(refreshToken) {
-  const body = { token: refreshToken };
+export const refreshTokenRequest = () => {
   return fetch(`${NORMA_API}/auth/token`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    }),
   }).then(checkResponse);
-}
+};
 
 /**
  * Выход пользователя из системы.
  * @returns Promise<data>
  */
-export function logout(refreshToken) {
-  const body = { token: refreshToken };
+export function logoutRequest() {
+  const body = { token: localStorage.getItem('refreshToken') };
   return fetch(`${NORMA_API}/auth/logout`, {
     method: 'POST',
     headers: {
@@ -84,12 +86,12 @@ export function logout(refreshToken) {
  * Получить пользователя в системе.
  * @returns Promise<data>
  */
-export function getUser(token) {
+export function getUserRequest() {
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token,
+      Authorization: getCookie('accessToken'),
     },
   }).then(checkResponse);
 }
@@ -98,12 +100,12 @@ export function getUser(token) {
  * Обновить данные пользователя в системе.
  * @returns Promise<data>
  */
-export function updateUser(token, data) {
+export function updateUserRequest(data) {
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token,
+      Authorization: getCookie('accessToken'),
     },
     body: JSON.stringify(data),
   }).then(checkResponse);
@@ -113,7 +115,7 @@ export function updateUser(token, data) {
  * Сброс пароля пользователя в системе.
  * @returns Promise<data>
  */
-export function forgotPassword(data) {
+export function forgotPasswordRequest(data) {
   return fetch(`${NORMA_API}/password-reset`, {
     method: 'POST',
     headers: {
@@ -127,7 +129,7 @@ export function forgotPassword(data) {
  * Изменение пароля пользователя в системе.
  * @returns Promise<data>
  */
-export function passwordReset(data) {
+export function passwordResetRequest(data) {
   return fetch(`${NORMA_API}/password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -144,15 +146,4 @@ export function passwordReset(data) {
  */
 const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
-
-const checkResponse1 = (res) => {
-  // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-  // return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-
-  if (res.ok) {
-    return res.json();
-  }
-
-  throw new Error('401');
 };

@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import { useDispatch } from 'react-redux';
 import { getIngredientsItems } from '../../services/actions/ingredients';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
   HomePage,
   LoginPage,
@@ -15,11 +15,23 @@ import {
 import { ProfilePage } from '../../pages/profile';
 import { useAuth } from '../../hooks/useAuth';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
-import IngredientDetails from '../burger-ingredients/ingredient-details/IngredientDetails';
+import { IngredientDetails } from '../burger-ingredients/ingredient-details/IngredientDetails';
+import { CLEAR_ITEM } from '../../services/actions/modal';
+
+import Modal from '../modal/Modal';
 
 function App() {
-  const auth = useAuth();
+  return <ModalSwitch />;
+}
 
+export default App;
+
+const ModalSwitch = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  let background = location.state && location.state.background;
+
+  const auth = useAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,26 +49,43 @@ function App() {
     return null;
   }
 
+  const handleModalClose = () => {
+    dispatch({
+      type: CLEAR_ITEM,
+    });
+    navigate(-1);
+  };
+
   return (
     <section className={styles.Page}>
       <AppHeader />
-      <Routes>
+
+      <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/ingredient/:id" element={<IngredientDetails />} />
-
+        <Route path="/ingredients/:_id" element={<IngredientDetails />} />
         <Route
           path="/profile"
           element={<ProtectedRouteElement element={<ProfilePage />} />}
         />
-
-        <Route path="*" element={<NotFoundPage />} />
+        <Route element={<NotFoundPage />} />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:_id"
+            element={
+              <Modal title={'Детали ингредиента'} onClose={handleModalClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </section>
   );
-}
-
-export default App;
+};

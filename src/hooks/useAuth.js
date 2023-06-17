@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   loginThunk,
-  refreshThunk,
+  refreshTokenThunk,
   logoutThunk,
 } from '../services/actions/auth';
 
@@ -53,8 +53,7 @@ export const useAuth = () => {
   const checkAuth = () => {
     setIsLoadingCheckAuth(true);
     try {
-      const refreshToken = localStorage.getItem('refreshToken');
-      dispatch(refreshThunk(refreshToken));
+      dispatch(refreshTokenThunk());
     } catch (error) {
     } finally {
       setIsLoadingCheckAuth(false);
@@ -99,7 +98,7 @@ export const useAuth = () => {
   const logout = useCallback(() => {
     setIsLoadingLogout(true);
     try {
-      dispatch(logoutThunk(localStorage.getItem('refreshToken')));
+      dispatch(logoutThunk());
     } catch (error) {
     } finally {
       setIsLoadingLogout(false);
