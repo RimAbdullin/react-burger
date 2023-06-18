@@ -13,7 +13,7 @@ import {
   NotFoundPage,
 } from '../../pages/';
 import { ProfilePage } from '../../pages/profile';
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../hooks/useUser';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
 import { IngredientDetails } from '../burger-ingredients/ingredient-details/IngredientDetails';
 import { CLEAR_ITEM } from '../../services/actions/modal';
@@ -31,7 +31,7 @@ const ModalSwitch = () => {
   const navigate = useNavigate();
   let background = location.state && location.state.background;
 
-  const auth = useAuth();
+  const user = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,12 +40,10 @@ const ModalSwitch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      auth.checkAuth();
-    }
+    user.checkAuth();
   }, []);
 
-  if (auth.isLoadingCheckAuth) {
+  if (user.isLoadingCheckAuth) {
     return null;
   }
 

@@ -18,10 +18,10 @@ import {
   getIngredientsSelector,
 } from '../../services/selectors/selector';
 
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../hooks/useUser';
 
 function BurgerConstructor() {
-  const auth = useAuth();
+  const user = useUser();
 
   // Определяем объект состояния компонента.
   const [state, setState] = useState({
@@ -93,7 +93,7 @@ function BurgerConstructor() {
 
   // Получаем номер заказа для конструктора и открываем модальное окно.
   const handleOpenModal = () => {
-    if (!auth.isAuth) {
+    if (!(user.isAuthChecked && user.user)) {
       return;
     }
     if (ingredientsConstructor && ingredientsConstructor.length > 0) {

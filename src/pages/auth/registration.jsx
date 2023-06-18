@@ -10,12 +10,12 @@ import {
 
 import { useRegistration } from '../../hooks/useRegistration';
 import { useSelector } from 'react-redux';
-import { getAuthSelector } from '../../services/selectors/selector';
+import { getUserSelector } from '../../services/selectors/selector';
 
 export function RegistrationPage() {
   const registration = useRegistration();
 
-  const { isAuth } = useSelector(getAuthSelector);
+  const { isAuthChecked, user } = useSelector(getUserSelector);
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
@@ -36,13 +36,21 @@ export function RegistrationPage() {
     return null;
   }
 
+  // Проверяем, авторизован ли пользователь
+  if (isAuthChecked && user.user) {
+    return (
+      // Переадресовываем авторизованного пользователя на главную страницу
+      <Navigate to="/" replace />
+    );
+  }
+
   // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
-  if (isAuth || registration.isRegistered) {
+  if (registration.isRegistered) {
     return <Navigate to="/" replace />;
   }
 
   return (
-    !isAuth && (
+    !(isAuthChecked && user.user) && (
       <section className={styles.container}>
         <div className={styles.content}>
           <form className={styles.form}>

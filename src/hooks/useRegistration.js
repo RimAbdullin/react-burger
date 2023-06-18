@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registrationThunk } from '../services/actions/registration';
 import { getRegistrationSelector } from '../services/selectors/selector';
-import { RESET_STATE } from '../services/actions/auth';
+import { RESET_STATE } from '../services/actions/user';
 
 export const useRegistration = () => {
   const { registrationRequest, registrationFailed } = useSelector(

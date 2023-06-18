@@ -7,11 +7,9 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useAuth } from '../hooks/useAuth';
 import { useUser } from '../hooks/useUser';
 
 export function ProfilePage() {
-  const auth = useAuth();
   const user = useUser();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
@@ -30,7 +28,7 @@ export function ProfilePage() {
 
   // При нажатии пункта меню "Выход" выходим из системы.
   const handleLogout = () => {
-    auth.logout();
+    user.logout();
   };
 
   // Устанавливаем значения полей на форме из полученных из запроса данных.
@@ -45,7 +43,8 @@ export function ProfilePage() {
   }, [user.user]);
 
   // Записываем данные пользователя.
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
     user.updateUser(form);
   };
 
@@ -60,7 +59,7 @@ export function ProfilePage() {
   };
 
   // Если еще выполняется запрос на получение данных пользователя, то не ничего не выполняем.
-  if (user.isLoading) {
+  if (user.isLoadingGetUser) {
     return null;
   }
 
@@ -94,7 +93,7 @@ export function ProfilePage() {
         </nav>
       </div>
       <div className={`ml-15 ${styles.content}`}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSave}>
           <div>
             <Input
               placeholder="Имя"
@@ -138,12 +137,7 @@ export function ProfilePage() {
               </div>
 
               <div className={`${styles['button-container']}`}>
-                <Button
-                  htmlType="button"
-                  type="primary"
-                  size="medium"
-                  onClick={handleSave}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                   Сохранить
                 </Button>
               </div>

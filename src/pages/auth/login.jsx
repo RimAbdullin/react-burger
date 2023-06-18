@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './login.module.css';
 
-import { useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useLocation, Link, Navigate } from 'react-router-dom';
+import { useUser } from '../../hooks/useUser';
 
 import {
   Button,
@@ -11,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function LoginPage() {
-  const auth = useAuth();
+  const user = useUser();
 
   const [form, setValue] = useState({ email: '', password: '' });
 
@@ -22,20 +22,20 @@ export function LoginPage() {
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      auth.login(form);
+      user.login(form);
     },
-    [auth, form]
+    [user, form]
   );
 
   const location = useLocation();
 
-  // Если еще выполняется запрос на регистрацию, то ничего не выполняем.
-  if (auth.isLoadingLogin) {
+  // Если еще выполняется запрос на вход, то ничего не выполняем.
+  if (user.isLoadingLogin) {
     return null;
   }
 
   // Если пользователь успешно зарегистрировался, то переходим на главную страницу.
-  if (auth.isAuth) {
+  if (user.isAuthChecked && user.user) {
     const redirectTo = location?.state?.redirectTo?.pathname
       ? location.state.redirectTo.pathname
       : '/';

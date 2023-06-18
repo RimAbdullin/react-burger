@@ -1,12 +1,12 @@
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../hooks/useUser';
 import { useLocation, Navigate } from 'react-router-dom';
 
 export function ProtectedRouteElement({ element }) {
-  const auth = useAuth();
+  const user = useUser();
 
   const location = useLocation();
 
-  return auth.isAuth ? (
+  return user.isAuthChecked && user.user ? (
     element
   ) : (
     <Navigate to="/login" replace state={{ redirectTo: location }} />

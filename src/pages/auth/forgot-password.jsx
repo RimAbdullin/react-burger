@@ -2,15 +2,14 @@ import { useEffect, useState } from 'react';
 import styles from './forgot-password.module.css';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/useAuth';
-
 import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useUser } from '../../hooks/useUser';
 
 export function ForgotPasswordPage() {
-  let auth = useAuth();
+  let user = useUser();
 
   const [form, setValue] = useState({ email: '' });
 
@@ -23,24 +22,24 @@ export function ForgotPasswordPage() {
     if (!form.email) {
       return;
     }
-    auth.forgotPassword(form);
+    user.forgotPassword(form);
   };
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth.isEmailSent) {
+    if (user.isEmailSent) {
       navigate('/reset-password');
     }
-  }, [auth.isEmailSent]);
+  }, [user.isEmailSent]);
 
   // Если еще выполняется запрос на регистрацию, то ничего не выполняем.
-  if (auth.isLoadingForgotPassword) {
+  if (user.isLoadingForgotPassword) {
     return null;
   }
 
   // Проверяем, авторизован ли пользователь
-  if (auth.isAuth) {
+  if (user.isAuthChecked && user.user) {
     return (
       // Переадресовываем авторизованного пользователя на главную страницу
       <Navigate to="/" replace />

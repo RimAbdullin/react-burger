@@ -9,7 +9,7 @@ export const getModalSelector = (store) => store.modal;
 
 export const getRegistrationSelector = (store) => store.registration;
 
-export const userSelector = (store) => store.user;
+export const getUserSelector = (store) => store.user;
 
 export const getForgotPasswordSelector = (store) => store.forgotPassword;
 

@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import styles from './reset-password.module.css';
 
 import { Link, Navigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../hooks/useUser';
 
-// import { useAuth } from '../services/auth';
 import {
   Button,
   Input,
@@ -12,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ResetPasswordPage() {
-  let auth = useAuth();
+  let user = useUser();
 
   const [form, setValue] = useState({ password: '', code: '' });
 
@@ -25,11 +24,11 @@ export function ResetPasswordPage() {
       return;
     }
     e.preventDefault();
-    auth.passwordReset({ password: form.password, token: form.code });
+    user.passwordReset({ password: form.password, token: form.code });
   };
 
   // Проверяем, авторизован ли пользователь
-  if (auth.isAuth) {
+  if (user.isAuthChecked && user.user) {
     return (
       // Переадресовываем авторизованного пользователя на главную страницу
       <Navigate to="/" replace />
@@ -37,18 +36,18 @@ export function ResetPasswordPage() {
   }
 
   // Если еще выполняется запрос на изменение пароля, то ничего не выполняем.
-  if (auth.isLoadingPasswordReset) {
+  if (user.isLoadingPasswordReset) {
     return null;
   }
 
   // Если изменение пароля произошло успешно..
-  if (auth.isPasswordReset) {
+  if (user.isPasswordReset) {
     // Отправляем на страницу логина.
     return <Navigate to={'/login'} replace />;
   }
 
   // Если ранее не было отправлено письмо с кодом.
-  if (!auth.isEmailSent) {
+  if (!user.isEmailSent) {
     // Отправляем на страницу отправки письма.
     return <Navigate to={'/forgot-password'} replace />;
   }
