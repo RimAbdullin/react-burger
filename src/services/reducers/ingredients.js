@@ -5,6 +5,7 @@ import {
   SET_BUN,
   INCREASE_ITEM,
   DECREASE_ITEM,
+  GET_ITEM,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   itemsRequest: false,
   itemsFailed: false,
   currentBun: null,
+  currentIngredient: {},
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -84,6 +86,15 @@ export const ingredientsReducer = (state = initialState, action) => {
             count: item._id === action.itemId ? item.count - 1 : item.count,
           })),
         ],
+      };
+    }
+
+    case GET_ITEM: {
+      return {
+        ...state,
+        currentIngredient: {
+          ...state.ingredients.filter((item) => item._id === action.id)[0],
+        },
       };
     }
 

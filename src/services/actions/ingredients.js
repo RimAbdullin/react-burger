@@ -1,4 +1,4 @@
-import { getIngredients } from '../../utils/burger-api';
+import { getIngredientsRequest } from '../../utils/burger-api';
 import { v4 } from 'uuid';
 
 export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
@@ -10,13 +10,15 @@ export const DECREASE_ITEM = 'DECREASE_ITEM';
 
 export const SET_BUN = 'SET_BUN';
 
+export const GET_ITEM = 'GET_ITEM';
+
 // thunk
 export function getIngredientsItems(bunName) {
   return function (dispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST,
     });
-    getIngredients()
+    getIngredientsRequest()
       .then((data) => {
         dispatch({
           type: GET_ITEMS_SUCCESS,
