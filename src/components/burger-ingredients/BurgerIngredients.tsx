@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
-import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.jsx';
+import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.js';
 import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../services/selectors/selector';
 

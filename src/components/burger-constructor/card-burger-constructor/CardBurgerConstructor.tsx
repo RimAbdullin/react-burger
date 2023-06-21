@@ -5,13 +5,24 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { burgerIngredientsConstructorObject } from '../../../utils/prop-types';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop, useDrag, DropTargetHookSpec } from 'react-dnd';
 import { DECREASE_ITEM } from '../../../services/actions/ingredients';
+import { IBurgerIngredientConstructor } from '../../../services/common/interfaces';
 
-function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
+interface ICardBurgerConstructorProps {
+  index: number;
+  children: IBurgerIngredientConstructor;
+  moveCard: (dragIndex: number, hoverIndex: number) => {};
+  extraClass: string;
+}
+
+function CardBurgerConstructor({
+  index,
+  children,
+  moveCard,
+  extraClass,
+}: ICardBurgerConstructorProps) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -28,7 +39,7 @@ function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
 
   const { id } = children;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const [{ handlerId }, drop] = useDrop({
     accept: 'card',
     collect(monitor) {
@@ -36,7 +47,7 @@ function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor): void {
       if (!ref.current) {
         return;
       }
@@ -52,7 +63,7 @@ function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset: any = monitor.getClientOffset();
 
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
@@ -104,10 +115,3 @@ function CardBurgerConstructor({ index, children, moveCard, extraClass }) {
 }
 
 export default CardBurgerConstructor;
-
-CardBurgerConstructor.propTypes = {
-  index: PropTypes.number.isRequired,
-  extraClass: PropTypes.string.isRequired,
-  children: PropTypes.shape(burgerIngredientsConstructorObject).isRequired,
-  moveCard: PropTypes.func.isRequired,
-};

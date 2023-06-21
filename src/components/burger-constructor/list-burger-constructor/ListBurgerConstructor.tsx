@@ -36,7 +36,7 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
     setCards(ingredientsConstructor);
   }, [ingredientsConstructor]);
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
+  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
     setCards((prevCards) =>
       update(prevCards, {
         $splice: [

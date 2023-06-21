@@ -11,7 +11,7 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   NotFoundPage,
-} from '../../pages/';
+} from '../../pages';
 import { ProfilePage } from '../../pages/profile';
 import { useUser } from '../../hooks/useUser';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
