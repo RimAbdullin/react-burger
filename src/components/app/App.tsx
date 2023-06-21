@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import { useDispatch } from 'react-redux';
@@ -20,9 +20,9 @@ import { CLEAR_ITEM } from '../../services/actions/modal';
 
 import Modal from '../modal/Modal';
 
-function App() {
+const App: FC = () => {
   return <ModalSwitch />;
-}
+};
 
 export default App;
 

@@ -8,6 +8,29 @@ import {
   GET_ITEM,
 } from '../actions/ingredients';
 
+import { IBurgerIngredient } from '../common/interfaces';
+
+interface IBurgerIngredientsState {
+  ingredients: IBurgerIngredient[];
+  bun: IBurgerIngredient[];
+  main: IBurgerIngredient[];
+  sauce: IBurgerIngredient[];
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+  currentBun: null | IBurgerIngredient;
+  currentIngredient: null | IBurgerIngredient;
+}
+
+interface IBurgerIngredientAction {
+  type: string;
+  items: IBurgerIngredient[];
+  bun: IBurgerIngredient[];
+  main: IBurgerIngredient[];
+  sauce: IBurgerIngredient[];
+  bunName: string;
+  id: string;
+}
+
 const initialState = {
   ingredients: [],
   bun: [],
@@ -16,10 +39,13 @@ const initialState = {
   itemsRequest: false,
   itemsFailed: false,
   currentBun: null,
-  currentIngredient: {},
+  currentIngredient: null,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: IBurgerIngredientAction
+): IBurgerIngredientsState => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

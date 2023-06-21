@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import styles from './CardBurgerConstructor.module.css';
 import {
   ConstructorElement,
@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
-import { useDrop, useDrag, DropTargetHookSpec } from 'react-dnd';
+import { useDrop, useDrag } from 'react-dnd';
 import { DECREASE_ITEM } from '../../../services/actions/ingredients';
 import { IBurgerIngredientConstructor } from '../../../services/common/interfaces';
 
@@ -17,12 +17,12 @@ interface ICardBurgerConstructorProps {
   extraClass: string;
 }
 
-function CardBurgerConstructor({
+const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
   index,
   children,
   moveCard,
   extraClass,
-}: ICardBurgerConstructorProps) {
+}) => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -112,6 +112,6 @@ function CardBurgerConstructor({
       />
     </section>
   );
-}
+};
 
 export default CardBurgerConstructor;
