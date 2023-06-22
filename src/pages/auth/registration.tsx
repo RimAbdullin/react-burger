@@ -9,22 +9,22 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useRegistration } from '../../hooks/useRegistration';
-import { useSelector } from 'react-redux';
 import { getUserSelector } from '../../services/selectors/selector';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
 
 export function RegistrationPage() {
   const registration = useRegistration();
 
-  const { isAuthChecked, user } = useSelector(getUserSelector);
+  const { isAuthChecked, user } = useTypedSelector(getUserSelector);
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleRegistration = useCallback(
-    (e) => {
+    (e: React.SyntheticEvent) => {
       e.preventDefault();
       registration.registration(form);
     },
@@ -50,60 +50,60 @@ export function RegistrationPage() {
   }
 
   return (
-    !(isAuthChecked && user.user) && (
-      <section className={styles.container}>
-        <div className={styles.content}>
-          <form className={styles.form}>
-            <div className={`mb-6 ${styles['title-container']}`}>
-              <span className={`text_type_main-medium`}>Регистрация</span>
+    <section className={styles.container}>
+      !(isAuthChecked && user.user) && (
+      <div className={styles.content}>
+        <form className={styles.form}>
+          <div className={`mb-6 ${styles['title-container']}`}>
+            <span className={`text_type_main-medium`}>Регистрация</span>
+          </div>
+          <Input
+            placeholder="Имя"
+            value={form.name}
+            name="name"
+            onChange={onChange}
+            extraClass="mb-6"
+          />
+          <Input
+            placeholder="Email"
+            value={form.email}
+            name="email"
+            onChange={onChange}
+            extraClass="mb-6"
+          />
+          <PasswordInput
+            placeholder="Пароль"
+            value={form.password}
+            name="password"
+            onChange={onChange}
+            extraClass="mb-6"
+          />
+          <div className={`mb-20 ${styles['actions']}`}>
+            <div className={`${styles['button-container']}`}>
+              <Button
+                htmlType="button"
+                type="primary"
+                size="medium"
+                onClick={handleRegistration}
+              >
+                Зарегистрироваться
+              </Button>
             </div>
-            <Input
-              placeholder="Имя"
-              value={form.name}
-              name="name"
-              onChange={onChange}
-              extraClass="mb-6"
-            />
-            <Input
-              placeholder="Email"
-              value={form.email}
-              name="email"
-              onChange={onChange}
-              extraClass="mb-6"
-            />
-            <PasswordInput
-              placeholder="Пароль"
-              value={form.password}
-              name="password"
-              onChange={onChange}
-              extraClass="mb-6"
-            />
-            <div className={`mb-20 ${styles['actions']}`}>
-              <div className={`${styles['button-container']}`}>
-                <Button
-                  htmlType="button"
-                  type="primary"
-                  size="medium"
-                  onClick={handleRegistration}
-                >
-                  Зарегистрироваться
-                </Button>
-              </div>
-            </div>
+          </div>
 
-            <div className={`${styles['bottom-title-container']}`}>
-              <span className={`text_color_inactive text_type_main-default`}>
-                Уже зарегистрированы?
+          <div className={`${styles['bottom-title-container']}`}>
+            <span className={`text_color_inactive text_type_main-default`}>
+              Уже зарегистрированы?
+            </span>
+            <Link to={`/login`} relative="path" className="ml-2">
+              <span className={`text_type_main-default ${styles['link']}`}>
+                Войти
               </span>
-              <Link to={`/login`} relative="path" className="ml-2">
-                <span className={`text_type_main-default ${styles['link']}`}>
-                  Войти
-                </span>
-              </Link>
-            </div>
-          </form>
-        </div>
-      </section>
-    )
+            </Link>
+          </div>
+        </form>
+      </div>
+      )
+    </section>
   );
 }

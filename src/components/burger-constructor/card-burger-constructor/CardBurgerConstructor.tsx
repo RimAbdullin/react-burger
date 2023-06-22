@@ -8,12 +8,12 @@ import { useDispatch } from 'react-redux';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
 import { useDrop, useDrag } from 'react-dnd';
 import { DECREASE_ITEM } from '../../../services/actions/ingredients';
-import { IBurgerIngredientConstructor } from '../../../services/common/interfaces';
+import { IBurgerIngredient } from '../../../services/common/interfaces';
 
 interface ICardBurgerConstructorProps {
   index: number;
-  children: IBurgerIngredientConstructor;
-  moveCard: (dragIndex: number, hoverIndex: number) => {};
+  children: IBurgerIngredient;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
   extraClass: string;
 }
 

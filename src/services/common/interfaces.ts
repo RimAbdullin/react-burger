@@ -11,9 +11,11 @@ export interface IBurgerIngredient {
   readonly image_mobile: string;
   readonly image_large: string;
   readonly __v: number;
+  id?: null | string;
+  count?: number;
 }
 
-export interface IBurgerIngredientConstructor extends IBurgerIngredient {
-  id: string;
-  count: number;
-}
+// export interface IBurgerIngredientConstructor extends IBurgerIngredient {
+//   id: string;
+//   count: number;
+// }

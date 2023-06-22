@@ -6,10 +6,10 @@ import styles from './CardBurgerIngredients.module.css';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
 import { useLocation, Link } from 'react-router-dom';
+import { useTypedSelector } from '../../../hooks/useTypeSelector';
 
 function CardBurgerIngredients({ children }) {
   const location = useLocation();
@@ -20,7 +20,7 @@ function CardBurgerIngredients({ children }) {
 
   // Получаем данные из хранилища redux.
   // Значение счетчика выбранного ингредиента.
-  const { ingredients } = useSelector(getIngredientsSelector);
+  const { ingredients } = useTypedSelector(getIngredientsSelector);
 
   // Изменяем количество выбранных ингредиентов.
   useEffect(() => {

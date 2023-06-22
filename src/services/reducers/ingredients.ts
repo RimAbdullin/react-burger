@@ -1,35 +1,8 @@
 import {
-  GET_ITEMS_FAILED,
-  GET_ITEMS_SUCCESS,
-  GET_ITEMS_REQUEST,
-  SET_BUN,
-  INCREASE_ITEM,
-  DECREASE_ITEM,
-  GET_ITEM,
-} from '../actions/ingredients';
-
-import { IBurgerIngredient } from '../common/interfaces';
-
-interface IBurgerIngredientsState {
-  ingredients: IBurgerIngredient[];
-  bun: IBurgerIngredient[];
-  main: IBurgerIngredient[];
-  sauce: IBurgerIngredient[];
-  itemsRequest: boolean;
-  itemsFailed: boolean;
-  currentBun: null | IBurgerIngredient;
-  currentIngredient: null | IBurgerIngredient;
-}
-
-interface IBurgerIngredientAction {
-  type: string;
-  items: IBurgerIngredient[];
-  bun: IBurgerIngredient[];
-  main: IBurgerIngredient[];
-  sauce: IBurgerIngredient[];
-  bunName: string;
-  id: string;
-}
+  IngredientsActionTypes,
+  IBurgerIngredientsState,
+  IngredientsAction,
+} from '../store/types/ingredients';
 
 const initialState = {
   ingredients: [],
@@ -43,18 +16,18 @@ const initialState = {
 };
 
 export const ingredientsReducer = (
-  state = initialState,
-  action: IBurgerIngredientAction
+  state: IBurgerIngredientsState = initialState,
+  action: IngredientsAction
 ): IBurgerIngredientsState => {
   switch (action.type) {
-    case GET_ITEMS_REQUEST: {
+    case IngredientsActionTypes.GET_ITEMS_REQUEST: {
       return {
         ...state,
         itemsRequest: true,
         itemsFailed: false,
       };
     }
-    case GET_ITEMS_SUCCESS: {
+    case IngredientsActionTypes.GET_ITEMS_SUCCESS: {
       return {
         ...state,
         itemsRequest: false,
@@ -68,10 +41,10 @@ export const ingredientsReducer = (
         },
       };
     }
-    case GET_ITEMS_FAILED: {
+    case IngredientsActionTypes.GET_ITEMS_FAILED: {
       return { ...state, itemsFailed: true, itemsRequest: false };
     }
-    case SET_BUN: {
+    case IngredientsActionTypes.SET_BUN: {
       return {
         ...state,
         currentBun: {
@@ -91,31 +64,41 @@ export const ingredientsReducer = (
         ],
       };
     }
-    case INCREASE_ITEM: {
+    case IngredientsActionTypes.INCREASE_ITEM: {
       return {
         ...state,
         ingredients: [
           ...state.ingredients.map((item) => ({
             ...item,
-            count: item._id === action.itemId ? item.count + 1 : item.count,
+            count:
+              item._id === action.itemId
+                ? item.count
+                  ? item.count
+                  : 0 + 1
+                : item.count,
           })),
         ],
       };
     }
 
-    case DECREASE_ITEM: {
+    case IngredientsActionTypes.DECREASE_ITEM: {
       return {
         ...state,
         ingredients: [
           ...state.ingredients.map((item) => ({
             ...item,
-            count: item._id === action.itemId ? item.count - 1 : item.count,
+            count:
+              item._id === action.itemId
+                ? item.count
+                  ? item.count
+                  : 0 - 1
+                : item.count,
           })),
         ],
       };
     }
 
-    case GET_ITEM: {
+    case IngredientsActionTypes.GET_ITEM: {
       return {
         ...state,
         currentIngredient: {

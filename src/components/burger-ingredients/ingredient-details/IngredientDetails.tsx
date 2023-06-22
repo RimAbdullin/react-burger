@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import styles from './IngredientDetails.module.css';
 import { useEffect } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
@@ -6,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { getIngredientsItems } from '../../../services/actions/ingredients';
 
 import { useParams } from 'react-router-dom';
-import { CLEAR_ITEM, SELECT_ITEM } from '../../../services/actions/modal';
-import { GET_ITEM } from '../../../services/actions/ingredients';
+import { useTypedSelector } from '../../../hooks/useTypeSelector';
+import { IngredientsActionTypes } from '../../../services/store/types/ingredients';
 
 export const IngredientDetails = () => {
   const params = useParams();
@@ -16,7 +15,7 @@ export const IngredientDetails = () => {
 
   // Получаем данные из хранилища redux.
   // Выбранный ингредиент для отображения детальных данных.
-  const { currentIngredient, ingredients } = useSelector(
+  const { currentIngredient, ingredients } = useTypedSelector(
     getIngredientsSelector
   );
 
@@ -30,7 +29,7 @@ export const IngredientDetails = () => {
 
   useEffect(() => {
     dispatch({
-      type: GET_ITEM,
+      type: IngredientsActionTypes.GET_ITEM,
       id: _id,
     });
   }, [dispatch, ingredients]);

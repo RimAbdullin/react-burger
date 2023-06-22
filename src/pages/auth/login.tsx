@@ -15,12 +15,12 @@ export function LoginPage() {
 
   const [form, setValue] = useState({ email: '', password: '' });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleLogin = useCallback(
-    (e) => {
+    (e: React.SyntheticEvent) => {
       e.preventDefault();
       user.login(form);
     },

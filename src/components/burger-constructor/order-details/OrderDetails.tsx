@@ -1,12 +1,12 @@
 import styles from './OrderDetails.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { getOrderSelector } from '../../../services/selectors/selector';
+import { useTypedSelector } from '../../../hooks/useTypeSelector';
 
 const OrderDetails = () => {
   // Номер заказа.
   const { orderNumber, orderRequest, orderFailed } =
-    useSelector(getOrderSelector);
+    useTypedSelector(getOrderSelector);
 
   return (
     <section className={`${styles['Modal-content']}`}>

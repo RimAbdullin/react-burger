@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { registrationThunk } from '../services/actions/registration';
 import { getRegistrationSelector } from '../services/selectors/selector';
 import { RESET_STATE } from '../services/actions/user';
+import { useTypedSelector } from './useTypeSelector';
 
 export const useRegistration = () => {
-  const { registrationRequest, registrationFailed } = useSelector(
+  const { registrationRequest, registrationFailed } = useTypedSelector(
     getRegistrationSelector
   );
 

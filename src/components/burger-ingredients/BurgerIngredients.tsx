@@ -2,12 +2,12 @@ import { useState, useRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
 import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.js';
-import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../services/selectors/selector';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
 
 function BurgerIngredients() {
   // Получаем данные из хранилища redux.
-  const { bun, main, sauce, itemsFailed, itemsRequest } = useSelector(
+  const { bun, main, sauce, itemsFailed, itemsRequest } = useTypedSelector(
     getIngredientsSelector
   );
 

@@ -8,7 +8,7 @@ import {
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
 import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
 import { INCREASE_ITEM, SET_BUN } from '../../services/actions/ingredients';
@@ -19,6 +19,8 @@ import {
 } from '../../services/selectors/selector';
 
 import { useUser } from '../../hooks/useUser';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
+import { IngredientsActionTypes } from '../../services/store/types/ingredients';
 
 function BurgerConstructor() {
   const user = useUser();
@@ -34,17 +36,17 @@ function BurgerConstructor() {
   // Выбранную булку и список выбранных ингредиентов для конструктора.
   const dispatch = useDispatch();
 
-  const { ingredientsConstructor } = useSelector(
+  const { ingredientsConstructor } = useTypedSelector(
     getIngredientsConstructorSelector
   );
 
-  const { currentBun } = useSelector(getIngredientsSelector);
+  const { currentBun } = useTypedSelector(getIngredientsSelector);
 
   // Добавление ингредиента в конструктор.
   const handleDrop = (item) => {
     if (item.type === 'bun') {
       dispatch({
-        type: SET_BUN,
+        type: IngredientsActionTypes.SET_BUN,
         bunName: item.name,
         id: v4(),
       });

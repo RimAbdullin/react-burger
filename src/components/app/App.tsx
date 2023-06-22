@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
-import { useDispatch } from 'react-redux';
 import { getIngredientsItems } from '../../services/actions/ingredients';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -19,6 +18,7 @@ import { IngredientDetails } from '../burger-ingredients/ingredient-details/Ingr
 import { CLEAR_ITEM } from '../../services/actions/modal';
 
 import Modal from '../modal/Modal';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const App: FC = () => {
   return <ModalSwitch />;
@@ -32,7 +32,7 @@ const ModalSwitch = () => {
   let background = location.state && location.state.background;
 
   const user = useUser();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.

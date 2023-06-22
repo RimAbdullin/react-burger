@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   checkAuthThunk,
@@ -12,16 +12,12 @@ import {
   getForgotPasswordSelector,
   getPasswordResetSelector,
 } from '../services/selectors/selector';
-import {
-  RESET_STATE,
-  loginThunk,
-  refreshTokenThunk,
-  logoutThunk,
-} from '../services/actions/user';
+import { RESET_STATE, loginThunk, logoutThunk } from '../services/actions/user';
 
 import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
 import { SET_FORGOT_PASSWORD } from '../services/actions/forgot-password';
+import { useTypedSelector } from './useTypeSelector';
 
 export const useUser = () => {
   const {
@@ -37,15 +33,15 @@ export const useUser = () => {
     refreshTokenFailed,
     logoutRequest,
     logoutFailed,
-  } = useSelector(getUserSelector);
+  } = useTypedSelector(getUserSelector);
 
   const [isLoadingGetUser, setIsLoadingGetUser] = useState(false);
   const [isLoadingUpdateUser, setIsLoadingUpdateUser] = useState(false);
 
   const { isEmailSent, forgotPasswordRequest, forgotPasswordFailed } =
-    useSelector(getForgotPasswordSelector);
+    useTypedSelector(getForgotPasswordSelector);
 
-  const { passwordResetRequest, passwordResetFailed } = useSelector(
+  const { passwordResetRequest, passwordResetFailed } = useTypedSelector(
     getPasswordResetSelector
   );
 
