@@ -11,7 +11,7 @@ import { useModal } from '../../hooks/useModal';
 import { useDispatch } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
 import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
-import { INCREASE_ITEM, SET_BUN } from '../../services/actions/ingredients';
+import { INCREASE_ITEM } from '../../services/actions/ingredients';
 import { v4 } from 'uuid';
 import {
   getIngredientsConstructorSelector,

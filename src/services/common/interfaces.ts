@@ -14,8 +14,3 @@ export interface IBurgerIngredient {
   id?: null | string;
   count?: number;
 }
-
-// export interface IBurgerIngredientConstructor extends IBurgerIngredient {
-//   id: string;
-//   count: number;
-// }

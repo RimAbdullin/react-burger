@@ -7,8 +7,8 @@ import {
 import { useDispatch } from 'react-redux';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
 import { useDrop, useDrag } from 'react-dnd';
-import { DECREASE_ITEM } from '../../../services/actions/ingredients';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
+import { IngredientsActionTypes } from '../../../services/store/types/ingredients';
 
 interface ICardBurgerConstructorProps {
   index: number;
@@ -32,7 +32,7 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
     });
 
     dispatch({
-      type: DECREASE_ITEM,
+      type: IngredientsActionTypes.DECREASE_ITEM,
       itemId: children._id,
     });
   };

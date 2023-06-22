@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import styles from './ListBurgerConstructor.module.css';
 import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstructor';
 import { useDrop } from 'react-dnd';
@@ -10,8 +10,15 @@ import {
   getIngredientsSelector,
 } from '../../../services/selectors/selector';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
+import { IBurgerIngredientConstructor } from '../../../services/common/interfaces';
 
-const ListBurgerConstructor = ({ onDropHandler }) => {
+interface IListBurgerConstructorProps {
+  onDropHandler: (itemId: string) => void;
+}
+
+const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
+  onDropHandler,
+}) => {
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
   const { ingredientsConstructor } = useTypedSelector(
@@ -22,7 +29,7 @@ const ListBurgerConstructor = ({ onDropHandler }) => {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredients',
-    drop(itemId) {
+    drop(itemId: string) {
       onDropHandler(itemId);
     },
     collect: (monitor) => ({
