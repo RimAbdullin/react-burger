@@ -31,7 +31,6 @@ interface IPostUserLoginFailed {
 
 interface IPostUserLoginSuccess {
   type: UserActionTypes.POST_LOGIN_SUCCESS;
-  data: IUserResponse;
 }
 
 interface IPostUserLoginRequest {
@@ -45,7 +44,6 @@ interface IPostUserRefreshTokenFailed {
 
 interface IPostUserRefreshTokenSuccess {
   type: UserActionTypes.POST_REFRESH_TOKEN_SUCCESS;
-  data: IUserResponse;
 }
 
 interface IPostUserRefreshTokenRequest {
@@ -59,7 +57,6 @@ interface IPostUserLogoutFailed {
 
 interface IPostUserLogoutSuccess {
   type: UserActionTypes.POST_LOGOUT_SUCCESS;
-  data: IUserResponse;
 }
 
 interface IPostUserLogoutRequest {
@@ -69,11 +66,12 @@ interface IPostUserLogoutRequest {
 // get user.
 interface IGetUserFailed {
   type: UserActionTypes.GET_USER_FAILED;
+  payload: string;
 }
 
 interface IGetUserSuccess {
   type: UserActionTypes.GET_USER_SUCCESS;
-  data: IUserResponse;
+  data: IGetUserResponse;
 }
 
 interface IGetUserRequest {
@@ -87,7 +85,7 @@ interface IPostUserUpdateFailed {
 
 interface IPostUserUpdateSuccess {
   type: UserActionTypes.UPDATE_USER_SUCCESS;
-  data: IUserResponse;
+  data: IGetUserResponse;
 }
 
 interface IPostUserUpdateRequest {
@@ -102,7 +100,7 @@ interface IUserResetState {
 // auth checked.
 interface IUserAuthChecked {
   type: UserActionTypes.AUTH_CHECKED;
-  data: IUserResponse;
+  // data: IUserResponse;
 }
 
 export type UserAction =
@@ -125,16 +123,32 @@ export type UserAction =
   | IUserAuthChecked;
 
 export interface IUserState {
-  isEmailSent: boolean;
-  forgotPasswordRequest: boolean;
-  forgotPasswordFailed: boolean;
+  isAuthChecked: boolean;
+  user: null | IUser;
+  // getUser.
+  getUserRequest: boolean;
+  getUserFailed: boolean;
+  // updateUser.
+  updateUserRequest: boolean;
+  updateUserFailed: boolean;
+  // login.
+  loginRequest: boolean;
+  loginFailed: boolean;
+  // refresh.
+  refreshTokenRequest: boolean;
+  refreshTokenFailed: boolean;
+  // logout.
+  logoutRequest: boolean;
+  logoutFailed: boolean;
 }
 
-export interface IUserForm {
+export interface IUser {
+  name: string;
   email: string;
+  password: string;
 }
 
-export interface IUserResponse {
+export interface IGetUserResponse {
   message: string;
   success: boolean;
 }

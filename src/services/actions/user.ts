@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import {
   getUserRequest,
   updateUserRequest,
@@ -7,51 +8,29 @@ import {
 } from '../../utils/burger-api';
 
 import { getCookie, removeCookie, saveTokens } from '../common/common';
-
-export const POST_LOGIN_FAILED = 'POST_LOGIN_FAILED';
-export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
-export const POST_LOGIN_REQUEST = 'POST_LOGIN_REQUEST';
-
-export const POST_REFRESH_TOKEN_FAILED = 'POST_REFRESH_TOKEN_FAILED';
-export const POST_REFRESH_TOKEN_SUCCESS = 'POST_REFRESH_TOKEN_SUCCESS';
-export const POST_REFRESH_TOKEN_REQUEST = 'POST_REFRESH_TOKEN_REQUEST';
-
-export const POST_LOGOUT_FAILED = 'POST_LOGOUT_FAILED';
-export const POST_LOGOUT_SUCCESS = 'POST_LOGOUT_SUCCESS';
-export const POST_LOGOUT_REQUEST = 'POST_LOGOUT_REQUEST';
-
-export const GET_USER_FAILED = 'GET_USER_FAILED';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-
-export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
-
-export const RESET_STATE = 'RESET_STATE';
-
-export const AUTH_CHECKED = 'AUTH_CHECKED';
+import { UserAction, UserActionTypes } from '../store/types/user';
 
 // thunk
 
 // check user is auth.
-export const checkAuthThunk = () => (dispatch) => {
+export const checkAuthThunk = () => (dispatch: Dispatch<UserAction>) => {
   if (getCookie('accessToken')) {
-    dispatch(getUserThunk());
+    // dispatch(getUserThunk());
+    getUserThunk();
   }
-  dispatch({ type: AUTH_CHECKED });
+  dispatch({ type: UserActionTypes.AUTH_CHECKED });
 };
 
 // get user.
 export function getUserThunk() {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<UserAction>) {
     dispatch({
-      type: GET_USER_REQUEST,
+      type: UserActionTypes.GET_USER_REQUEST,
     });
     getUserRequest()
       .then((data) => {
         dispatch({
-          type: GET_USER_SUCCESS,
+          type: UserActionTypes.GET_USER_SUCCESS,
           data: data,
         });
 
@@ -59,10 +38,11 @@ export function getUserThunk() {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken(getUserThunk()));
+          // dispatch(refreshToken(getUserThunk()));
+          refreshToken(getUserThunk());
         } else {
           dispatch({
-            type: GET_USER_FAILED,
+            type: UserActionTypes.GET_USER_FAILED,
             payload: err.message,
           });
         }
@@ -72,14 +52,14 @@ export function getUserThunk() {
 
 // update user.
 export function updateUserThunk(form) {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<UserAction>) {
     dispatch({
-      type: UPDATE_USER_REQUEST,
+      type: UserActionTypes.UPDATE_USER_REQUEST,
     });
     updateUserRequest(form)
       .then((data) => {
         dispatch({
-          type: UPDATE_USER_SUCCESS,
+          type: UserActionTypes.UPDATE_USER_SUCCESS,
           data: data,
         });
         return data;
@@ -89,7 +69,7 @@ export function updateUserThunk(form) {
           dispatch(refreshToken(updateUserThunk(form)));
         } else {
           dispatch({
-            type: UPDATE_USER_FAILED,
+            type: UserActionTypes.UPDATE_USER_FAILED,
           });
         }
       });
@@ -97,7 +77,7 @@ export function updateUserThunk(form) {
 }
 
 // refresh.
-const refreshToken = (afterRefresh) => (dispatch) => {
+const refreshToken = (afterRefresh) => (dispatch: Dispatch<UserAction>) => {
   refreshTokenRequest().then((res) => {
     saveTokens(res.accessToken, res.refreshToken);
     dispatch(afterRefresh);
@@ -106,14 +86,14 @@ const refreshToken = (afterRefresh) => (dispatch) => {
 
 // login.
 export function loginThunk(form) {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<UserAction>) {
     dispatch({
-      type: POST_LOGIN_REQUEST,
+      type: UserActionTypes.POST_LOGIN_REQUEST,
     });
     loginRequest(form)
       .then((data) => {
         dispatch({
-          type: POST_LOGIN_SUCCESS,
+          type: UserActionTypes.POST_LOGIN_SUCCESS,
           data: data,
         });
 
@@ -123,25 +103,25 @@ export function loginThunk(form) {
       })
       .catch((err) => {
         dispatch({
-          type: POST_LOGIN_FAILED,
+          type: UserActionTypes.POST_LOGIN_FAILED,
         });
       })
       .finally(() => {
-        dispatch({ type: AUTH_CHECKED });
+        dispatch({ type: UserActionTypes.AUTH_CHECKED });
       });
   };
 }
 
 // refresh.
 export function refreshTokenThunk() {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<UserAction>) {
     dispatch({
-      type: POST_REFRESH_TOKEN_REQUEST,
+      type: UserActionTypes.POST_REFRESH_TOKEN_REQUEST,
     });
     refreshTokenRequest()
       .then((data) => {
         dispatch({
-          type: POST_REFRESH_TOKEN_SUCCESS,
+          type: UserActionTypes.POST_REFRESH_TOKEN_SUCCESS,
           data: data,
         });
 
@@ -151,7 +131,7 @@ export function refreshTokenThunk() {
       })
       .catch((err) => {
         dispatch({
-          type: POST_REFRESH_TOKEN_FAILED,
+          type: UserActionTypes.POST_REFRESH_TOKEN_FAILED,
         });
       });
   };
@@ -159,21 +139,21 @@ export function refreshTokenThunk() {
 
 // logout.
 export function logoutThunk() {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<UserAction>) {
     dispatch({
-      type: POST_LOGOUT_REQUEST,
+      type: UserActionTypes.POST_LOGOUT_REQUEST,
     });
     logoutRequest()
       .then((data) => {
         localStorage.removeItem('refreshToken');
 
         dispatch({
-          type: POST_LOGOUT_SUCCESS,
+          type: UserActionTypes.POST_LOGOUT_SUCCESS,
           data: data,
         });
 
         dispatch({
-          type: RESET_STATE,
+          type: UserActionTypes.RESET_STATE,
         });
 
         removeCookie('accessToken');
@@ -182,7 +162,7 @@ export function logoutThunk() {
       })
       .catch((err) => {
         dispatch({
-          type: POST_LOGOUT_FAILED,
+          type: UserActionTypes.POST_LOGOUT_FAILED,
         });
       });
   };

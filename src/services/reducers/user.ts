@@ -1,22 +1,4 @@
-import {
-  GET_USER_FAILED,
-  GET_USER_SUCCESS,
-  GET_USER_REQUEST,
-  UPDATE_USER_FAILED,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_REQUEST,
-  POST_LOGIN_FAILED,
-  POST_LOGIN_SUCCESS,
-  POST_LOGIN_REQUEST,
-  POST_REFRESH_TOKEN_FAILED,
-  POST_REFRESH_TOKEN_SUCCESS,
-  POST_REFRESH_TOKEN_REQUEST,
-  POST_LOGOUT_FAILED,
-  POST_LOGOUT_SUCCESS,
-  POST_LOGOUT_REQUEST,
-  RESET_STATE,
-  AUTH_CHECKED,
-} from '../actions/user';
+import { IUserState, UserActionTypes } from '../store/types/user';
 
 const initialState = {
   isAuthChecked: false,
@@ -38,16 +20,19 @@ const initialState = {
   logoutFailed: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+  state: IUserState = initialState,
+  action
+): IUserState => {
   switch (action.type) {
-    case GET_USER_REQUEST: {
+    case UserActionTypes.GET_USER_REQUEST: {
       return {
         ...state,
         getUserRequest: true,
         getUserFailed: false,
       };
     }
-    case GET_USER_SUCCESS: {
+    case UserActionTypes.GET_USER_SUCCESS: {
       return {
         ...state,
         getUserRequest: false,
@@ -55,18 +40,18 @@ export const userReducer = (state = initialState, action) => {
         user: { ...action.data.user },
       };
     }
-    case GET_USER_FAILED: {
+    case UserActionTypes.GET_USER_FAILED: {
       return { ...state, getUserFailed: true, getUserRequest: false };
     }
 
-    case UPDATE_USER_REQUEST: {
+    case UserActionTypes.UPDATE_USER_REQUEST: {
       return {
         ...state,
         updateUserRequest: true,
         updateUserFailed: false,
       };
     }
-    case UPDATE_USER_SUCCESS: {
+    case UserActionTypes.UPDATE_USER_SUCCESS: {
       return {
         ...state,
         updateUserRequest: false,
@@ -74,11 +59,11 @@ export const userReducer = (state = initialState, action) => {
         user: { ...action.data.user },
       };
     }
-    case UPDATE_USER_FAILED: {
+    case UserActionTypes.UPDATE_USER_FAILED: {
       return { ...state, updateUserFailed: true, updateUserRequest: false };
     }
 
-    case AUTH_CHECKED: {
+    case UserActionTypes.AUTH_CHECKED: {
       return {
         ...state,
         isAuthChecked: true,
@@ -86,14 +71,14 @@ export const userReducer = (state = initialState, action) => {
     }
 
     // login.
-    case POST_LOGIN_REQUEST: {
+    case UserActionTypes.POST_LOGIN_REQUEST: {
       return {
         ...state,
         loginRequest: true,
         loginFailed: false,
       };
     }
-    case POST_LOGIN_SUCCESS: {
+    case UserActionTypes.POST_LOGIN_SUCCESS: {
       return {
         ...state,
         loginRequest: false,
@@ -101,7 +86,7 @@ export const userReducer = (state = initialState, action) => {
         user: { ...action.data.user },
       };
     }
-    case POST_LOGIN_FAILED: {
+    case UserActionTypes.POST_LOGIN_FAILED: {
       return {
         ...state,
         loginFailed: true,
