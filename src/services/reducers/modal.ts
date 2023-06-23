@@ -1,18 +1,25 @@
-import { SELECT_ITEM, CLEAR_ITEM } from '../actions/modal';
+import {
+  IModalState,
+  ModalAction,
+  ModalActionTypes,
+} from '../store/types/modal';
 
 const initialState = {
   currentIngredient: null,
 };
 
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (
+  state: IModalState = initialState,
+  action: ModalAction
+) => {
   switch (action.type) {
-    case SELECT_ITEM: {
+    case ModalActionTypes.SELECT_ITEM: {
       return {
         ...state,
         currentIngredient: action.item,
       };
     }
-    case CLEAR_ITEM: {
+    case ModalActionTypes.CLEAR_ITEM: {
       return {
         ...state,
         currentIngredient: null,

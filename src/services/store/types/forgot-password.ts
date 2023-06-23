@@ -12,7 +12,7 @@ interface IGetForgotPasswordFailed {
 
 interface IGetForgotPasswordSuccess {
   type: ForgotPasswordActionTypes.POST_FORGOT_PASSWORD_SUCCESS;
-  orderNumber: number;
+  data: IForgotPasswordResponse;
 }
 
 interface IGetForgotPasswordRequest {
@@ -21,12 +21,10 @@ interface IGetForgotPasswordRequest {
 
 interface IForgotPasswordResetState {
   type: ForgotPasswordActionTypes.RESET_STATE;
-  orderNumber: number;
 }
 
 interface ISetForgotPassword {
   type: ForgotPasswordActionTypes.SET_FORGOT_PASSWORD;
-  orderNumber: number;
   value: boolean;
 }
 
@@ -45,4 +43,9 @@ export interface IForgotPasswordState {
 
 export interface IForgotPasswordForm {
   email: string;
+}
+
+export interface IForgotPasswordResponse {
+  message: string;
+  success: boolean;
 }

@@ -1,12 +1,12 @@
 import styles from './IngredientDetails.module.css';
 import { useEffect } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
-import { useDispatch } from 'react-redux';
 import { getIngredientsItems } from '../../../services/actions/ingredients';
 
 import { useParams } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { IngredientsActionTypes } from '../../../services/store/types/ingredients';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 export const IngredientDetails = () => {
   const params = useParams();
@@ -19,7 +19,7 @@ export const IngredientDetails = () => {
     getIngredientsSelector
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!ingredients) {

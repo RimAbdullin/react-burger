@@ -1,32 +1,34 @@
 import {
-  POST_PASSWORD_RESET_FAILED,
-  POST_PASSWORD_RESET_SUCCESS,
-  POST_PASSWORD_RESET_REQUEST,
-  RESET_STATE,
-} from '../actions/password-reset';
+  IPasswordResetState,
+  PasswordResetAction,
+  PasswordResetActionTypes,
+} from '../store/types/password-reset';
 
 const initialState = {
   passwordResetRequest: true,
   passwordResetFailed: false,
 };
 
-export const passwordResetReducer = (state = initialState, action) => {
+export const passwordResetReducer = (
+  state: IPasswordResetState = initialState,
+  action: PasswordResetAction
+): IPasswordResetState => {
   switch (action.type) {
-    case POST_PASSWORD_RESET_REQUEST: {
+    case PasswordResetActionTypes.POST_PASSWORD_RESET_REQUEST: {
       return {
         ...state,
         passwordResetRequest: true,
         passwordResetFailed: false,
       };
     }
-    case POST_PASSWORD_RESET_SUCCESS: {
+    case PasswordResetActionTypes.POST_PASSWORD_RESET_SUCCESS: {
       return {
         ...state,
         passwordResetRequest: false,
         passwordResetFailed: false,
       };
     }
-    case POST_PASSWORD_RESET_FAILED: {
+    case PasswordResetActionTypes.POST_PASSWORD_RESET_FAILED: {
       return {
         ...state,
         passwordResetFailed: true,
@@ -35,7 +37,7 @@ export const passwordResetReducer = (state = initialState, action) => {
     }
 
     // reset all store.
-    case RESET_STATE: {
+    case PasswordResetActionTypes.RESET_STATE: {
       return {
         ...initialState,
       };

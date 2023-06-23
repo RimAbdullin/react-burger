@@ -13,11 +13,11 @@ export function ForgotPasswordPage() {
 
   const [form, setValue] = useState({ email: '' });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRestore = (e) => {
+  const handleRestore = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!form.email) {
       return;

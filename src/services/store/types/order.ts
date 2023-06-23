@@ -34,3 +34,7 @@ export interface IOrderState {
   orderRequest: boolean;
   orderFailed: boolean;
 }
+
+export interface OrderRequestBody {
+  _id: string;
+}

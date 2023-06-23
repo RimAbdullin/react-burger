@@ -1,42 +1,47 @@
+import { Dispatch } from 'react';
 import { getOrderRequest } from '../../utils/burger-api';
-import { CLEAR_INGREDIENTS_CONSTRUCTOR } from './ingredientsConstructor';
-
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
-
-export const SET_ORDER_NUMBER = 'SET_ORDER_NUMBER';
+import {
+  IngredientsConstructorAction,
+  IngredientsConstructorActionTypes,
+} from '../store/types/ingredientsConstructor';
+import {
+  OrderAction,
+  OrderActionTypes,
+  OrderRequestBody,
+} from '../store/types/order';
 
 // thunk
-export function getOrderNumber(data) {
-  return function (dispatch) {
+export function getOrderNumber(data: OrderRequestBody) {
+  return function (
+    dispatch: Dispatch<OrderAction | IngredientsConstructorAction>
+  ) {
     dispatch({
-      type: GET_ORDER_REQUEST,
+      type: OrderActionTypes.GET_ORDER_REQUEST,
     });
     getOrderRequest(data)
       .then((data) => {
         dispatch({
-          type: GET_ORDER_SUCCESS,
+          type: OrderActionTypes.GET_ORDER_SUCCESS,
           orderNumber: data.order.number,
         });
         dispatch({
-          type: CLEAR_INGREDIENTS_CONSTRUCTOR,
+          type: IngredientsConstructorActionTypes.CLEAR_INGREDIENTS_CONSTRUCTOR,
         });
         return data.order.number;
       })
       .catch((err) => {
         dispatch({
-          type: GET_ORDER_FAILED,
+          type: OrderActionTypes.GET_ORDER_FAILED,
         });
       });
   };
 }
 
 // Устанавливаем номер выбранного заказа.
-export function setOrderNumber(orderNumber) {
-  return function (dispatch) {
+export function setOrderNumber(orderNumber: number) {
+  return function (dispatch: Dispatch<OrderAction>) {
     dispatch({
-      type: SET_ORDER_NUMBER,
+      type: OrderActionTypes.SET_ORDER_NUMBER,
       orderNumber: orderNumber,
     });
   };

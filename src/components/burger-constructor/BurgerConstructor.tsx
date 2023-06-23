@@ -8,7 +8,6 @@ import {
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
-import { useDispatch } from 'react-redux';
 import { getOrderNumber } from '../../services/actions/order';
 import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
 import { INCREASE_ITEM } from '../../services/actions/ingredients';
@@ -21,6 +20,7 @@ import {
 import { useUser } from '../../hooks/useUser';
 import { useTypedSelector } from '../../hooks/useTypeSelector';
 import { IngredientsActionTypes } from '../../services/store/types/ingredients';
+import { useAppDispatch } from '../../hooks/hooks';
 
 function BurgerConstructor() {
   const user = useUser();
@@ -34,7 +34,7 @@ function BurgerConstructor() {
 
   // Получаем данные из хранилища redux.
   // Выбранную булку и список выбранных ингредиентов для конструктора.
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { ingredientsConstructor } = useTypedSelector(
     getIngredientsConstructorSelector

@@ -4,11 +4,11 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { DELETE_ITEM_CONSTRUCTOR } from '../../../services/actions/ingredientsConstructor';
 import { useDrop, useDrag } from 'react-dnd';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
 import { IngredientsActionTypes } from '../../../services/store/types/ingredients';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 interface ICardBurgerConstructorProps {
   index: number;
@@ -23,7 +23,7 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
   moveCard,
   extraClass,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClose = () => {
     dispatch({

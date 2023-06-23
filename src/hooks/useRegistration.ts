@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { registrationThunk } from '../services/actions/registration';
 import { getRegistrationSelector } from '../services/selectors/selector';
 import { RESET_STATE } from '../services/actions/user';
 import { useTypedSelector } from './useTypeSelector';
+import { useAppDispatch } from './hooks';
 
 export const useRegistration = () => {
   const { registrationRequest, registrationFailed } = useTypedSelector(
@@ -13,7 +13,7 @@ export const useRegistration = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Регистрация пользователя.
   const registration = useCallback(

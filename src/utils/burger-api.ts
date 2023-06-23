@@ -1,5 +1,9 @@
 import { NORMA_API } from '../data/data';
 import { getCookie } from '../services/common/common';
+import { IForgotPasswordForm } from '../services/store/types/forgot-password';
+import { OrderRequestBody } from '../services/store/types/order';
+import { IPasswordResetForm } from '../services/store/types/password-reset';
+import { IRegistrationForm } from '../services/store/types/registration';
 
 /**
  * Получить массив объектов (список ингредиентов бургера).
@@ -13,7 +17,7 @@ export function getIngredientsRequest() {
  * Получить массив объектов (список ингредиентов бургера).
  * @returns Promise<data>
  */
-export function getOrderRequest(data) {
+export function getOrderRequest(data: OrderRequestBody) {
   return fetch(`${NORMA_API}/orders`, {
     method: 'POST',
     headers: {
@@ -27,13 +31,13 @@ export function getOrderRequest(data) {
  * Регистрация пользователя в системе.
  * @returns Promise<data>
  */
-export function registrationRequest(data) {
+export function registrationRequest(form: IRegistrationForm) {
   return fetch(`${NORMA_API}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   }).then(checkResponse);
 }
 
@@ -100,14 +104,14 @@ export function getUserRequest() {
  * Обновить данные пользователя в системе.
  * @returns Promise<data>
  */
-export function updateUserRequest(data) {
+export function updateUserRequest(form) {
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: getCookie('accessToken'),
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   }).then(checkResponse);
 }
 
@@ -115,13 +119,13 @@ export function updateUserRequest(data) {
  * Сброс пароля пользователя в системе.
  * @returns Promise<data>
  */
-export function forgotPasswordRequest(data) {
+export function forgotPasswordRequest(form: IForgotPasswordForm) {
   return fetch(`${NORMA_API}/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   }).then(checkResponse);
 }
 
@@ -129,13 +133,13 @@ export function forgotPasswordRequest(data) {
  * Изменение пароля пользователя в системе.
  * @returns Promise<data>
  */
-export function passwordResetRequest(data) {
+export function passwordResetRequest(form: IPasswordResetForm) {
   return fetch(`${NORMA_API}/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   }).then(checkResponse);
 }
 
