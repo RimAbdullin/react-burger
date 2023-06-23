@@ -1,8 +1,3 @@
-// import {
-//   ADD_ITEM_CONSTRUCTOR,
-//   DELETE_ITEM_CONSTRUCTOR,
-//   CLEAR_INGREDIENTS_CONSTRUCTOR,
-// } from '../actions/ingredientsConstructor';
 import {
   IBurgerIngredientsConstructorState,
   IngredientsConstructorAction,

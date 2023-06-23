@@ -1,5 +1,5 @@
 import { getOrderRequest } from '../../utils/burger-api';
-import { CLEAR_INGREDIENTS_CONSTRUCTOR } from '../actions/ingredientsConstructor';
+import { CLEAR_INGREDIENTS_CONSTRUCTOR } from './ingredientsConstructor';
 
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';

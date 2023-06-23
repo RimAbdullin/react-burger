@@ -18,6 +18,8 @@ import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
 import { SET_FORGOT_PASSWORD } from '../services/actions/forgot-password';
 import { useTypedSelector } from './useTypeSelector';
+import { IForgotPasswordForm } from '../services/store/types/forgot-password';
+import { useAppDispatch } from './hooks';
 
 export const useUser = () => {
   const {
@@ -56,7 +58,7 @@ export const useUser = () => {
 
   const [isPasswordReset, setIsPasswordReset] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Получение данных пользователя.
   const getUser = useCallback(() => {
@@ -173,7 +175,7 @@ export const useUser = () => {
 
   // Сброс пароля пользователя.
   const forgotPassword = useCallback(
-    (form) => {
+    (form: IForgotPasswordForm) => {
       setIsLoadingForgotPassword(true);
       try {
         dispatch(forgotPasswordThunk(form));

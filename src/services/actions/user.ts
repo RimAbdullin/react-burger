@@ -6,11 +6,7 @@ import {
   logoutRequest,
 } from '../../utils/burger-api';
 
-import {
-  getCookie,
-  removeCookie,
-  saveTokens,
-} from '../../services/common/common';
+import { getCookie, removeCookie, saveTokens } from '../common/common';
 
 export const POST_LOGIN_FAILED = 'POST_LOGIN_FAILED';
 export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
