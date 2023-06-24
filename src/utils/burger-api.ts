@@ -4,6 +4,10 @@ import { IForgotPasswordForm } from '../services/store/types/forgot-password';
 import { OrderRequestBody } from '../services/store/types/order';
 import { IPasswordResetForm } from '../services/store/types/password-reset';
 import { IRegistrationForm } from '../services/store/types/registration';
+import {
+  IUserLoginForm,
+  IUserWithPassword,
+} from '../services/store/types/user';
 
 /**
  * Получить массив объектов (список ингредиентов бургера).
@@ -45,7 +49,7 @@ export function registrationRequest(form: IRegistrationForm) {
  * Авторизация пользователя в системе.
  * @returns Promise<data>
  */
-export function loginRequest(data) {
+export function loginRequest(data: IUserLoginForm) {
   return fetch(`${NORMA_API}/auth/login`, {
     method: 'POST',
     headers: {
@@ -91,11 +95,17 @@ export function logoutRequest() {
  * @returns Promise<data>
  */
 export function getUserRequest() {
+  let accessToken = getCookie('accessToken');
+
+  if (!accessToken) {
+    accessToken = '';
+  }
+
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getCookie('accessToken'),
+      Authorization: accessToken,
     },
   }).then(checkResponse);
 }
@@ -104,12 +114,18 @@ export function getUserRequest() {
  * Обновить данные пользователя в системе.
  * @returns Promise<data>
  */
-export function updateUserRequest(form) {
+export function updateUserRequest(form: IUserWithPassword) {
+  let accessToken = getCookie('accessToken');
+
+  if (!accessToken) {
+    accessToken = '';
+  }
+
   return fetch(`${NORMA_API}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getCookie('accessToken'),
+      Authorization: accessToken,
     },
     body: JSON.stringify(form),
   }).then(checkResponse);
@@ -148,6 +164,6 @@ export function passwordResetRequest(form: IPasswordResetForm) {
  * @param {*} res - response.
  * @returns Promise<json> || Promise<err>
  */
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };

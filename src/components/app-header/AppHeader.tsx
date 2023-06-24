@@ -38,6 +38,7 @@ function AppHeader() {
           >
             <ListIcon type={isFeed ? 'primary' : 'secondary'} />
             <NavLink
+              to={'/'}
               className={`pl-2 text text_type_main-default ${
                 isFeed ? 'text_color_primary' : 'text_color_inactive'
               }`}

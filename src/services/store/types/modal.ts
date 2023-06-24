@@ -12,7 +12,6 @@ interface ISelectItem {
 
 interface IClearItem {
   type: ModalActionTypes.CLEAR_ITEM;
-  orderNumber: number;
 }
 
 export type ModalAction = ISelectItem | IClearItem;

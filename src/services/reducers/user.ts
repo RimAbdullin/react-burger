@@ -1,4 +1,4 @@
-import { IUserState, UserActionTypes } from '../store/types/user';
+import { IUserState, UserAction, UserActionTypes } from '../store/types/user';
 
 const initialState = {
   isAuthChecked: false,
@@ -22,7 +22,7 @@ const initialState = {
 
 export const userReducer = (
   state: IUserState = initialState,
-  action
+  action: UserAction
 ): IUserState => {
   switch (action.type) {
     case UserActionTypes.GET_USER_REQUEST: {
@@ -95,22 +95,21 @@ export const userReducer = (
     }
 
     // refresh.
-    case POST_REFRESH_TOKEN_REQUEST: {
+    case UserActionTypes.POST_REFRESH_TOKEN_REQUEST: {
       return {
         ...state,
         refreshTokenRequest: true,
         refreshTokenFailed: false,
       };
     }
-    case POST_REFRESH_TOKEN_SUCCESS: {
+    case UserActionTypes.POST_REFRESH_TOKEN_SUCCESS: {
       return {
         ...state,
-        isAuth: true,
         refreshTokenRequest: false,
         refreshTokenFailed: false,
       };
     }
-    case POST_REFRESH_TOKEN_FAILED: {
+    case UserActionTypes.POST_REFRESH_TOKEN_FAILED: {
       return {
         ...state,
         refreshTokenRequest: false,
@@ -119,14 +118,14 @@ export const userReducer = (
     }
 
     // logout.
-    case POST_LOGOUT_REQUEST: {
+    case UserActionTypes.POST_LOGOUT_REQUEST: {
       return {
         ...state,
         logoutRequest: true,
         logoutFailed: false,
       };
     }
-    case POST_LOGOUT_SUCCESS: {
+    case UserActionTypes.POST_LOGOUT_SUCCESS: {
       return {
         ...state,
         logoutRequest: false,
@@ -135,7 +134,7 @@ export const userReducer = (
         user: null,
       };
     }
-    case POST_LOGOUT_FAILED: {
+    case UserActionTypes.POST_LOGOUT_FAILED: {
       return {
         ...state,
         logoutFailed: true,
@@ -144,7 +143,7 @@ export const userReducer = (
     }
 
     // reset all store.
-    case RESET_STATE: {
+    case UserActionTypes.RESET_STATE: {
       return {
         ...state,
         isAuthChecked: state.isAuthChecked,

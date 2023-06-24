@@ -1,3 +1,5 @@
+import { extend } from 'immutability-helper';
+
 export enum UserActionTypes {
   POST_LOGIN_FAILED = 'POST_LOGIN_FAILED',
   POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS',
@@ -31,6 +33,7 @@ interface IPostUserLoginFailed {
 
 interface IPostUserLoginSuccess {
   type: UserActionTypes.POST_LOGIN_SUCCESS;
+  data: IUserLoginResponse;
 }
 
 interface IPostUserLoginRequest {
@@ -44,6 +47,7 @@ interface IPostUserRefreshTokenFailed {
 
 interface IPostUserRefreshTokenSuccess {
   type: UserActionTypes.POST_REFRESH_TOKEN_SUCCESS;
+  data: IUserRefreshResponse;
 }
 
 interface IPostUserRefreshTokenRequest {
@@ -57,6 +61,7 @@ interface IPostUserLogoutFailed {
 
 interface IPostUserLogoutSuccess {
   type: UserActionTypes.POST_LOGOUT_SUCCESS;
+  data: IUserLogoutResponse;
 }
 
 interface IPostUserLogoutRequest {
@@ -71,7 +76,7 @@ interface IGetUserFailed {
 
 interface IGetUserSuccess {
   type: UserActionTypes.GET_USER_SUCCESS;
-  data: IGetUserResponse;
+  data: { user: IUser };
 }
 
 interface IGetUserRequest {
@@ -85,7 +90,7 @@ interface IPostUserUpdateFailed {
 
 interface IPostUserUpdateSuccess {
   type: UserActionTypes.UPDATE_USER_SUCCESS;
-  data: IGetUserResponse;
+  data: { user: IUser };
 }
 
 interface IPostUserUpdateRequest {
@@ -145,10 +150,37 @@ export interface IUserState {
 export interface IUser {
   name: string;
   email: string;
+}
+
+// form для обновления данных пользователя.
+export interface IUserWithPassword extends IUser {
   password: string;
 }
 
-export interface IGetUserResponse {
-  message: string;
+// response для получения и обновления данных пользователя.
+export interface IUserResponse {
+  user: IUser;
   success: boolean;
+}
+
+export interface IUserLoginForm {
+  email: string;
+  password: string;
+}
+
+export interface IUserLoginResponse extends IUserResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IUserRefreshRequestBody {
+  token: string;
+}
+
+export interface IUserRefreshResponse extends IUserLoginResponse {
+  success: boolean;
+}
+
+export interface IUserLogoutResponse extends IUserRefreshResponse {
+  message: string;
 }

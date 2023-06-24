@@ -2,6 +2,7 @@ import { rootReducer } from '../reducers/rootReducer';
 import { createStore, compose, applyMiddleware } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 // const composeEnhancers =
 //   (typeof window === 'object' &&
@@ -13,6 +14,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware));
 
 export const store = createStore(rootReducer, composeWithDevTools());
+
+// export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type RootState = ReturnType<typeof rootReducer>;
 

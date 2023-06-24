@@ -1,14 +1,22 @@
-import { Dispatch } from 'redux';
+import { Action, Dispatch, ActionCreator, AnyAction } from 'redux';
 import { getIngredientsRequest } from '../../utils/burger-api';
 import { v4 } from 'uuid';
 import {
+  IBurgerIngredientsState,
   IngredientsAction,
   IngredientsActionTypes,
 } from '../store/types/ingredients';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 // thunk
-export function getIngredientsItems(bunName: string) {
-  return (dispatch: Dispatch<IngredientsAction>) => {
+export const getIngredientsItems = (
+  bunName: string
+): ThunkAction<void, IBurgerIngredientsState, void, IngredientsAction> => {
+  // ThunkAction<void, IBurgerIngredientsState, void, IngredientsAction>
+  return (
+    dispatch: ThunkDispatch<IBurgerIngredientsState, void, IngredientsAction>
+    // ThunkDispatch<IBurgerIngredientsState, void, IngredientsAction>
+  ) => {
     dispatch({
       type: IngredientsActionTypes.GET_ITEMS_REQUEST,
     });
@@ -32,4 +40,4 @@ export function getIngredientsItems(bunName: string) {
         });
       });
   };
-}
+};

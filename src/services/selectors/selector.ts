@@ -1,4 +1,4 @@
-import { RootState } from '../reducers/rootReducer';
+import { RootState } from '../store/store';
 
 export const getIngredientsSelector = (store: RootState) => store.ingredients;
 

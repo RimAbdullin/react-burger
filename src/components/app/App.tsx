@@ -15,10 +15,11 @@ import { ProfilePage } from '../../pages/profile';
 import { useUser } from '../../hooks/useUser';
 import { ProtectedRouteElement } from '../protected-route-element/ProtectedRouteElement';
 import { IngredientDetails } from '../burger-ingredients/ingredient-details/IngredientDetails';
-import { CLEAR_ITEM } from '../../services/actions/modal';
 
 import Modal from '../modal/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
+import { ModalActionTypes } from '../../services/store/types/modal';
+import { useDispatch } from 'react-redux';
 
 const App: FC = () => {
   return <ModalSwitch />;
@@ -36,7 +37,7 @@ const ModalSwitch = () => {
 
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
-    dispatch(getIngredientsItems('Краторная булка N-200i'));
+    dispatch(getIngredientsItems('Краторная булка N-200i') as any);
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const ModalSwitch = () => {
 
   const handleModalClose = () => {
     dispatch({
-      type: CLEAR_ITEM,
+      type: ModalActionTypes.CLEAR_ITEM,
     });
     navigate(-1);
   };

@@ -10,7 +10,8 @@ import {
   getIngredientsSelector,
 } from '../../../services/selectors/selector';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { IBurgerIngredientConstructor } from '../../../services/common/interfaces';
+import { IBurgerIngredientsConstructorState } from '../../../services/store/types/ingredientsConstructor';
+import { IBurgerIngredient } from '../../../services/common/interfaces';
 
 interface IListBurgerConstructorProps {
   onDropHandler: (itemId: string) => void;
@@ -37,7 +38,7 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
     }),
   });
 
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState<IBurgerIngredient[]>([]);
 
   useEffect(() => {
     setCards(ingredientsConstructor);
@@ -54,20 +55,39 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
     );
   }, []);
 
-  const renderCard = useCallback((ingredientsConstructor, index) => {
+  // const renderCard = useCallback((ingredientsConstructor : IBurgerIngredient, index: number) => {
+  //   return (
+  //     ingredientsConstructor && (
+  //       <CardBurgerConstructor
+  //         extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
+  //         key={ingredientsConstructor.id}
+  //         index={index}
+  //         id={ingredientsConstructor.id}
+  //         text={ingredientsConstructor.text}
+  //         type={undefined}
+  //         isLocked={false}
+  //         moveCard={moveCard}
+  //       >
+  //         {ingredientsConstructor}
+  //       </CardBurgerConstructor>
+  //     )
+  //   );
+  // }, []);
+
+  const renderCard = useCallback((card: IBurgerIngredient, index: number) => {
     return (
       ingredientsConstructor && (
         <CardBurgerConstructor
           extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
-          key={ingredientsConstructor.id}
+          key={card.id}
           index={index}
-          id={ingredientsConstructor.id}
-          text={ingredientsConstructor.text}
+          id={card.id}
+          text={card.text}
           type={undefined}
           isLocked={false}
           moveCard={moveCard}
         >
-          {ingredientsConstructor}
+          {card}
         </CardBurgerConstructor>
       )
     );

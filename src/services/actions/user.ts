@@ -8,7 +8,12 @@ import {
 } from '../../utils/burger-api';
 
 import { getCookie, removeCookie, saveTokens } from '../common/common';
-import { UserAction, UserActionTypes } from '../store/types/user';
+import {
+  IUserLoginForm,
+  IUserWithPassword,
+  UserAction,
+  UserActionTypes,
+} from '../store/types/user';
 
 // thunk
 
@@ -51,7 +56,7 @@ export function getUserThunk() {
 }
 
 // update user.
-export function updateUserThunk(form) {
+export function updateUserThunk(form: IUserWithPassword) {
   return function (dispatch: Dispatch<UserAction>) {
     dispatch({
       type: UserActionTypes.UPDATE_USER_REQUEST,
@@ -66,7 +71,8 @@ export function updateUserThunk(form) {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken(updateUserThunk(form)));
+          // dispatch(refreshToken(updateUserThunk(form)));
+          refreshToken(updateUserThunk(form));
         } else {
           dispatch({
             type: UserActionTypes.UPDATE_USER_FAILED,
@@ -77,15 +83,16 @@ export function updateUserThunk(form) {
 }
 
 // refresh.
-const refreshToken = (afterRefresh) => (dispatch: Dispatch<UserAction>) => {
-  refreshTokenRequest().then((res) => {
-    saveTokens(res.accessToken, res.refreshToken);
-    dispatch(afterRefresh);
-  });
-};
+const refreshToken =
+  (afterRefresh: any) => (dispatch: Dispatch<UserAction>) => {
+    refreshTokenRequest().then((res) => {
+      saveTokens(res.accessToken, res.refreshToken);
+      dispatch(afterRefresh);
+    });
+  };
 
 // login.
-export function loginThunk(form) {
+export function loginThunk(form: IUserLoginForm) {
   return function (dispatch: Dispatch<UserAction>) {
     dispatch({
       type: UserActionTypes.POST_LOGIN_REQUEST,
