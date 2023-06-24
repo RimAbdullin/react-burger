@@ -23,14 +23,14 @@ export const IngredientDetails = () => {
 
   useEffect(() => {
     if (!ingredients) {
-      dispatch(getIngredientsItems('Краторная булка N-200i'));
+      dispatch(getIngredientsItems('Краторная булка N-200i') as any);
     }
   }, [dispatch]);
 
   useEffect(() => {
     dispatch({
       type: IngredientsActionTypes.GET_ITEM,
-      id: _id,
+      id: _id ? _id : '',
     });
   }, [dispatch, ingredients]);
 

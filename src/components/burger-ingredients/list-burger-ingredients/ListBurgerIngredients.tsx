@@ -1,9 +1,14 @@
 import styles from './ListBurgerIngredients.module.css';
 import CardBurgerIngredients from '../card-burger-ingredients/CardBurgerIngredients';
-import PropTypes from 'prop-types';
-import { burgerIngredientsObject } from '../../../utils/prop-types';
+import { IBurgerIngredient } from '../../../services/common/interfaces';
 
-const ListBurgerIngredients = ({ data }) => {
+interface IListBurgerIngredientsProps {
+  data: IBurgerIngredient[];
+}
+
+const ListBurgerIngredients: React.FC<IListBurgerIngredientsProps> = ({
+  data,
+}) => {
   return (
     <section>
       <div className={styles['List-container']}>
@@ -16,8 +21,3 @@ const ListBurgerIngredients = ({ data }) => {
 };
 
 export default ListBurgerIngredients;
-
-ListBurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(burgerIngredientsObject).isRequired)
-    .isRequired,
-};

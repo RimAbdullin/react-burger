@@ -4,7 +4,6 @@ import CardBurgerConstructor from '../card-burger-constructor/CardBurgerConstruc
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import {
   getIngredientsConstructorSelector,
   getIngredientsSelector,
@@ -14,7 +13,7 @@ import { IBurgerIngredientsConstructorState } from '../../../services/store/type
 import { IBurgerIngredient } from '../../../services/common/interfaces';
 
 interface IListBurgerConstructorProps {
-  onDropHandler: (itemId: string) => void;
+  onDropHandler: (item: IBurgerIngredient) => void;
 }
 
 const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
@@ -30,8 +29,8 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
 
   const [, dropTarget] = useDrop({
     accept: 'ingredients',
-    drop(itemId: string) {
-      onDropHandler(itemId);
+    drop(item: IBurgerIngredient) {
+      onDropHandler(item);
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -81,10 +80,6 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
           extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
           key={card.id}
           index={index}
-          id={card.id}
-          text={card.text}
-          type={undefined}
-          isLocked={false}
           moveCard={moveCard}
         >
           {card}
@@ -132,7 +127,3 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
 };
 
 export default ListBurgerConstructor;
-
-ListBurgerConstructor.propTypes = {
-  onDropHandler: PropTypes.func.isRequired,
-};

@@ -14,31 +14,33 @@ function BurgerIngredients() {
   const [selectedTab, setSelectedTab] = useState('id-bun');
 
   // Прокрутка списка ингредиентов до выбранного в Таб элемента.
-  const scrollToElement = (v) => {
+  const scrollToElement = (v: string) => {
     const elem = document.getElementById(v);
-    elem.scrollIntoView();
+    if (elem) {
+      elem.scrollIntoView();
+    }
   };
 
   // Устанавливаем наблюдатель за булками.
-  const bunRef = useRef();
-  const mainRef = useRef();
-  const sauceRef = useRef();
+  const bunRef = useRef<HTMLAnchorElement>(null);
+  const mainRef = useRef<HTMLAnchorElement>(null);
+  const sauceRef = useRef<HTMLAnchorElement>(null);
 
   // Переключение табов в зависимости от позиции прокрутки списка.
   const scrollList = () => {
-    const topBun = bunRef.current.getBoundingClientRect().top;
-    const topMain = mainRef.current.getBoundingClientRect().top;
-    const topSauce = sauceRef.current.getBoundingClientRect().top;
+    const topBun = bunRef?.current?.getBoundingClientRect().top;
+    const topMain = mainRef?.current?.getBoundingClientRect().top;
+    const topSauce = sauceRef?.current?.getBoundingClientRect().top;
 
-    if (topBun < 350) {
+    if (topBun && topBun < 350) {
       setSelectedTab('id-bun');
     }
 
-    if (topSauce < 350) {
+    if (topSauce && topSauce < 350) {
       setSelectedTab('id-sauce');
     }
 
-    if (topMain < 350) {
+    if (topMain && topMain < 350) {
       setSelectedTab('id-main');
     }
   };

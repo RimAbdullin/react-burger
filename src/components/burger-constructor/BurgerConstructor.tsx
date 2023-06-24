@@ -9,8 +9,6 @@ import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
 import { getOrderNumber } from '../../services/actions/order';
-import { ADD_ITEM_CONSTRUCTOR } from '../../services/actions/ingredientsConstructor';
-import { INCREASE_ITEM } from '../../services/actions/ingredients';
 import { v4 } from 'uuid';
 import {
   getIngredientsConstructorSelector,
@@ -21,15 +19,26 @@ import { useUser } from '../../hooks/useUser';
 import { useTypedSelector } from '../../hooks/useTypeSelector';
 import { IngredientsActionTypes } from '../../services/store/types/ingredients';
 import { useAppDispatch } from '../../hooks/hooks';
+import { IngredientsConstructorActionTypes } from '../../services/store/types/ingredientsConstructor';
+import { IBurgerIngredient } from '../../services/common/interfaces';
+import { OrderRequestBody } from '../../services/store/types/order';
+
+interface IState {
+  ingredientsPrice: null | number;
+  bunPrice: null | number;
+  isCalculatingPrice: boolean;
+  loadingOrder: boolean;
+}
 
 function BurgerConstructor() {
   const user = useUser();
 
   // Определяем объект состояния компонента.
-  const [state, setState] = useState({
+  const [state, setState] = useState<IState>({
     ingredientsPrice: null,
     bunPrice: null,
     isCalculatingPrice: false,
+    loadingOrder: false,
   });
 
   // Получаем данные из хранилища redux.
@@ -43,7 +52,7 @@ function BurgerConstructor() {
   const { currentBun } = useTypedSelector(getIngredientsSelector);
 
   // Добавление ингредиента в конструктор.
-  const handleDrop = (item) => {
+  const handleDrop = (item: IBurgerIngredient) => {
     if (item.type === 'bun') {
       dispatch({
         type: IngredientsActionTypes.SET_BUN,
@@ -52,12 +61,12 @@ function BurgerConstructor() {
       });
     } else {
       dispatch({
-        type: ADD_ITEM_CONSTRUCTOR,
+        type: IngredientsConstructorActionTypes.ADD_ITEM_CONSTRUCTOR,
         item: { id: v4(), ...item },
       });
 
       dispatch({
-        type: INCREASE_ITEM,
+        type: IngredientsActionTypes.INCREASE_ITEM,
         itemId: item._id,
       });
     }
@@ -83,13 +92,16 @@ function BurgerConstructor() {
   }, [ingredientsConstructor, currentBun]);
 
   // Получаем объект для body запроса с id ингредиентов.
-  const getBody = () => {
+  const getBody = (): OrderRequestBody => {
     const body = {
       ingredients: ingredientsConstructor.map((item) => {
         return item._id;
       }),
     };
-    body.ingredients.push(currentBun._id);
+    if (currentBun) {
+      body.ingredients.push(currentBun._id);
+    }
+
     return body;
   };
 
@@ -100,23 +112,21 @@ function BurgerConstructor() {
     }
     if (ingredientsConstructor && ingredientsConstructor.length > 0) {
       // Получаем номер заказа.
-      dispatch(getOrderNumber(getBody()));
+      dispatch(getOrderNumber(getBody()) as any);
 
       // Открываем модальное окно.
       openModal();
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     closeModal();
   };
 
   const modal = (
     <Modal onClose={closeModal} title={''}>
-      {!state.loadingOrder && (
-        <OrderDetails orderNumber={state.orderNumber}></OrderDetails>
-      )}
+      {!state.loadingOrder && <OrderDetails></OrderDetails>}
     </Modal>
   );
 
@@ -134,7 +144,8 @@ function BurgerConstructor() {
             <div className={`${styles['Info-price-container']}`}>
               {!state.isCalculatingPrice && (
                 <span className={`mr-2 text_type_digits-medium`}>
-                  {state.ingredientsPrice + state.bunPrice}
+                  {(state.ingredientsPrice ? state.ingredientsPrice : 0) +
+                    (state.bunPrice ? state.bunPrice : 0)}
                 </span>
               )}
 

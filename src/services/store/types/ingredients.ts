@@ -42,7 +42,7 @@ interface IDecreaseItem {
 
 interface IGetItem {
   type: IngredientsActionTypes.GET_ITEM;
-  id: null | string;
+  id: string;
 }
 
 export type IngredientsAction =

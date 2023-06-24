@@ -6,17 +6,24 @@ import styles from './CardBurgerIngredients.module.css';
 import PropTypes from 'prop-types';
 import { burgerIngredientsObject } from '../../../utils/prop-types';
 import { useDrag } from 'react-dnd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
 import { useLocation, Link } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
+import { IBurgerIngredient } from '../../../services/common/interfaces';
 
-function CardBurgerIngredients({ children }) {
+interface ICardBurgerIngredientsProps {
+  children: IBurgerIngredient;
+}
+
+const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
+  children,
+}) => {
   const location = useLocation();
 
   const { _id } = children;
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
 
   // Получаем данные из хранилища redux.
   // Значение счетчика выбранного ингредиента.
@@ -25,7 +32,9 @@ function CardBurgerIngredients({ children }) {
   // Изменяем количество выбранных ингредиентов.
   useEffect(() => {
     const count = ingredients.filter((item) => item._id === _id)[0].count;
-    setCount(count);
+    if (count) {
+      setCount(count);
+    }
   }, [ingredients]);
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -72,7 +81,7 @@ function CardBurgerIngredients({ children }) {
       </>
     </Link>
   );
-}
+};
 
 export default CardBurgerIngredients;
 

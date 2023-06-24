@@ -2,27 +2,33 @@ import PortalReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+interface IModalProps {
+  children: ReactNode;
+  title: string;
+  onClose: () => void;
+}
 
 const modalRoot = document.getElementById('react-modals');
 
-const Modal = ({ title, children, onClose }) => {
-  const closeModal = (e) => {
+const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
+  const closeModal = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', closeModal);
+    window.addEventListener('keydown', closeModal());
 
     return () => {
       window.removeEventListener('keydown', closeModal);
     };
   }, []);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     onClose();
   };
@@ -42,7 +48,7 @@ const Modal = ({ title, children, onClose }) => {
             </section>
             {/* Иконка закрытия. */}
             <section className={styles['Button-close']} onClick={handleClick}>
-              <CloseIcon />
+              <CloseIcon type="primary" />
             </section>
           </section>
           {children}

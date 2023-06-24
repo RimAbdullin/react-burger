@@ -1,12 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TabsBurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-function TabsBurgerIngredients({ click, selectedTab }) {
+interface ITabsBurgerIngredientsProps {
+  click: (v: string) => void;
+  selectedTab: string;
+}
+
+const TabsBurgerIngredients: React.FC<ITabsBurgerIngredientsProps> = ({
+  click,
+  selectedTab,
+}) => {
   const [current, setCurrent] = useState('id-bun');
 
-  const scrollElement = (v) => {
+  const scrollElement = (v: string) => {
     click(v);
     setCurrent(v);
   };
@@ -36,7 +44,7 @@ function TabsBurgerIngredients({ click, selectedTab }) {
       </Tab>
     </section>
   );
-}
+};
 
 export default TabsBurgerIngredients;
 

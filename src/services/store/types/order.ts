@@ -36,5 +36,5 @@ export interface IOrderState {
 }
 
 export interface OrderRequestBody {
-  _id: string;
+  ingredients: string[];
 }

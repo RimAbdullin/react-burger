@@ -21,7 +21,7 @@ const OrderDetails = () => {
       </div>
 
       <div className={`mt-15 ${styles['Icon_container']}`}>
-        <CheckMarkIcon />
+        <CheckMarkIcon type="primary" />
       </div>
 
       <div className={`mt-15 ${styles['Info_container']}`}>
