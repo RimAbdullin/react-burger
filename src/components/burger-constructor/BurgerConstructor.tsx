@@ -22,6 +22,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IngredientsConstructorActionTypes } from '../../services/store/types/ingredientsConstructor';
 import { IBurgerIngredient } from '../../services/common/interfaces';
 import { OrderRequestBody } from '../../services/store/types/order';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 interface IState {
   ingredientsPrice: null | number;
@@ -106,16 +107,22 @@ function BurgerConstructor() {
   };
 
   // Получаем номер заказа для конструктора и открываем модальное окно.
-  const handleOpenModal = () => {
-    if (!(user.isAuthChecked && user.user)) {
-      return;
-    }
-    if (ingredientsConstructor && ingredientsConstructor.length > 0) {
-      // Получаем номер заказа.
-      dispatch(getOrderNumber(getBody()) as any);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-      // Открываем модальное окно.
-      openModal();
+  const handleOpenModal = () => {
+    if (user.isAuthChecked && user.user) {
+      console.log('1');
+
+      if (ingredientsConstructor && ingredientsConstructor.length > 0) {
+        // Получаем номер заказа.
+        dispatch(getOrderNumber(getBody()) as any);
+
+        // Открываем модальное окно.
+        openModal();
+      }
+    } else {
+      navigate('/login');
     }
   };
 

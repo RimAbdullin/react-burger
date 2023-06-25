@@ -44,7 +44,7 @@ export function LoginPage() {
 
   return (
     <section className={styles.container}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <div className={`mb-6 ${styles['title-container']}`}>
           <span className={`text_type_main-medium`}>Вход</span>
         </div>
@@ -64,12 +64,7 @@ export function LoginPage() {
         />
         <div className={`mb-20 ${styles['actions']}`}>
           <div className={`${styles['button-container']}`}>
-            <Button
-              htmlType="button"
-              type="primary"
-              size="medium"
-              onClick={handleLogin}
-            >
+            <Button htmlType="submit" type="primary" size="medium">
               Войти
             </Button>
           </div>

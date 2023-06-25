@@ -48,7 +48,7 @@ export function ForgotPasswordPage() {
 
   return (
     <div className={styles.container}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleRestore}>
         <div className={`mb-6 ${styles['title-container']}`}>
           <span className={`text_type_main-medium`}>Восстановление пароля</span>
         </div>
@@ -61,12 +61,7 @@ export function ForgotPasswordPage() {
         />
         <div className={`mb-20 ${styles['actions']}`}>
           <div className={`${styles['button-container']}`}>
-            <Button
-              htmlType="button"
-              type="primary"
-              size="medium"
-              onClick={handleRestore}
-            >
+            <Button htmlType="submit" type="primary" size="medium">
               Восстановить
             </Button>
           </div>

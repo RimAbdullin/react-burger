@@ -51,59 +51,54 @@ export function RegistrationPage() {
 
   return (
     <section className={styles.container}>
-      !(isAuthChecked && user.user) && (
-      <div className={styles.content}>
-        <form className={styles.form}>
-          <div className={`mb-6 ${styles['title-container']}`}>
-            <span className={`text_type_main-medium`}>Регистрация</span>
-          </div>
-          <Input
-            placeholder="Имя"
-            value={form.name}
-            name="name"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <Input
-            placeholder="Email"
-            value={form.email}
-            name="email"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <PasswordInput
-            placeholder="Пароль"
-            value={form.password}
-            name="password"
-            onChange={onChange}
-            extraClass="mb-6"
-          />
-          <div className={`mb-20 ${styles['actions']}`}>
-            <div className={`${styles['button-container']}`}>
-              <Button
-                htmlType="button"
-                type="primary"
-                size="medium"
-                onClick={handleRegistration}
-              >
-                Зарегистрироваться
-              </Button>
+      {!(isAuthChecked && user) && (
+        <div className={styles.content}>
+          <form className={styles.form} onSubmit={handleRegistration}>
+            <div className={`mb-6 ${styles['title-container']}`}>
+              <span className={`text_type_main-medium`}>Регистрация</span>
             </div>
-          </div>
+            <Input
+              placeholder="Имя"
+              value={form.name}
+              name="name"
+              onChange={onChange}
+              extraClass="mb-6"
+            />
+            <Input
+              placeholder="Email"
+              value={form.email}
+              name="email"
+              onChange={onChange}
+              extraClass="mb-6"
+            />
+            <PasswordInput
+              placeholder="Пароль"
+              value={form.password}
+              name="password"
+              onChange={onChange}
+              extraClass="mb-6"
+            />
+            <div className={`mb-20 ${styles['actions']}`}>
+              <div className={`${styles['button-container']}`}>
+                <Button htmlType="submit" type="primary" size="medium">
+                  Зарегистрироваться
+                </Button>
+              </div>
+            </div>
 
-          <div className={`${styles['bottom-title-container']}`}>
-            <span className={`text_color_inactive text_type_main-default`}>
-              Уже зарегистрированы?
-            </span>
-            <Link to={`/login`} relative="path" className="ml-2">
-              <span className={`text_type_main-default ${styles['link']}`}>
-                Войти
+            <div className={`${styles['bottom-title-container']}`}>
+              <span className={`text_color_inactive text_type_main-default`}>
+                Уже зарегистрированы?
               </span>
-            </Link>
-          </div>
-        </form>
-      </div>
-      )
+              <Link to={`/login`} relative="path" className="ml-2">
+                <span className={`text_type_main-default ${styles['link']}`}>
+                  Войти
+                </span>
+              </Link>
+            </div>
+          </form>
+        </div>
+      )}
     </section>
   );
 }

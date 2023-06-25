@@ -20,8 +20,7 @@ import {
 // check user is auth.
 export const checkAuthThunk = () => (dispatch: Dispatch<UserAction>) => {
   if (getCookie('accessToken')) {
-    // dispatch(getUserThunk());
-    getUserThunk();
+    dispatch(getUserThunk() as any);
   }
   dispatch({ type: UserActionTypes.AUTH_CHECKED });
 };
@@ -43,7 +42,7 @@ export function getUserThunk() {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          // dispatch(refreshToken(getUserThunk()));
+          dispatch(refreshToken(getUserThunk()) as any);
           refreshToken(getUserThunk());
         } else {
           dispatch({
@@ -71,8 +70,7 @@ export function updateUserThunk(form: IUserWithPassword) {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          // dispatch(refreshToken(updateUserThunk(form)));
-          refreshToken(updateUserThunk(form));
+          dispatch(refreshToken(updateUserThunk(form)) as any);
         } else {
           dispatch({
             type: UserActionTypes.UPDATE_USER_FAILED,
