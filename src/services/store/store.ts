@@ -13,9 +13,9 @@ import thunk from 'redux-thunk';
 
 // const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware));
 
-export const store = createStore(rootReducer, composeWithDevTools());
+// export const store = createStore(rootReducer, composeWithDevTools());
 
-// export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type RootState = ReturnType<typeof rootReducer>;
 

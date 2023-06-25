@@ -3,8 +3,6 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './CardBurgerIngredients.module.css';
-import PropTypes from 'prop-types';
-import { burgerIngredientsObject } from '../../../utils/prop-types';
 import { useDrag } from 'react-dnd';
 import { useState, useEffect, FC } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
@@ -84,7 +82,3 @@ const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
 };
 
 export default CardBurgerIngredients;
-
-CardBurgerIngredients.propTypes = {
-  children: PropTypes.shape(burgerIngredientsObject).isRequired,
-};

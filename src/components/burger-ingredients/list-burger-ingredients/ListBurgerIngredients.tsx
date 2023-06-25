@@ -6,7 +6,7 @@ interface IListBurgerIngredientsProps {
   data: IBurgerIngredient[];
 }
 
-const ListBurgerIngredients: React.FC<IListBurgerIngredientsProps> = ({
+export const ListBurgerIngredients: React.FC<IListBurgerIngredientsProps> = ({
   data,
 }) => {
   return (
@@ -19,5 +19,3 @@ const ListBurgerIngredients: React.FC<IListBurgerIngredientsProps> = ({
     </section>
   );
 };
-
-export default ListBurgerIngredients;

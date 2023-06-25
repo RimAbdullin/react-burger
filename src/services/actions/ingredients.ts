@@ -9,12 +9,10 @@ import {
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 // thunk
-export const getIngredientsItems = (
-  bunName: string
-): ThunkAction<void, IBurgerIngredientsState, void, IngredientsAction> => {
+export const getIngredientsItems = (bunName: string) => {
   // ThunkAction<void, IBurgerIngredientsState, void, IngredientsAction>
   return (
-    dispatch: ThunkDispatch<IBurgerIngredientsState, void, IngredientsAction>
+    dispatch: Dispatch<IngredientsAction>
     // ThunkDispatch<IBurgerIngredientsState, void, IngredientsAction>
   ) => {
     dispatch({

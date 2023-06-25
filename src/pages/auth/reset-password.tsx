@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './reset-password.module.css';
 
 import { Link, Navigate } from 'react-router-dom';
@@ -15,11 +15,11 @@ export function ResetPasswordPage() {
 
   const [form, setValue] = useState({ password: '', code: '' });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordReset = (e) => {
+  const handlePasswordReset = (e: React.SyntheticEvent) => {
     if (!form.password && !form.code) {
       return;
     }

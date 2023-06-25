@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TabsBurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
 interface ITabsBurgerIngredientsProps {
   click: (v: string) => void;
@@ -47,7 +46,3 @@ const TabsBurgerIngredients: React.FC<ITabsBurgerIngredientsProps> = ({
 };
 
 export default TabsBurgerIngredients;
-
-TabsBurgerIngredients.propTypes = {
-  click: PropTypes.func.isRequired,
-};

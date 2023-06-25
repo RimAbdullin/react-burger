@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 import TabsBurgerIngredients from './tabs-burger-ingredients/TabsBurgerIngredients';
-import ListBurgerIngredients from './list-burger-ingredients/ListBurgerIngredients.js';
+import { ListBurgerIngredients } from './list-burger-ingredients/ListBurgerIngredients';
 import { getIngredientsSelector } from '../../services/selectors/selector';
 import { useTypedSelector } from '../../hooks/useTypeSelector';
 

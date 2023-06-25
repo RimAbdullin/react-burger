@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useUser } from '../hooks/useUser';
 
-export function ProfilePage() {
+export function ProfilePage(): React.ReactElement {
   const user = useUser();
 
   const [form, setValue] = useState({ name: '', email: '', password: '' });
@@ -21,7 +21,7 @@ export function ProfilePage() {
   }, []);
 
   // При изменении поля показываем группу кнопок.
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
     setIsChanged(true);
   };
@@ -43,7 +43,7 @@ export function ProfilePage() {
   }, [user.user]);
 
   // Записываем данные пользователя.
-  const handleSave = (e) => {
+  const handleSave = (e: React.SyntheticEvent) => {
     e.preventDefault();
     user.updateUser(form);
   };
@@ -52,16 +52,16 @@ export function ProfilePage() {
   const handleCancel = () => {
     setValue({
       ...form,
-      name: user.user.name,
-      email: user.user.email,
+      name: user?.user?.name ? user.user.name : '',
+      email: user?.user?.email ? user.user.email : '',
       password: '',
     });
   };
 
   // Если еще выполняется запрос на получение данных пользователя, то не ничего не выполняем.
-  if (user.isLoadingGetUser) {
-    return null;
-  }
+  // if (user.isLoadingGetUser) {
+  //   return null;
+  // }
 
   return (
     <section className={styles.container}>
@@ -77,6 +77,7 @@ export function ProfilePage() {
           </div>
           <div className={`${styles['menu-container']}`}>
             <NavLink
+              to={'/'}
               className={`text_color_inactive text text_type_main-medium`}
             >
               История заказов
@@ -84,6 +85,7 @@ export function ProfilePage() {
           </div>
           <div className={`${styles['menu-container']}`}>
             <NavLink
+              to={'/'}
               className={`text_color_inactive text text_type_main-medium`}
               onClick={handleLogout}
             >
@@ -117,7 +119,6 @@ export function ProfilePage() {
               placeholder="Пароль"
               value={form.password}
               name="password"
-              type="password"
               onChange={onChange}
               extraClass="mb-6"
               icon="EditIcon"

@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { registrationThunk } from '../services/actions/registration';
 import { getRegistrationSelector } from '../services/selectors/selector';
-import { RESET_STATE } from '../services/actions/user';
 import { useTypedSelector } from './useTypeSelector';
 import { useAppDispatch } from './hooks';
+import {
+  IRegistrationForm,
+  RegistrationActionTypes,
+} from '../services/store/types/registration';
 
 export const useRegistration = () => {
   const { registrationRequest, registrationFailed } = useTypedSelector(
@@ -17,10 +20,10 @@ export const useRegistration = () => {
 
   // Регистрация пользователя.
   const registration = useCallback(
-    (form) => {
+    (form: IRegistrationForm) => {
       setIsLoading(true);
       try {
-        dispatch(registrationThunk(form));
+        dispatch(registrationThunk(form) as any);
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -37,7 +40,7 @@ export const useRegistration = () => {
       setIsRegistered(true);
       // И сбрасываем все состояния в редукторе до первоначального.
       dispatch({
-        type: RESET_STATE,
+        type: RegistrationActionTypes.RESET_STATE,
       });
     }
   }, [dispatch, isLoading, registrationRequest, registrationFailed]);

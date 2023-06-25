@@ -11,14 +11,22 @@ import {
   getForgotPasswordSelector,
   getPasswordResetSelector,
 } from '../services/selectors/selector';
-import { RESET_STATE, loginThunk, logoutThunk } from '../services/actions/user';
+import { loginThunk, logoutThunk } from '../services/actions/user';
 
 import { forgotPasswordThunk } from '../services/actions/forgot-password';
 import { passwordResetThunk } from '../services/actions/password-reset';
-import { SET_FORGOT_PASSWORD } from '../services/actions/forgot-password';
 import { useTypedSelector } from './useTypeSelector';
-import { IForgotPasswordForm } from '../services/store/types/forgot-password';
+import {
+  ForgotPasswordActionTypes,
+  IForgotPasswordForm,
+} from '../services/store/types/forgot-password';
 import { useAppDispatch } from './hooks';
+import {
+  IUserLoginForm,
+  IUserWithPassword,
+  UserActionTypes,
+} from '../services/store/types/user';
+import { IPasswordResetForm } from '../services/store/types/password-reset';
 
 export const useUser = () => {
   const {
@@ -63,7 +71,7 @@ export const useUser = () => {
   const getUser = useCallback(() => {
     setIsLoadingGetUser(true);
     try {
-      dispatch(getUserThunk());
+      dispatch(getUserThunk() as any);
     } catch (error) {
     } finally {
       setIsLoadingGetUser(false);
@@ -75,17 +83,17 @@ export const useUser = () => {
     if (!isLoadingGetUser && !getUserRequest && !getUserFailed) {
       // Если был сделан запрос getUser и он завершен успешно, то сбрасываем состояние.
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
     }
   }, [dispatch, isLoadingGetUser, getUserRequest, getUserFailed]);
 
   // Обновление данных пользователя.
   const updateUser = useCallback(
-    (form) => {
+    (form: IUserWithPassword) => {
       setIsLoadingUpdateUser(true);
       try {
-        dispatch(updateUserThunk(form));
+        dispatch(updateUserThunk(form) as any);
       } catch (error) {
       } finally {
         setIsLoadingUpdateUser(false);
@@ -99,7 +107,7 @@ export const useUser = () => {
     if (!isLoadingUpdateUser && !updateUserRequest && !updateUserFailed) {
       // Если был сделан запрос getUser и он завершен успешно, то сбрасываем состояние.
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
     }
   }, [dispatch, isLoadingUpdateUser, updateUserRequest, updateUserFailed]);
@@ -108,7 +116,7 @@ export const useUser = () => {
   const checkAuth = () => {
     setIsLoadingCheckAuth(true);
     try {
-      dispatch(checkAuthThunk());
+      dispatch(checkAuthThunk() as any);
     } catch (error) {
     } finally {
       setIsLoadingCheckAuth(false);
@@ -120,17 +128,17 @@ export const useUser = () => {
     if (!isLoadingCheckAuth && !refreshTokenRequest && !refreshTokenFailed) {
       // Если был сделан запрос refreshToken и он завершен успешно, то сбрасываем состояние.
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
     }
   }, [dispatch, isLoadingCheckAuth, refreshTokenRequest, refreshTokenFailed]);
 
   // Логин пользователя.
   const login = useCallback(
-    (form) => {
+    (form: IUserLoginForm) => {
       setIsLoadingLogin(true);
       try {
-        dispatch(loginThunk(form));
+        dispatch(loginThunk(form) as any);
       } catch (error) {
       } finally {
         setIsLoadingLogin(false);
@@ -144,7 +152,7 @@ export const useUser = () => {
     if (!isLoadingLogin && !loginRequest && !loginFailed) {
       // Если был сделан запрос login и он завершен успешно, то сбрасываем состояние.
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
     }
   }, [dispatch, isLoadingLogin, loginRequest, loginFailed]);
@@ -153,7 +161,7 @@ export const useUser = () => {
   const logout = useCallback(() => {
     setIsLoadingLogout(true);
     try {
-      dispatch(logoutThunk());
+      dispatch(logoutThunk() as any);
     } catch (error) {
     } finally {
       setIsLoadingLogout(false);
@@ -166,7 +174,7 @@ export const useUser = () => {
       // Если был сделан запрос logout и он завершен успешно
       // то сбрасываем состояние.
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
       setIsLogout(true);
     }
@@ -177,7 +185,7 @@ export const useUser = () => {
     (form: IForgotPasswordForm) => {
       setIsLoadingForgotPassword(true);
       try {
-        dispatch(forgotPasswordThunk(form));
+        dispatch(forgotPasswordThunk(form) as any);
       } catch (error) {
       } finally {
         setIsLoadingForgotPassword(false);
@@ -195,10 +203,10 @@ export const useUser = () => {
     ) {
       // Если был сделан запрос forgot-password и он завершен успешно.
       dispatch({
-        type: RESET_STATE,
+        type: ForgotPasswordActionTypes.RESET_STATE,
       });
       dispatch({
-        type: SET_FORGOT_PASSWORD,
+        type: ForgotPasswordActionTypes.SET_FORGOT_PASSWORD,
         value: true,
       });
     }
@@ -211,10 +219,10 @@ export const useUser = () => {
 
   // Изменение пароля пользователя.
   const passwordReset = useCallback(
-    (form) => {
+    (form: IPasswordResetForm) => {
       setIsLoadingPasswordReset(true);
       try {
-        dispatch(passwordResetThunk(form));
+        dispatch(passwordResetThunk(form) as any);
       } catch (error) {
       } finally {
         setIsLoadingPasswordReset(false);
@@ -234,10 +242,10 @@ export const useUser = () => {
       // то в состоянии устанавливаем, что пользователь имеет статус авторизован.
       setIsPasswordReset(true);
       dispatch({
-        type: RESET_STATE,
+        type: UserActionTypes.RESET_STATE,
       });
       dispatch({
-        type: SET_FORGOT_PASSWORD,
+        type: ForgotPasswordActionTypes.SET_FORGOT_PASSWORD,
         value: false,
       });
       setIsPasswordReset(true);

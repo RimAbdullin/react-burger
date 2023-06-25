@@ -37,7 +37,7 @@ export function RegistrationPage() {
   }
 
   // Проверяем, авторизован ли пользователь
-  if (isAuthChecked && user.user) {
+  if (isAuthChecked && user) {
     return (
       // Переадресовываем авторизованного пользователя на главную страницу
       <Navigate to="/" replace />

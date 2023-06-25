@@ -19,7 +19,6 @@ import { IngredientDetails } from '../burger-ingredients/ingredient-details/Ingr
 import Modal from '../modal/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
 import { ModalActionTypes } from '../../services/store/types/modal';
-import { useDispatch } from 'react-redux';
 
 const App: FC = () => {
   return <ModalSwitch />;

@@ -1,8 +1,7 @@
 import PortalReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
-import PropTypes from 'prop-types';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IModalProps {
@@ -11,17 +10,23 @@ interface IModalProps {
   onClose: () => void;
 }
 
-const modalRoot = document.getElementById('react-modals');
+declare global {
+  interface WindowEventMap {
+    keydown: React.KeyboardEvent<HTMLInputElement>;
+  }
+}
 
 const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
-  const closeModal = (e: React.KeyboardEvent) => {
+  const modalRoot = document.getElementById('react-modals');
+
+  const closeModal = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
       onClose();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', closeModal());
+    window.addEventListener('keydown', closeModal);
 
     return () => {
       window.removeEventListener('keydown', closeModal);
@@ -33,37 +38,37 @@ const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
     onClose();
   };
 
-  return PortalReactDOM.createPortal(
-    <>
-      <section className={`${styles['Modal-container']}`} onClick={handleClick}>
+  return (
+    modalRoot &&
+    PortalReactDOM.createPortal(
+      <>
         <section
-          className={`${styles.Modal}`}
-          onClick={(e) => e.stopPropagation()}
+          className={`${styles['Modal-container']}`}
+          onClick={handleClick}
         >
-          <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
-            <section className={`${styles['Title']}`}>
-              <span className="text text_type_main-large text_color_primary">
-                {title}
-              </span>
+          <section
+            className={`${styles.Modal}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
+              <section className={`${styles['Title']}`}>
+                <span className="text text_type_main-large text_color_primary">
+                  {title}
+                </span>
+              </section>
+              {/* Иконка закрытия. */}
+              <section className={styles['Button-close']} onClick={handleClick}>
+                <CloseIcon type="primary" />
+              </section>
             </section>
-            {/* Иконка закрытия. */}
-            <section className={styles['Button-close']} onClick={handleClick}>
-              <CloseIcon type="primary" />
-            </section>
+            {children}
           </section>
-          {children}
         </section>
-      </section>
-      <ModalOverlay onClose={onClose}></ModalOverlay>
-    </>,
-    modalRoot
+        <ModalOverlay></ModalOverlay>
+      </>,
+      modalRoot
+    )
   );
 };
 
 export default Modal;
-
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
-};

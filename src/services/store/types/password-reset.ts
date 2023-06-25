@@ -35,7 +35,7 @@ export interface IPasswordResetState {
 
 export interface IPasswordResetForm {
   password: string;
-  code: string;
+  token: string;
 }
 
 export interface IPasswordResetResponse {
