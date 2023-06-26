@@ -107,13 +107,14 @@ function BurgerConstructor() {
   };
 
   // Получаем номер заказа для конструктора и открываем модальное окно.
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleOpenModal = () => {
-    if (user.isAuthChecked && user.user) {
-      console.log('1');
+    if (!currentBun) {
+      return;
+    }
 
+    if (user.isAuthChecked && user.user) {
       if (ingredientsConstructor && ingredientsConstructor.length > 0) {
         // Получаем номер заказа.
         dispatch(getOrderNumber(getBody()) as any);
@@ -138,8 +139,6 @@ function BurgerConstructor() {
   );
 
   return (
-    // ingredientsConstructor &&
-    // currentBun && (
     <>
       <section className={`${styles['Burger-constructor']}`}>
         <>

@@ -11,6 +11,9 @@ const OrderDetails = () => {
   return (
     <section className={`${styles['Modal-content']}`}>
       <div className={`mt-4 ${styles['Order_id_container']}`}>
+        {orderRequest && (
+          <span className="text text_type_main-medium">Получаем номер</span>
+        )}
         {!orderRequest && !orderFailed && (
           <span className="text text_type_digits-large">{orderNumber}</span>
         )}

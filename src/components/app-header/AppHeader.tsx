@@ -47,7 +47,9 @@ function AppHeader() {
             </NavLink>
           </div>
           <div className={`${styles.Logo}`}>
-            <Logo />
+            <NavLink to={'/'}>
+              <Logo />
+            </NavLink>
           </div>
           <div
             className={`${styles['Profile-container']} ${styles['Flex-container']}`}
@@ -61,20 +63,6 @@ function AppHeader() {
             >
               Личный кабинет
             </NavLink>
-
-            {/* <Link
-              to={'/registration'}
-              className={`pl-2 text text_type_main-default text_color_inactive`}
-            >
-              Регистрация
-            </Link>
-
-            <Link
-              to={'/login'}
-              className={`pl-2 text text_type_main-default text_color_inactive`}
-            >
-              Вход
-            </Link> */}
           </div>
         </div>
       </nav>

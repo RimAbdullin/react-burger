@@ -9,7 +9,6 @@ import {
   getIngredientsSelector,
 } from '../../../services/selectors/selector';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { IBurgerIngredientsConstructorState } from '../../../services/store/types/ingredientsConstructor';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
 
 interface IListBurgerConstructorProps {
@@ -39,9 +38,19 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
 
   const [cards, setCards] = useState<IBurgerIngredient[]>([]);
 
+  const [bun, setBun] = useState<boolean>(false);
+
   useEffect(() => {
     setCards(ingredientsConstructor);
   }, [ingredientsConstructor]);
+
+  useEffect(() => {
+    if (currentBun) {
+      setBun(true);
+    } else {
+      setBun(false);
+    }
+  }, [currentBun]);
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
     setCards((prevCards) =>
@@ -53,25 +62,6 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
       })
     );
   }, []);
-
-  // const renderCard = useCallback((ingredientsConstructor : IBurgerIngredient, index: number) => {
-  //   return (
-  //     ingredientsConstructor && (
-  //       <CardBurgerConstructor
-  //         extraClass={index !== ingredientsConstructor.length - 1 ? 'mb-4' : ''}
-  //         key={ingredientsConstructor.id}
-  //         index={index}
-  //         id={ingredientsConstructor.id}
-  //         text={ingredientsConstructor.text}
-  //         type={undefined}
-  //         isLocked={false}
-  //         moveCard={moveCard}
-  //       >
-  //         {ingredientsConstructor}
-  //       </CardBurgerConstructor>
-  //     )
-  //   );
-  // }, []);
 
   const renderCard = useCallback((card: IBurgerIngredient, index: number) => {
     return (
@@ -89,10 +79,10 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
   }, []);
 
   return (
-    ingredientsConstructor &&
-    currentBun && (
-      <section>
-        {/* Первый элемент булки. */}
+    <section>
+      {/* ingredientsConstructor && (currentBun || bun) && ( */}
+      {/* Первый элемент булки. */}
+      {currentBun && bun && (
         <div className={`ml-4  ${styles['Card-ingredients']}`}>
           <ConstructorElement
             extraClass={'mb-4 ml-15'}
@@ -103,14 +93,26 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
             thumbnail={currentBun.image}
           />
         </div>
-        <div
-          className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
-          ref={dropTarget}
-        >
-          {/* Список ингредиентов. */}
-          {cards.map((card, i) => renderCard(card, i))}
-        </div>
-        {/* Последний элемент булки. */}
+      )}
+      <div
+        className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
+        ref={dropTarget}
+      >
+        {!currentBun && !bun && ingredientsConstructor.length === 0 && (
+          <div className={`${styles['Info-container']}`}>
+            <span
+              className={`ml-4  text text_type_main-medium text_color_primary ${styles['Info']}`}
+            >
+              Пожалуйста, перенесите сюда булку и ингредиенты для создания
+              заказа
+            </span>
+          </div>
+        )}
+        {/* Список ингредиентов. */}
+        {cards.map((card, i) => renderCard(card, i))}
+      </div>
+      {/* Последний элемент булки. */}
+      {currentBun && bun && (
         <div className={`ml-4  ${styles['Card-ingredients']}`}>
           <ConstructorElement
             extraClass={'ml-15'}
@@ -121,8 +123,9 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
             thumbnail={currentBun.image}
           />
         </div>
-      </section>
-    )
+      )}
+      {/* ) */}
+    </section>
   );
 };
 
