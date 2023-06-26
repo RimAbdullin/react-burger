@@ -5,7 +5,7 @@ import {
 import styles from './CardBurgerIngredients.module.css';
 import { useDrag } from 'react-dnd';
 import { useState, useEffect, FC } from 'react';
-import { getIngredientsSelector } from '../../../services/selectors/selector';
+import { getIngredientsConstructorSelector } from '../../../services/selectors/selector';
 import { useLocation, Link } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
@@ -25,15 +25,30 @@ const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
 
   // Получаем данные из хранилища redux.
   // Значение счетчика выбранного ингредиента.
-  const { ingredients } = useTypedSelector(getIngredientsSelector);
+  const { ingredientsConstructor } = useTypedSelector(
+    getIngredientsConstructorSelector
+  );
 
   // Изменяем количество выбранных ингредиентов.
   useEffect(() => {
-    const count = ingredients.filter((item) => item._id === _id)[0].count;
-    if (count) {
-      setCount(count);
+    if (ingredientsConstructor.length > 0) {
+      const filter = ingredientsConstructor.filter((item) => item._id === _id);
+
+      if (filter.length <= 1) {
+        setCount(filter.length);
+      }
+
+      if (filter.length > 1) {
+        const count = ingredientsConstructor.filter(
+          (item) => item._id === _id
+        ).length;
+
+        if (count) {
+          setCount(count);
+        }
+      }
     }
-  }, [ingredients]);
+  }, [ingredientsConstructor]);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredients',
