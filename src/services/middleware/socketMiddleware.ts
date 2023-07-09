@@ -1,11 +1,6 @@
-// socketMiddleware.ts
 import type { Middleware, MiddlewareAPI } from 'redux';
 
-import type {
-  ApplicationActions,
-  AppDispatch,
-  RootState,
-} from '../store/store';
+import type { AppDispatch, RootState } from '../store/store';
 import { WSAction, WSActionTypes } from '../store/types/ws';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
@@ -16,7 +11,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
 
-      type;
+      console.log('=== payload', payload);
 
       if (type === WSActionTypes.WS_CONNECTION_START) {
         // объект класса WebSocket
