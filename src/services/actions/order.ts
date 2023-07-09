@@ -1,14 +1,6 @@
-import { Dispatch } from 'react';
 import { getOrderRequest } from '../../utils/burger-api';
-import {
-  IngredientsConstructorAction,
-  IngredientsConstructorActionTypes,
-} from '../store/types/ingredientsConstructor';
-import {
-  OrderAction,
-  OrderActionTypes,
-  OrderRequestBody,
-} from '../store/types/order';
+import { IngredientsConstructorActionTypes } from '../store/types/ingredientsConstructor';
+import { OrderActionTypes, OrderRequestBody } from '../store/types/order';
 import { AppDispatch } from '../store/store';
 
 // thunk

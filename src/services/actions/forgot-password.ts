@@ -1,7 +1,5 @@
-import { Dispatch } from 'react';
 import { forgotPasswordRequest } from '../../utils/burger-api';
 import {
-  ForgotPasswordAction,
   ForgotPasswordActionTypes,
   IForgotPasswordForm,
 } from '../store/types/forgot-password';

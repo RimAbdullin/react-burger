@@ -18,3 +18,5 @@ export const getForgotPasswordSelector = (store: RootState) =>
 
 export const getPasswordResetSelector = (store: RootState) =>
   store.passwordReset;
+
+export const getWSSelector = (store: RootState) => store.ws;

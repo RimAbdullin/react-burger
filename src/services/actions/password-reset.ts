@@ -1,8 +1,6 @@
-import { Dispatch } from 'react';
 import { passwordResetRequest } from '../../utils/burger-api';
 import {
   IPasswordResetForm,
-  PasswordResetAction,
   PasswordResetActionTypes,
 } from '../store/types/password-reset';
 import { AppDispatch } from '../store/store';

@@ -19,8 +19,15 @@ import { IngredientDetails } from '../burger-ingredients/ingredient-details/Ingr
 import Modal from '../modal/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
 import { ModalActionTypes } from '../../services/store/types/modal';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
+import { getWSSelector } from '../../services/selectors/selector';
 
 const App: FC = () => {
+  // Получаем данные из хранилища redux.
+  const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
+
+  console.log(messages);
+
   return <ModalSwitch />;
 };
 

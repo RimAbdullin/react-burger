@@ -1,0 +1,91 @@
+.Modal-content {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.Image {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 520px;
+  height: 240px;
+}
+
+.Illustration {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 480px;
+  height: 240px;
+}
+
+.Nutrition-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+
+  width: 516px;
+  height: 56px;
+}
+
+.Value-container-calories {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 56px;
+}
+
+.Value-container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 112px;
+  height: 56px;
+}
+
+.Value-calories {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 24px;
+}
+
+.Value {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 24px;
+}

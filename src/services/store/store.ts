@@ -11,15 +11,22 @@ import { RegistrationAction } from './types/registration';
 import { UserAction } from './types/user';
 import { Action, ActionCreator } from 'redux';
 import thunk, { ThunkDispatch, ThunkAction } from 'redux-thunk';
+import { socketMiddleware } from '../middleware/socketMiddleware';
+import { WSAction, WSActionTypes } from './types/ws';
+import { NORMA_API_WS } from '../../data/data';
 
 export const store = createStore(
   rootReducer,
-  compose(applyMiddleware(thunk), composeWithDevTools())
+  compose(
+    applyMiddleware(thunk),
+    composeWithDevTools(),
+    applyMiddleware(socketMiddleware(NORMA_API_WS))
+  )
 );
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-type ApplicationActions =
+export type ApplicationActions =
   | ForgotPasswordAction
   | IngredientsAction
   | IngredientsConstructorAction
@@ -27,7 +34,8 @@ type ApplicationActions =
   | OrderAction
   | PasswordResetAction
   | RegistrationAction
-  | UserAction;
+  | UserAction
+  | WSAction;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, ApplicationActions>

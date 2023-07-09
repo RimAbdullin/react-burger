@@ -1,9 +1,7 @@
-import { Dispatch } from 'react';
 import { registrationRequest } from '../../utils/burger-api';
 import { saveTokens } from '../common/common';
 import {
   IRegistrationForm,
-  RegistrationAction,
   RegistrationActionTypes,
 } from '../store/types/registration';
 import { AppDispatch } from '../store/store';
