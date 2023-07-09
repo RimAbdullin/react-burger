@@ -5,10 +5,11 @@ import {
   PasswordResetAction,
   PasswordResetActionTypes,
 } from '../store/types/password-reset';
+import { AppDispatch } from '../store/store';
 
 // thunk
 export function passwordResetThunk(form: IPasswordResetForm) {
-  return function (dispatch: Dispatch<PasswordResetAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: PasswordResetActionTypes.POST_PASSWORD_RESET_REQUEST,
     });

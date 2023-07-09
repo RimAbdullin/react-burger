@@ -23,7 +23,7 @@ export const useRegistration = () => {
     (form: IRegistrationForm) => {
       setIsLoading(true);
       try {
-        dispatch(registrationThunk(form) as any);
+        dispatch(registrationThunk(form));
       } catch (error) {
       } finally {
         setIsLoading(false);

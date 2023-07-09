@@ -117,7 +117,7 @@ function BurgerConstructor() {
     if (user.isAuthChecked && user.user) {
       if (ingredientsConstructor && ingredientsConstructor.length > 0) {
         // Получаем номер заказа.
-        dispatch(getOrderNumber(getBody()) as any);
+        dispatch(getOrderNumber(getBody()));
 
         // Открываем модальное окно.
         openModal();

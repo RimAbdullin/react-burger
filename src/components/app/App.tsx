@@ -36,7 +36,7 @@ const ModalSwitch = () => {
 
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
-    dispatch(getIngredientsItems('Краторная булка N-200i') as any);
+    dispatch(getIngredientsItems('Краторная булка N-200i'));
   }, [dispatch]);
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import { Dispatch } from 'react';
 import {
   getUserRequest,
   updateUserRequest,
@@ -11,23 +10,23 @@ import { getCookie, removeCookie, saveTokens } from '../common/common';
 import {
   IUserLoginForm,
   IUserWithPassword,
-  UserAction,
   UserActionTypes,
 } from '../store/types/user';
+import { AppDispatch } from '../store/store';
 
 // thunk
 
 // check user is auth.
-export const checkAuthThunk = () => (dispatch: Dispatch<UserAction>) => {
+export const checkAuthThunk = () => (dispatch: AppDispatch) => {
   if (getCookie('accessToken')) {
-    dispatch(getUserThunk() as any);
+    dispatch(getUserThunk());
   }
   dispatch({ type: UserActionTypes.AUTH_CHECKED });
 };
 
 // get user.
 export function getUserThunk() {
-  return function (dispatch: Dispatch<UserAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UserActionTypes.GET_USER_REQUEST,
     });
@@ -42,7 +41,7 @@ export function getUserThunk() {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken(getUserThunk()) as any);
+          dispatch(refreshToken(getUserThunk()));
           refreshToken(getUserThunk());
         } else {
           dispatch({
@@ -56,7 +55,7 @@ export function getUserThunk() {
 
 // update user.
 export function updateUserThunk(form: IUserWithPassword) {
-  return function (dispatch: Dispatch<UserAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UserActionTypes.UPDATE_USER_REQUEST,
     });
@@ -70,7 +69,7 @@ export function updateUserThunk(form: IUserWithPassword) {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken(updateUserThunk(form)) as any);
+          dispatch(refreshToken(updateUserThunk(form)));
         } else {
           dispatch({
             type: UserActionTypes.UPDATE_USER_FAILED,
@@ -81,17 +80,16 @@ export function updateUserThunk(form: IUserWithPassword) {
 }
 
 // refresh.
-const refreshToken =
-  (afterRefresh: any) => (dispatch: Dispatch<UserAction>) => {
-    refreshTokenRequest().then((res) => {
-      saveTokens(res.accessToken, res.refreshToken);
-      dispatch(afterRefresh);
-    });
-  };
+const refreshToken = (afterRefresh: any) => (dispatch: AppDispatch) => {
+  refreshTokenRequest().then((res) => {
+    saveTokens(res.accessToken, res.refreshToken);
+    dispatch(afterRefresh);
+  });
+};
 
 // login.
 export function loginThunk(form: IUserLoginForm) {
-  return function (dispatch: Dispatch<UserAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UserActionTypes.POST_LOGIN_REQUEST,
     });
@@ -119,7 +117,7 @@ export function loginThunk(form: IUserLoginForm) {
 
 // refresh.
 export function refreshTokenThunk() {
-  return function (dispatch: Dispatch<UserAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UserActionTypes.POST_REFRESH_TOKEN_REQUEST,
     });
@@ -144,7 +142,7 @@ export function refreshTokenThunk() {
 
 // logout.
 export function logoutThunk() {
-  return function (dispatch: Dispatch<UserAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UserActionTypes.POST_LOGOUT_REQUEST,
     });

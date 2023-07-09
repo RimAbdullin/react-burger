@@ -23,7 +23,7 @@ export const IngredientDetails = () => {
 
   useEffect(() => {
     if (!ingredients) {
-      dispatch(getIngredientsItems('Краторная булка N-200i') as any);
+      dispatch(getIngredientsItems('Краторная булка N-200i'));
     }
   }, [dispatch]);
 

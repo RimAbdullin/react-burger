@@ -5,10 +5,11 @@ import {
   ForgotPasswordActionTypes,
   IForgotPasswordForm,
 } from '../store/types/forgot-password';
+import { AppDispatch } from '../store/store';
 
 // thunk
 export function forgotPasswordThunk(form: IForgotPasswordForm) {
-  return function (dispatch: Dispatch<ForgotPasswordAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: ForgotPasswordActionTypes.POST_FORGOT_PASSWORD_REQUEST,
     });
