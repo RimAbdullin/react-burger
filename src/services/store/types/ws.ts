@@ -1,5 +1,3 @@
-import { IFeedOrders } from '../../common/interfaces';
-
 export enum WSActionTypes {
   WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR',
   WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS',

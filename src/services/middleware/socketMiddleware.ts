@@ -11,6 +11,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
 
+      console.log('=== type', type);
       console.log('=== payload', payload);
 
       if (type === WSActionTypes.WS_CONNECTION_START) {

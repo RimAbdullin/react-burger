@@ -21,6 +21,8 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ModalActionTypes } from '../../services/store/types/modal';
 import { useTypedSelector } from '../../hooks/useTypeSelector';
 import { getWSSelector } from '../../services/selectors/selector';
+import { WSActionTypes } from '../../services/store/types/ws';
+import { FeedPage } from '../../pages/feed';
 
 const App: FC = () => {
   // Получаем данные из хранилища redux.
@@ -44,6 +46,11 @@ const ModalSwitch = () => {
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
+
+    dispatch({
+      type: WSActionTypes.WS_CONNECTION_START,
+      payload: '',
+    });
   }, [dispatch]);
 
   useEffect(() => {
@@ -72,6 +79,7 @@ const ModalSwitch = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/ingredients/:_id" element={<IngredientDetails />} />
+        <Route path="/feed" element={<FeedPage />} />
         <Route
           path="/profile"
           element={<ProtectedRouteElement element={<ProfilePage />} />}

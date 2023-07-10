@@ -1,11 +1,40 @@
-import styles from './BurgerIngredients.module.css';
+import styles from './FeedOrder.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { getWSSelector } from '../../../services/selectors/selector';
 import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { WSActionTypes } from '../../../services/store/types/ws';
+import { socketMiddleware } from '../../../services/middleware/socketMiddleware';
+import { NORMA_API_WS } from '../../../data/data';
 
 function FeedOrder() {
+  const dispatch = useAppDispatch();
+
+  const ws = socketMiddleware(NORMA_API_WS);
+
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
+
+  useEffect(() => {
+    if (wsConnected) {
+      dispatch({
+        type: WSActionTypes.WS_GET_MESSAGE,
+        // payload: '',
+      });
+      return () => {};
+    }
+  }, [wsConnected]);
+
+  useEffect(() => {
+    // if (wsConnected) {
+    //   dispatch({
+    //     type: WSActionTypes.WS_GET_MESSAGE,
+    //     payload: '',
+    //   });
+    //   console.log('=== messages', messages);
+    // }
+  }, [wsConnected]);
 
   return !wsConnected ? (
     <section className={styles['Info-container']}>

@@ -12,15 +12,15 @@ import { UserAction } from './types/user';
 import { Action, ActionCreator } from 'redux';
 import thunk, { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import { socketMiddleware } from '../middleware/socketMiddleware';
-import { WSAction, WSActionTypes } from './types/ws';
+import { WSAction } from './types/ws';
 import { NORMA_API_WS } from '../../data/data';
 
 export const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(thunk),
-    composeWithDevTools(),
-    applyMiddleware(socketMiddleware(NORMA_API_WS))
+    applyMiddleware(thunk, socketMiddleware(NORMA_API_WS)),
+    composeWithDevTools()
+    // applyMiddleware(socketMiddleware(NORMA_API_WS))
   )
 );
 
