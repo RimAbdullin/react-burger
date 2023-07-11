@@ -4,28 +4,28 @@ import { WSActionTypes, type WSAction } from '../store/types/ws';
 type TWSState = {
   wsConnected: boolean;
   // messages: IFeedOrders[];
-  messages: any;
+  messages: [];
   error?: Event;
 };
 
 const initialState: TWSState = {
   wsConnected: false,
   messages: [
-    {
-      success: false,
-      orders: [
-        {
-          ingredients: [],
-          _id: '',
-          status: '',
-          number: 0,
-          createdAt: null,
-          updatedAt: null,
-        },
-      ],
-      total: 0,
-      totalToday: 0,
-    },
+    // {
+    //   success: false,
+    //   orders: [
+    //     {
+    //       ingredients: [],
+    //       _id: '',
+    //       status: '',
+    //       number: 0,
+    //       createdAt: null,
+    //       updatedAt: null,
+    //     },
+    //   ],
+    //   total: 0,
+    //   totalToday: 0,
+    // },
   ],
 };
 

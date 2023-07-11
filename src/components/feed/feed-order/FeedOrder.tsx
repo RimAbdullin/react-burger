@@ -8,33 +8,47 @@ import { WSActionTypes } from '../../../services/store/types/ws';
 import { socketMiddleware } from '../../../services/middleware/socketMiddleware';
 import { NORMA_API_WS } from '../../../data/data';
 
+// const socket = new WebSocket(NORMA_API_WS);
+
+// socket.onopen = () => {
+//   console.log('connection open');
+//   console.log('=== socket', socket);
+// };
+
+// socket.onmessage = (event) => {
+//   const { data } = event;
+//   console.log('=== data', data);
+
+//   // console.log('=== event', event);
+//   // const { data } = event;
+//   // dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: data });
+// };
+
 function FeedOrder() {
   const dispatch = useAppDispatch();
 
-  const ws = socketMiddleware(NORMA_API_WS);
+  // const ws = socketMiddleware(NORMA_API_WS);
 
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
 
   useEffect(() => {
-    if (wsConnected) {
-      dispatch({
-        type: WSActionTypes.WS_GET_MESSAGE,
-        // payload: '',
-      });
-      return () => {};
-    }
-  }, [wsConnected]);
+    dispatch({
+      type: WSActionTypes.WS_CONNECTION_START,
+      payload: undefined,
+    });
+    // return () => {};
+  }, []);
 
-  useEffect(() => {
-    // if (wsConnected) {
-    //   dispatch({
-    //     type: WSActionTypes.WS_GET_MESSAGE,
-    //     payload: '',
-    //   });
-    //   console.log('=== messages', messages);
-    // }
-  }, [wsConnected]);
+  // useEffect(() => {
+  //   if (wsConnected) {
+  //     console.log('=== messages', messages);
+  //     // dispatch({
+  //     //   type: WSActionTypes.WS_GET_MESSAGE,
+  //     //   payload: undefined,
+  //     // });
+  //   }
+  // }, [messages]);
 
   return !wsConnected ? (
     <section className={styles['Info-container']}>

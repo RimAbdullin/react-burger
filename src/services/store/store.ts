@@ -15,6 +15,8 @@ import { socketMiddleware } from '../middleware/socketMiddleware';
 import { WSAction } from './types/ws';
 import { NORMA_API_WS } from '../../data/data';
 
+// const webSocketMiddleWare = socketMiddleware('');
+
 export const store = createStore(
   rootReducer,
   compose(

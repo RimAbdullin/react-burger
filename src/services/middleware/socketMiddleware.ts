@@ -11,8 +11,8 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
 
-      console.log('=== type', type);
-      console.log('=== payload', payload);
+      // console.log('=== type', type);
+      // console.log('=== payload', payload);
 
       if (type === WSActionTypes.WS_CONNECTION_START) {
         // объект класса WebSocket
@@ -20,25 +20,31 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       }
       if (socket) {
         // функция, которая вызывается при открытии сокета
-        socket.onopen = (event) => {
+        socket.onopen = () => {
+          console.log('ws connected');
+
           dispatch({
             type: WSActionTypes.WS_CONNECTION_SUCCESS,
-            payload: event,
+            payload: undefined,
           });
         };
 
         // функция, которая вызывается при ошибке соединения
-        socket.onerror = (event) => {
+        socket.onerror = (event: Event) => {
           dispatch({ type: WSActionTypes.WS_CONNECTION_ERROR, payload: event });
         };
 
         // функция, которая вызывается при получения события от сервера
-        socket.onmessage = (event) => {
+        socket.onmessage = (event: MessageEvent) => {
           const { data } = event;
-          dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: data });
+          const parseData = JSON.parse(data);
+
+          console.log('=== data', data);
+
+          dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: parseData });
         };
         // функция, которая вызывается при закрытии соединения
-        socket.onclose = (event) => {
+        socket.onclose = (event: CloseEvent) => {
           dispatch({
             type: WSActionTypes.WS_CONNECTION_CLOSED,
             payload: event,

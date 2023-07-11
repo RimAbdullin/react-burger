@@ -28,7 +28,7 @@ const App: FC = () => {
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
 
-  console.log(messages);
+  // console.log(messages);
 
   return <ModalSwitch />;
 };

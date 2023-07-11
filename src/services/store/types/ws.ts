@@ -17,12 +17,12 @@ interface IConnectionSuccessWS {
   payload: any;
 }
 
-interface IConnectionGetMessageWS {
+interface IGetMessageWS {
   readonly type: typeof WSActionTypes.WS_GET_MESSAGE;
   payload: any;
 }
 
-interface IConnectionSendMessageWS {
+interface ISendMessageWS {
   readonly type: typeof WSActionTypes.WS_SEND_MESSAGE;
   payload: any;
 }
@@ -40,8 +40,8 @@ interface IConnectionStartWS {
 export type WSAction =
   | IConnectionErrorWS
   | IConnectionSuccessWS
-  | IConnectionGetMessageWS
-  | IConnectionSendMessageWS
+  | IGetMessageWS
+  | ISendMessageWS
   | IConnectionClosedWS
   | IConnectionStartWS;
 
