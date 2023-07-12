@@ -15,15 +15,11 @@ import { socketMiddleware } from '../middleware/socketMiddleware';
 import { WSAction } from './types/ws';
 import { NORMA_API_WS } from '../../data/data';
 
-// const webSocketMiddleWare = socketMiddleware('');
+export const webSocketMiddleWare = socketMiddleware(NORMA_API_WS);
 
 export const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(thunk, socketMiddleware(NORMA_API_WS)),
-    composeWithDevTools()
-    // applyMiddleware(socketMiddleware(NORMA_API_WS))
-  )
+  compose(applyMiddleware(thunk, webSocketMiddleWare), composeWithDevTools())
 );
 
 export type RootState = ReturnType<typeof rootReducer>;

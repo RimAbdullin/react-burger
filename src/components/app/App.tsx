@@ -46,11 +46,6 @@ const ModalSwitch = () => {
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
     dispatch(getIngredientsItems('Краторная булка N-200i'));
-
-    dispatch({
-      type: WSActionTypes.WS_CONNECTION_START,
-      payload: '',
-    });
   }, [dispatch]);
 
   useEffect(() => {

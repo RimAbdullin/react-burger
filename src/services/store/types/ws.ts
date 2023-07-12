@@ -1,3 +1,5 @@
+import { IFeedOrders } from '../../common/interfaces';
+
 export enum WSActionTypes {
   WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR',
   WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS',
@@ -19,7 +21,7 @@ interface IConnectionSuccessWS {
 
 interface IGetMessageWS {
   readonly type: typeof WSActionTypes.WS_GET_MESSAGE;
-  payload: any;
+  payload: IFeedOrders;
 }
 
 interface ISendMessageWS {

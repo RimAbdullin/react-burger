@@ -1,32 +1,16 @@
 import { IFeedOrders } from '../common/interfaces';
 import { WSActionTypes, type WSAction } from '../store/types/ws';
 
-type TWSState = {
+export type TWSState = {
   wsConnected: boolean;
-  // messages: IFeedOrders[];
-  messages: [];
-  error?: Event;
+  messages: IFeedOrders;
+  error?: null | Event;
 };
 
 const initialState: TWSState = {
   wsConnected: false,
-  messages: [
-    // {
-    //   success: false,
-    //   orders: [
-    //     {
-    //       ingredients: [],
-    //       _id: '',
-    //       status: '',
-    //       number: 0,
-    //       createdAt: null,
-    //       updatedAt: null,
-    //     },
-    //   ],
-    //   total: 0,
-    //   totalToday: 0,
-    // },
-  ],
+  messages: {} as IFeedOrders,
+  error: null,
 };
 
 // Создадим редьюсер для WebSocket
@@ -57,7 +41,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
       return {
         ...state,
         error: undefined,
-        messages: [...state.messages, action.payload],
+        messages: { ...state.messages, action },
       };
 
     // Опишем обработку экшена с типом WS_CONNECTION_CLOSED, когда соединение закрывается
@@ -73,3 +57,20 @@ export const wsReducer = (state = initialState, action: WSAction) => {
       return state;
   }
 };
+
+// {
+//   success: false,
+//   orders: [
+//     {
+//       ingredients: [],
+//       name: '',
+//       _id: '',
+//       status: '',
+//       number: 0,
+//       createdAt: null,
+//       updatedAt: null,
+//     },
+//   ],
+//   total: 0,
+//   totalToday: 0,
+// },

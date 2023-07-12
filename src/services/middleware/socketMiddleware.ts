@@ -2,6 +2,7 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 
 import type { AppDispatch, RootState } from '../store/store';
 import { WSAction, WSActionTypes } from '../store/types/ws';
+import { IFeedOrders } from '../common/interfaces';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -11,9 +12,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
 
-      // console.log('=== type', type);
-      // console.log('=== payload', payload);
-
       if (type === WSActionTypes.WS_CONNECTION_START) {
         // объект класса WebSocket
         socket = new WebSocket(wsUrl);
@@ -21,8 +19,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
       if (socket) {
         // функция, которая вызывается при открытии сокета
         socket.onopen = () => {
-          console.log('ws connected');
-
           dispatch({
             type: WSActionTypes.WS_CONNECTION_SUCCESS,
             payload: undefined,
@@ -37,9 +33,9 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = (event: MessageEvent) => {
           const { data } = event;
-          const parseData = JSON.parse(data);
+          const parseData: IFeedOrders = JSON.parse(data);
 
-          console.log('=== data', data);
+          // console.log('=== data', data);
 
           dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: parseData });
         };

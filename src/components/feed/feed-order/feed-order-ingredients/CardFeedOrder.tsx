@@ -1,14 +1,11 @@
-import {
-  CurrencyIcon,
-  Counter,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './CardBurgerIngredients.module.css';
-import { useState, FC } from 'react';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './CardFeedOrder.module.css';
+import { FC } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { IFeedOrders } from '../../../../services/common/interfaces';
+import { IFeedOrderData } from '../../../../services/common/interfaces';
 
 interface ICardFeedOrderProps {
-  children: IFeedOrders;
+  children: IFeedOrderData;
 }
 
 const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
@@ -16,8 +13,6 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
 
   // const { _id } = children.orders;
   const _id = 1;
-
-  const [count, setCount] = useState<number>(0);
 
   // Получаем данные из хранилища redux.
   // Значение счетчика выбранного ингредиента.

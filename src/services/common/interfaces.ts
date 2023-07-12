@@ -15,18 +15,19 @@ export interface IBurgerIngredient {
   count?: number;
 }
 
+export interface IFeedOrderData {
+  ingredients: string[];
+  name: string;
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: null | Date;
+  updatedAt: null | Date;
+}
+
 export interface IFeedOrders {
   success: boolean;
-  orders: [
-    {
-      ingredients: string[];
-      _id: string;
-      status: string;
-      number: number;
-      createdAt: null | Date;
-      updatedAt: null | Date;
-    }
-  ];
+  orders: IFeedOrderData[];
   total: number;
   totalToday: number;
 }

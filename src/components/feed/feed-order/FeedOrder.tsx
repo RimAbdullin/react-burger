@@ -5,54 +5,40 @@ import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { WSActionTypes } from '../../../services/store/types/ws';
-import { socketMiddleware } from '../../../services/middleware/socketMiddleware';
-import { NORMA_API_WS } from '../../../data/data';
-
-// const socket = new WebSocket(NORMA_API_WS);
-
-// socket.onopen = () => {
-//   console.log('connection open');
-//   console.log('=== socket', socket);
-// };
-
-// socket.onmessage = (event) => {
-//   const { data } = event;
-//   console.log('=== data', data);
-
-//   // console.log('=== event', event);
-//   // const { data } = event;
-//   // dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: data });
-// };
+import { TWSState } from '../../../services/reducers/ws';
 
 function FeedOrder() {
   const dispatch = useAppDispatch();
 
-  // const ws = socketMiddleware(NORMA_API_WS);
-
   // Получаем данные из хранилища redux.
-  const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
+  const { error, messages, wsConnected } =
+    useTypedSelector<TWSState>(getWSSelector);
+
+  console.log('=== messages', messages);
+
+  const { orders } = messages;
+
+  console.log('=== orders', orders);
 
   useEffect(() => {
+    // Открытие wev socket.
     dispatch({
       type: WSActionTypes.WS_CONNECTION_START,
-      payload: undefined,
+      payload: '',
     });
-    // return () => {};
-  }, []);
 
-  // useEffect(() => {
-  //   if (wsConnected) {
-  //     console.log('=== messages', messages);
-  //     // dispatch({
-  //     //   type: WSActionTypes.WS_GET_MESSAGE,
-  //     //   payload: undefined,
-  //     // });
-  //   }
-  // }, [messages]);
+    return () => {
+      // Закрытие web socket.
+      dispatch({
+        type: WSActionTypes.WS_CONNECTION_CLOSED,
+        payload: '',
+      });
+    };
+  }, []);
 
   return !wsConnected ? (
     <section className={styles['Info-container']}>
-      <p>Идет загрузка ...</p>
+      <p>Ошибка соединения</p>
     </section>
   ) : error ? (
     <section className={styles['Info-container']}>
@@ -72,7 +58,7 @@ function FeedOrder() {
           >
             <a id={'id-bun'}>Булки</a>
           </div>
-          {/* <ListFeedOrders data={messages}></ListFeedOrders> */}
+          {messages && <ListFeedOrders data={orders}></ListFeedOrders>}
         </div>
       </div>
     </section>
