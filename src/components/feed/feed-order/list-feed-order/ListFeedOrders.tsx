@@ -1,5 +1,5 @@
 import { IFeedOrderData } from '../../../../services/common/interfaces';
-import CardFeedOrder from '../feed-order-ingredients/CardFeedOrder';
+import CardFeedOrder from '../card-feed-order/CardFeedOrder';
 import styles from './ListFeedOrders.module.css';
 
 interface IListFeedOrdersProps {
@@ -7,6 +7,8 @@ interface IListFeedOrdersProps {
 }
 
 export const ListFeedOrders: React.FC<IListFeedOrdersProps> = ({ data }) => {
+  console.log(data);
+
   return (
     <section>
       <div className={styles['List-container']}>

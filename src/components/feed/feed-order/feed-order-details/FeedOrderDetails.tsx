@@ -5,7 +5,11 @@ import { useParams } from 'react-router-dom';
 export const FeedOrderDetails = () => {
   const params = useParams();
 
+  console.log(FeedOrderDetails);
+
   const { _id } = params;
+
+  console.log(_id);
 
   // Получаем данные из хранилища redux.
   // Выбранный ингредиент для отображения детальных данных.

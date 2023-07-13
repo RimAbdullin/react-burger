@@ -19,17 +19,10 @@ import { IngredientDetails } from '../burger-ingredients/ingredient-details/Ingr
 import Modal from '../modal/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
 import { ModalActionTypes } from '../../services/store/types/modal';
-import { useTypedSelector } from '../../hooks/useTypeSelector';
-import { getWSSelector } from '../../services/selectors/selector';
-import { WSActionTypes } from '../../services/store/types/ws';
 import { FeedPage } from '../../pages/feed';
+import FeedOrderDetails from '../feed/feed-order/feed-order-details/FeedOrderDetails';
 
 const App: FC = () => {
-  // Получаем данные из хранилища redux.
-  const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
-
-  // console.log(messages);
-
   return <ModalSwitch />;
 };
 
@@ -75,6 +68,7 @@ const ModalSwitch = () => {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/ingredients/:_id" element={<IngredientDetails />} />
         <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:_id" element={<FeedOrderDetails />} />
         <Route
           path="/profile"
           element={<ProtectedRouteElement element={<ProfilePage />} />}

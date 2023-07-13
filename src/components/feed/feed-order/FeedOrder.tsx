@@ -14,11 +14,7 @@ function FeedOrder() {
   const { error, messages, wsConnected } =
     useTypedSelector<TWSState>(getWSSelector);
 
-  console.log('=== messages', messages);
-
   const { orders } = messages;
-
-  console.log('=== orders', orders);
 
   useEffect(() => {
     // Открытие wev socket.
@@ -38,7 +34,7 @@ function FeedOrder() {
 
   return !wsConnected ? (
     <section className={styles['Info-container']}>
-      <p>Ошибка соединения</p>
+      <p>Идет загрузка ...</p>
     </section>
   ) : error ? (
     <section className={styles['Info-container']}>
@@ -49,16 +45,13 @@ function FeedOrder() {
       <div
         className={`mt-10 mb-5 text text_type_main-large text_color_primary ${styles.Title}`}
       >
-        Соберите бургер
+        Лента заказов
       </div>
       <div className={`custom-scroll ${styles['Scroll-area']}`}>
         <div>
-          <div
-            className={`mt-10 text text_type_main-medium text_color_primary`}
-          >
-            <a id={'id-bun'}>Булки</a>
-          </div>
-          {messages && <ListFeedOrders data={orders}></ListFeedOrders>}
+          {messages && messages.orders && (
+            <ListFeedOrders data={orders}></ListFeedOrders>
+          )}
         </div>
       </div>
     </section>

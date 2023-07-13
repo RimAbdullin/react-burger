@@ -1,20 +1,43 @@
-.Container {
-  width: 720px;
-  height: 539px;
-}
-
 .Card-ingredients {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   flex: none;
 
-  width: 272px;
-  height: 208px;
+  width: 584px;
+  height: 214px;
 
-  box-sizing: border-box;
   position: relative;
   cursor: pointer;
+}
+
+.Order-id-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  width: 536px;
+  height: 24px;
+}
+
+.Id-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  width: 102px;
+  height: 24px;
+}
+
+.Date-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  flex: none;
+
+  width: 418px;
+  height: 24px;
 }
 
 .Illustration {

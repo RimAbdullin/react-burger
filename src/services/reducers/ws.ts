@@ -41,7 +41,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
       return {
         ...state,
         error: undefined,
-        messages: { ...state.messages, action },
+        messages: { ...action.payload },
       };
 
     // Опишем обработку экшена с типом WS_CONNECTION_CLOSED, когда соединение закрывается

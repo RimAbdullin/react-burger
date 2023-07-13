@@ -21,8 +21,8 @@ export interface IFeedOrderData {
   _id: string;
   status: string;
   number: number;
-  createdAt: null | Date;
-  updatedAt: null | Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IFeedOrders {

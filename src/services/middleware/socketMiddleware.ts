@@ -35,8 +35,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
           const { data } = event;
           const parseData: IFeedOrders = JSON.parse(data);
 
-          // console.log('=== data', data);
-
           dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: parseData });
         };
         // функция, которая вызывается при закрытии соединения
