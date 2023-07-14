@@ -2,19 +2,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   flex: none;
 
   width: 584px;
-  height: 214px;
+  min-height: 214px;
 
-  position: relative;
   cursor: pointer;
+
+  box-sizing: border-box;
+  border: 1px solid blue;
 }
 
 .Order-id-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex: none;
 
   width: 536px;
@@ -24,6 +26,7 @@
 .Id-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex: none;
 
   width: 102px;
@@ -33,6 +36,7 @@
 .Date-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: end;
   flex: none;
 
@@ -40,15 +44,46 @@
   height: 24px;
 }
 
-.Illustration {
+.Name-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex: none;
 
-  width: 180px;
-  height: 120px;
+  width: 536px;
+  min-height: 30px;
+}
+
+.Components-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 536px;
+  min-height: 64px;
+  position: relative;
+}
+
+.Ingredients-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 436px;
+  min-height: 64px;
+}
+
+.Price-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 76px;
+  min-height: 64px;
 }
 
 .Price {
@@ -65,10 +100,6 @@
   height: 52px;
 }
 
-.Counter {
-  z-index: -1;
-}
-
 .Image {
   display: flex;
   flex-direction: row;
@@ -76,6 +107,13 @@
   justify-content: center;
   flex: none;
 
-  width: 190px;
-  height: 120px;
+  height: 64px;
+}
+
+.ml-container {
+  margin-left: 0px;
+}
+
+.ml-container-2 {
+  margin-left: -34px;
 }
