@@ -2,7 +2,10 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import styles from './CardFeedOrder.module.css';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { IFeedOrderData } from '../../../../services/common/interfaces';
+import {
+  IBurgerIngredient,
+  IFeedOrderData,
+} from '../../../../services/common/interfaces';
 import { useTypedSelector } from '../../../../hooks/useTypeSelector';
 import { getIngredientsItems } from '../../../../services/actions/ingredients';
 import { getIngredientsSelector } from '../../../../services/selectors/selector';
@@ -84,6 +87,25 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
     });
   };
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    children.ingredients.map((item) => {
+      let found = ingredients.find((itemIngredients) => {
+        if (itemIngredients._id === item) {
+          return itemIngredients.price;
+        }
+
+        if (found) {
+          setTotalPrice(totalPrice + found.price);
+        }
+      });
+    });
+    ingredients.reduce((sum, record) => {
+      return sum + record.price;
+    }, 0);
+  }, []);
+
   return (
     <Link
       key={_id}
@@ -156,10 +178,10 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
               ))}
             </div>
 
-            {/* Дата */}
+            {/* Стоимость */}
             <div className={`${styles['Price-container']}`}>
               <span className="text text_type_main-default text_color_inactive">
-                {date}
+                {totalPrice}
               </span>
             </div>
           </div>
