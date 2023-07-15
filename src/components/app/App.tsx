@@ -21,6 +21,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ModalActionTypes } from '../../services/store/types/modal';
 import { FeedPage } from '../../pages/feed';
 import FeedOrderDetails from '../feed/feed-order/feed-order-details/FeedOrderDetails';
+import { ProfileOrderPage } from '../../pages/profileOrder';
 
 const App: FC = () => {
   return <ModalSwitch />;
@@ -74,6 +75,10 @@ const ModalSwitch = () => {
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
+          <Route
+            path="/profile/orders"
+            element={<ProtectedRouteElement element={<ProfileOrderPage />} />}
+          />
           <Route element={<NotFoundPage />} />
         </Routes>
 
@@ -92,14 +97,14 @@ const ModalSwitch = () => {
               }
             />
 
-            {/* <Route
-            path="/feed/:_id"
-            element={
-              <Modal isTitle={false} title={''} onClose={handleModalClose}>
-                <FeedOrderDetails />
-              </Modal>
-            }
-          /> */}
+            <Route
+              path="/feed/:_id"
+              element={
+                <Modal isTitle={true} title={''} onClose={handleModalClose}>
+                  <FeedOrderDetails />
+                </Modal>
+              }
+            />
           </Routes>
         )}
       </div>

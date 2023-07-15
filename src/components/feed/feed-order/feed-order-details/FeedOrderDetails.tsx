@@ -9,6 +9,8 @@ import {
 import { IBurgerIngredient } from '../../../../services/common/interfaces';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getDateToString } from '../../../../services/common/common';
+import { WSActionTypes } from '../../../../services/store/types/ws';
+import { useAppDispatch } from '../../../../hooks/hooks';
 
 interface IItemFeedDetails {
   ingredients: IBurgerIngredient[];
@@ -30,18 +32,27 @@ export const FeedOrderDetails = () => {
   // Получаем данные из хранилища redux.
   // Список ингредиентов.
   const { ingredients } = useTypedSelector(getIngredientsSelector);
-  const { messages } = useTypedSelector(getWSSelector);
-  const orders = messages.orders;
+  const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
 
-  console.log('=== orders', orders);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (ingredients && orders) {
+    // Открытие wev socket.
+    if (!wsConnected) {
+      dispatch({
+        type: WSActionTypes.WS_CONNECTION_START,
+        payload: '',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (ingredients && messages && messages.orders && messages.orders.length) {
       let orderDataObj: IItemFeedDetails = { ingredients: [] };
       let orderDataDestObj: IItemFeedDetails = { ingredients: [] };
 
       // Ищем по id заказ в массиве orders из messages.
-      const itemOrders = orders.find((item) => item._id === _id);
+      const itemOrders = messages.orders.find((item) => item._id === _id);
 
       // Если заказ найден.
       if (itemOrders) {
@@ -89,11 +100,8 @@ export const FeedOrderDetails = () => {
       orderDataDestObj.sum = sum;
 
       setOrderData(orderDataDestObj);
-
-      console.log('=== orderDataObj', orderDataObj);
-      console.log('=== orderDataDestObj', orderDataDestObj);
     }
-  }, [ingredients, orders]);
+  }, [ingredients, messages]);
 
   return (
     <>
@@ -170,7 +178,7 @@ export const FeedOrderDetails = () => {
           </div>
 
           {/* Область для времени и стоимости. */}
-          <div className={`${styles['Time-price-container']}`}>
+          <div className={`mb-6 ${styles['Time-price-container']}`}>
             {/* Время. */}
             <div className={`${styles['Time-container']}`}>
               <span className="text_color_inactive text text_type_main-default">

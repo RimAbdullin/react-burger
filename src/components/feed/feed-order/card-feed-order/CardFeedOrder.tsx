@@ -74,7 +74,7 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
       to={{
         pathname: `/feed/${_id}`,
       }}
-      // state={{ background: location }}
+      state={{ background: location }}
     >
       <>
         <section className={`mb-4 ${styles['Card-ingredients']}`}>
