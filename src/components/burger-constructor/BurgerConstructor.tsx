@@ -133,7 +133,7 @@ function BurgerConstructor() {
   };
 
   const modal = (
-    <Modal onClose={closeModal} title={''}>
+    <Modal isTitle={true} onClose={closeModal} title={''}>
       {!state.loadingOrder && <OrderDetails></OrderDetails>}
     </Modal>
   );

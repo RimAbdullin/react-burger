@@ -50,3 +50,54 @@ export const removeCookie = (
     (sDomain ? '; domain=' + sDomain : '') +
     (sPath ? '; path=' + sPath : '');
 };
+
+export const dropHMS = (date: Date) => {
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0, 0);
+};
+
+export const dayTitle = (number: number): string => {
+  if (number > 10 && [11, 12, 13, 14].includes(number % 100)) return 'дней';
+  const last_num = number % 10;
+  if (last_num == 1) return 'день';
+  if ([2, 3, 4].includes(last_num)) return 'дня';
+  if ([5, 6, 7, 8, 9, 0].includes(last_num)) return 'дней';
+  return '';
+};
+
+export const getDateToString = (date: string): string => {
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+
+  dropHMS(today);
+  dropHMS(yesterday);
+
+  const dateMessageParse = Date.parse(date);
+
+  const dateMessage = new Date(dateMessageParse);
+
+  let dateMessageMatch = new Date(dateMessage);
+  dropHMS(dateMessageMatch);
+
+  if (dateMessageMatch.getTime() === today.getTime()) {
+    return (
+      'Сегодня, ' + dateMessage.getHours() + ':' + dateMessage.getMinutes()
+    );
+  } else if (dateMessageMatch.getTime() === yesterday.getTime()) {
+    return 'Вчера, ' + dateMessage.getHours() + ':' + dateMessage.getMinutes();
+  } else {
+    const timeDiff = Math.abs(today.getTime() - dateMessage.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const message =
+      diffDays +
+      ' ' +
+      dayTitle(diffDays) +
+      ' назад ' +
+      dateMessage.getHours() +
+      ':' +
+      dateMessage.getMinutes();
+    return message;
+  }
+};

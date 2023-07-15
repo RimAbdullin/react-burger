@@ -8,6 +8,7 @@ interface IModalProps {
   children: ReactNode;
   title: string;
   onClose: () => void;
+  isTitle: boolean;
 }
 
 declare global {
@@ -16,7 +17,12 @@ declare global {
   }
 }
 
-const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
+const Modal: React.FC<IModalProps> = ({
+  isTitle,
+  title,
+  children,
+  onClose,
+}) => {
   const modalRoot = document.getElementById('react-modals');
 
   const closeModal = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -46,23 +52,25 @@ const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
           className={`${styles['Modal-container']}`}
           onClick={handleClick}
         >
-          <section
+          <div
             className={`${styles.Modal}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <section className={`pt-10 ml-10 ${styles['Title-button']}`}>
-              <section className={`${styles['Title']}`}>
-                <span className="text text_type_main-large text_color_primary">
-                  {title}
-                </span>
-              </section>
-              {/* Иконка закрытия. */}
-              <section className={styles['Button-close']} onClick={handleClick}>
-                <CloseIcon type="primary" />
-              </section>
-            </section>
+            {isTitle && (
+              <div className={`pt-10 ml-10 ${styles['Title-button']}`}>
+                <div className={`${styles['Title']}`}>
+                  <span className="text text_type_main-large text_color_primary">
+                    {title}
+                  </span>
+                </div>
+                {/* Иконка закрытия. */}
+                <div className={styles['Button-close']} onClick={handleClick}>
+                  <CloseIcon type="primary" />
+                </div>
+              </div>
+            )}
             {children}
-          </section>
+          </div>
         </section>
         <ModalOverlay></ModalOverlay>
       </>,

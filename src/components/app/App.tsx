@@ -60,34 +60,49 @@ const ModalSwitch = () => {
     <section className={styles.Page}>
       <AppHeader />
 
-      <Routes location={background || location}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/ingredients/:_id" element={<IngredientDetails />} />
-        <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:_id" element={<FeedOrderDetails />} />
-        <Route
-          path="/profile"
-          element={<ProtectedRouteElement element={<ProfilePage />} />}
-        />
-        <Route element={<NotFoundPage />} />
-      </Routes>
-
-      {background && (
-        <Routes>
+      <div className={`${styles['Page-content']}`}>
+        <Routes location={background || location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/ingredients/:_id" element={<IngredientDetails />} />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:_id" element={<FeedOrderDetails />} />
           <Route
-            path="/ingredients/:_id"
+            path="/profile"
+            element={<ProtectedRouteElement element={<ProfilePage />} />}
+          />
+          <Route element={<NotFoundPage />} />
+        </Routes>
+
+        {background && (
+          <Routes>
+            <Route
+              path="/ingredients/:_id"
+              element={
+                <Modal
+                  isTitle={true}
+                  title={'Детали ингредиента'}
+                  onClose={handleModalClose}
+                >
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+
+            {/* <Route
+            path="/feed/:_id"
             element={
-              <Modal title={'Детали ингредиента'} onClose={handleModalClose}>
-                <IngredientDetails />
+              <Modal isTitle={false} title={''} onClose={handleModalClose}>
+                <FeedOrderDetails />
               </Modal>
             }
-          />
-        </Routes>
-      )}
+          /> */}
+          </Routes>
+        )}
+      </div>
     </section>
   );
 };

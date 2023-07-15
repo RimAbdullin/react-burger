@@ -5,6 +5,8 @@
 
   align-items: center;
   justify-content: center;
+
+  width: 720px;
 }
 
 .Order_id_container {

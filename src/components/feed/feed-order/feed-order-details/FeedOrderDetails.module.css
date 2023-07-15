@@ -2,12 +2,9 @@
   display: flex;
   flex-direction: column;
   flex: none;
-
-  align-items: center;
-  justify-content: center;
 }
 
-.Image {
+.Number-container {
   display: flex;
   flex-direction: row;
   flex: none;
@@ -15,8 +12,168 @@
   align-items: center;
   justify-content: center;
 
-  width: 520px;
-  height: 240px;
+  width: 640px;
+  min-height: 24px;
+}
+
+.Info-container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  width: 640px;
+  min-height: 66px;
+}
+
+.Name-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: start;
+
+  width: 640px;
+  min-height: 30px;
+}
+
+.Status-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: start;
+
+  color: #00cccc;
+
+  width: 640px;
+  min-height: 24px;
+}
+
+.Ingredients-container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+
+  width: 640px;
+  height: 366px;
+}
+
+.Scroll-area {
+  width: 640px;
+  height: 366px;
+  overflow-y: scroll;
+}
+
+.List-container {
+  width: 608px;
+  min-height: 376px;
+}
+
+.List-item-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: start;
+
+  width: 608px;
+  min-height: 64px;
+}
+
+.Time-price-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  width: 640px;
+  min-height: 24px;
+}
+
+.Time-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+
+  min-width: 530px;
+  min-height: 24px;
+}
+
+.Price-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: start;
+
+  min-width: 45px;
+  min-height: 24px;
+}
+
+.Price-icon-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: end;
+
+  width: 24px;
+  min-height: 24px;
+}
+
+.Image-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  background: #1c1c21;
+  border: 1px solid #801ab2;
+}
+
+.Image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+
+  height: 64px;
+}
+
+.Item-name-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: start;
+
+  width: 415px;
+  min-height: 24px;
+}
+
+.Item-price-container {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 98px;
+  min-height: 24px;
 }
 
 .Illustration {
@@ -29,63 +186,4 @@
 
   width: 480px;
   height: 240px;
-}
-
-.Nutrition-container {
-  display: flex;
-  flex-direction: row;
-  flex: none;
-
-  align-items: center;
-
-  width: 516px;
-  height: 56px;
-}
-
-.Value-container-calories {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
-  height: 56px;
-}
-
-.Value-container {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 112px;
-  height: 56px;
-}
-
-.Value-calories {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
-  height: 24px;
-}
-
-.Value {
-  display: flex;
-  flex-direction: column;
-  flex: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
-  height: 24px;
 }
