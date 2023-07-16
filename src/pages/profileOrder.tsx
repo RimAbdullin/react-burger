@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import styles from './profile.module.css';
+import styles from './profileOrder.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { useUser } from '../hooks/useUser';
 import { ProfileMenu } from '../components/profile-menu/ProfileMenu';
-import FeedOrder from '../components/feed/feed-order/FeedOrder';
+import ProfileOrder from '../components/feed/feed-order/ProfileOrder';
 
 export function ProfileOrderPage(): React.ReactElement {
   const user = useUser();
@@ -19,7 +19,7 @@ export function ProfileOrderPage(): React.ReactElement {
       <section className={styles.container}>
         <ProfileMenu />
         <div className={`ml-15 ${styles.content}`}>
-          <FeedOrder />
+          <ProfileOrder />
         </div>
       </section>
     </>

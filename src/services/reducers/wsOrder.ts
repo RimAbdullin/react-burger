@@ -1,5 +1,5 @@
 import { IFeedOrders } from '../common/interfaces';
-import { WSActionTypes, type WSAction } from '../store/types/ws';
+import { WSOrderActionTypes, type WSOrderAction } from '../store/types/wsOrder';
 
 export type TWSState = {
   wsConnected: boolean;
@@ -14,11 +14,11 @@ const initialState: TWSState = {
 };
 
 // Создадим редьюсер для WebSocket
-export const wsReducer = (state = initialState, action: WSAction) => {
+export const wsOrderReducer = (state = initialState, action: WSOrderAction) => {
   switch (action.type) {
     // Опишем обработку экшена с типом WS_CONNECTION_ERROR
     // Установим флаг wsConnected в состояние false и передадим ошибку из action.payload
-    case WSActionTypes.WS_CONNECTION_ERROR:
+    case WSOrderActionTypes.WS_ORDER_CONNECTION_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -27,7 +27,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
 
     // Опишем обработку экшена с типом WS_CONNECTION_SUCCESS
     // Установим флаг wsConnected в состояние true
-    case WSActionTypes.WS_CONNECTION_SUCCESS:
+    case WSOrderActionTypes.WS_ORDER_CONNECTION_SUCCESS:
       return {
         ...state,
         error: undefined,
@@ -37,7 +37,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
     // Опишем обработку экшена с типом WS_GET_MESSAGE
     // Обработка происходит, когда с сервера возвращаются данные
     // В messages передадим данные, которые пришли с сервера
-    case WSActionTypes.WS_GET_MESSAGE:
+    case WSOrderActionTypes.WS_ORDER_GET_MESSAGE:
       return {
         ...state,
         error: undefined,
@@ -46,7 +46,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
 
     // Опишем обработку экшена с типом WS_CONNECTION_CLOSED, когда соединение закрывается
     // Установим флаг wsConnected в состояние false
-    case WSActionTypes.WS_CONNECTION_CLOSED:
+    case WSOrderActionTypes.WS_ORDER_CONNECTION_CLOSED:
       return {
         ...state,
         error: undefined,

@@ -79,6 +79,7 @@ const ModalSwitch = () => {
             path="/profile/orders"
             element={<ProtectedRouteElement element={<ProfileOrderPage />} />}
           />
+          <Route path="/profile/orders/:_id" element={<FeedOrderDetails />} />
           <Route element={<NotFoundPage />} />
         </Routes>
 
@@ -99,6 +100,15 @@ const ModalSwitch = () => {
 
             <Route
               path="/feed/:_id"
+              element={
+                <Modal isTitle={true} title={''} onClose={handleModalClose}>
+                  <FeedOrderDetails />
+                </Modal>
+              }
+            />
+
+            <Route
+              path="/profile/orders/:_id"
               element={
                 <Modal isTitle={true} title={''} onClose={handleModalClose}>
                   <FeedOrderDetails />

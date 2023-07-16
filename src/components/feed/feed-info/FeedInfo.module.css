@@ -1,0 +1,92 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+
+  width: 580px;
+  height: 626px;
+}
+
+.Status-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 580px;
+  height: 206px;
+}
+
+.Status-details-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 272px;
+  height: 206px;
+}
+
+.Status-title-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 280px;
+  height: 30px;
+}
+
+.Status-data-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 280px;
+  height: 152px;
+
+  overflow-x: auto;
+}
+
+.Status-data {
+  display: flex;
+  flex-direction: column;
+
+  color: #00cccc;
+
+  height: 152px;
+}
+
+.Status-data-2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  color: blue;
+
+  height: 152px;
+}
+
+.Status-data-pending-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 280px;
+  height: 152px;
+}
+
+.Completed-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 580px;
+  height: 150px;
+}
+
+.Title-completed-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 580px;
+  height: 30px;
+}
+
+.Data-completed-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 580px;
+  height: 120px;
+}

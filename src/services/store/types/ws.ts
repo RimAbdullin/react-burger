@@ -46,5 +46,3 @@ export type WSAction =
   | ISendMessageWS
   | IConnectionClosedWS
   | IConnectionStartWS;
-
-export interface IMessage {}

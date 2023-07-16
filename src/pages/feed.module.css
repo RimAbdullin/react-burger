@@ -1,6 +1,14 @@
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
 
-  gap: 40px;
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.Feed-order-container {
+  display: flex;
+  flex-direction: column;
 }

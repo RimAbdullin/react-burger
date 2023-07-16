@@ -4,16 +4,20 @@ import styles from './ListFeedOrders.module.css';
 
 interface IListFeedOrdersProps {
   data: IFeedOrderData[];
+  path: 'feed' | 'profile';
 }
 
-export const ListFeedOrders: React.FC<IListFeedOrdersProps> = ({ data }) => {
-  console.log(data[0]);
-
+export const ListFeedOrders: React.FC<IListFeedOrdersProps> = ({
+  path,
+  data,
+}) => {
   return (
     <section>
       <div className={styles['List-container']}>
         {data.map((item) => (
-          <CardFeedOrder key={item._id}>{item}</CardFeedOrder>
+          <CardFeedOrder key={item._id} path={path}>
+            {item}
+          </CardFeedOrder>
         ))}
       </div>
     </section>

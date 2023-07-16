@@ -9,9 +9,10 @@ import { getDateToString } from '../../../../services/common/common';
 
 interface ICardFeedOrderProps {
   children: IFeedOrderData;
+  path: 'feed' | 'profile';
 }
 
-const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
+const CardFeedOrder: FC<ICardFeedOrderProps> = ({ path, children }) => {
   const [date, setDate] = useState('');
 
   useEffect(() => {
@@ -68,11 +69,21 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
     boxSizing: 'border-box',
   };
 
+  const [pathRoute, setPathRoute] = useState('');
+
+  useEffect(() => {
+    if (path === 'feed') {
+      setPathRoute(`/feed/${_id}`);
+    } else {
+      setPathRoute(`/profile/orders/${_id}`);
+    }
+  }, [path]);
+
   return (
     <Link
       key={_id}
       to={{
-        pathname: `/feed/${_id}`,
+        pathname: pathRoute,
       }}
       state={{ background: location }}
     >
