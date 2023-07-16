@@ -13,20 +13,12 @@ import { Action, ActionCreator } from 'redux';
 import thunk, { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import { socketMiddleware } from '../middleware/socketMiddleware';
 import { WSAction } from './types/ws';
-import { NORMA_API_ORDERS_WS, NORMA_API_WS } from '../../data/data';
-import { socketMiddlewareOrders } from '../middleware/socketMiddlewareOrders';
-import { WSOrderAction } from './types/wsOrder';
 
-export const webSocketMiddleWare = socketMiddleware(NORMA_API_WS);
-export const webSocketMiddleWareOrders =
-  socketMiddlewareOrders(NORMA_API_ORDERS_WS);
+export const webSocketMiddleWare = socketMiddleware();
 
 export const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(thunk, webSocketMiddleWare, webSocketMiddleWareOrders),
-    composeWithDevTools()
-  )
+  compose(applyMiddleware(thunk, webSocketMiddleWare), composeWithDevTools())
 );
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -40,8 +32,7 @@ export type ApplicationActions =
   | PasswordResetAction
   | RegistrationAction
   | UserAction
-  | WSAction
-  | WSOrderAction;
+  | WSAction;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, ApplicationActions>

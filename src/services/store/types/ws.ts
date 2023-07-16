@@ -36,7 +36,7 @@ interface IConnectionClosedWS {
 
 interface IConnectionStartWS {
   readonly type: typeof WSActionTypes.WS_CONNECTION_START;
-  payload: any;
+  payload: string;
 }
 
 export type WSAction =

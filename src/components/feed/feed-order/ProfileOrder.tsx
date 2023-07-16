@@ -1,32 +1,40 @@
 import { useEffect } from 'react';
 import styles from './ProfileOrder.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { getWSOrderSelector } from '../../../services/selectors/selector';
 import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { TWSState } from '../../../services/reducers/ws';
-import { WSOrderActionTypes } from '../../../services/store/types/wsOrder';
+import { getWSSelector } from '../../../services/selectors/selector';
+import { WSActionTypes } from '../../../services/store/types/ws';
+import { getCookie } from '../../../services/common/common';
+import { NORMA_API_ORDERS_WS } from '../../../data/data';
 
 function ProfileOrder() {
   const dispatch = useAppDispatch();
 
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
-    useTypedSelector<TWSState>(getWSOrderSelector);
+    useTypedSelector<TWSState>(getWSSelector);
 
   const { orders } = messages;
 
   useEffect(() => {
     // Открытие wev socket.
+    const accessToken = getCookie('accessToken');
+    let token = '';
+    if (accessToken) {
+      token = accessToken.split(' ')[1];
+    }
+
     dispatch({
-      type: WSOrderActionTypes.WS_ORDER_CONNECTION_START,
-      payload: '',
+      type: WSActionTypes.WS_CONNECTION_START,
+      payload: NORMA_API_ORDERS_WS + '?token=' + token,
     });
 
     return () => {
       // Закрытие web socket.
       dispatch({
-        type: WSOrderActionTypes.WS_ORDER_CONNECTION_CLOSED,
+        type: WSActionTypes.WS_CONNECTION_CLOSED,
         payload: '',
       });
     };
@@ -42,11 +50,6 @@ function ProfileOrder() {
     </section>
   ) : (
     <section className={`${styles.Container}`}>
-      <div
-        className={`mt-10 mb-5 text text_type_main-large text_color_primary ${styles.Title}`}
-      >
-        Лента заказов
-      </div>
       <div className={`custom-scroll ${styles['Scroll-area']}`}>
         <div>
           {messages && messages.orders && (

@@ -2,35 +2,15 @@ import styles from './FeedOrder.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { getWSSelector } from '../../../services/selectors/selector';
 import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
-import { useEffect } from 'react';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { WSActionTypes } from '../../../services/store/types/ws';
+
 import { TWSState } from '../../../services/reducers/ws';
 
 function FeedOrder() {
-  const dispatch = useAppDispatch();
-
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
     useTypedSelector<TWSState>(getWSSelector);
 
   const { orders } = messages;
-
-  useEffect(() => {
-    // Открытие wev socket.
-    dispatch({
-      type: WSActionTypes.WS_CONNECTION_START,
-      payload: '',
-    });
-
-    return () => {
-      // Закрытие web socket.
-      dispatch({
-        type: WSActionTypes.WS_CONNECTION_CLOSED,
-        payload: '',
-      });
-    };
-  }, []);
 
   return !wsConnected ? (
     <section className={styles['Info-container']}>

@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import styles from './FeedInfo.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { getWSSelector } from '../../../services/selectors/selector';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { WSActionTypes } from '../../../services/store/types/ws';
 import { TWSState } from '../../../services/reducers/ws';
 import { IFeedOrderData } from '../../../services/common/interfaces';
 
@@ -13,31 +11,12 @@ interface IDoneResult {
 }
 
 function FeedInfo() {
-  const dispatch = useAppDispatch();
-
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
     useTypedSelector<TWSState>(getWSSelector);
 
-  useEffect(() => {
-    // Открытие wev socket.
-    dispatch({
-      type: WSActionTypes.WS_CONNECTION_START,
-      payload: '',
-    });
-
-    return () => {
-      // Закрытие web socket.
-      dispatch({
-        type: WSActionTypes.WS_CONNECTION_CLOSED,
-        payload: '',
-      });
-    };
-  }, []);
-
   const [total, setTotal] = useState(0);
   const [totalDay, setTotalDay] = useState(0);
-  const [done, setDone] = useState<IFeedOrderData[]>([]);
   const [pending, setPending] = useState<IFeedOrderData[]>([]);
 
   const [doneResult, setDoneResult] = useState<IDoneResult[]>([]);
@@ -54,7 +33,6 @@ function FeedInfo() {
         (item) => item.status !== 'done'
       );
 
-      setDone(filterDone);
       setPending(filterPending);
 
       let arr: IFeedOrderData[] = [];

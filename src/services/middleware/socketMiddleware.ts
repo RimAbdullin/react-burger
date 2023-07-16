@@ -4,7 +4,8 @@ import type { AppDispatch, RootState } from '../store/store';
 import { WSAction, WSActionTypes } from '../store/types/ws';
 import { IFeedOrders } from '../common/interfaces';
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+// export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
@@ -14,7 +15,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
       if (type === WSActionTypes.WS_CONNECTION_START) {
         // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(payload);
       }
       if (socket) {
         // функция, которая вызывается при открытии сокета
@@ -39,6 +40,8 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = (event: CloseEvent) => {
+          console.log('ws close');
+
           dispatch({
             type: WSActionTypes.WS_CONNECTION_CLOSED,
             payload: event,

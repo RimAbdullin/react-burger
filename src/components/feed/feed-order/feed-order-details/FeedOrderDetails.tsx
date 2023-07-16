@@ -11,6 +11,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { getDateToString } from '../../../../services/common/common';
 import { WSActionTypes } from '../../../../services/store/types/ws';
 import { useAppDispatch } from '../../../../hooks/hooks';
+import { NORMA_API_WS } from '../../../../data/data';
 
 interface IItemFeedDetails {
   ingredients: IBurgerIngredient[];
@@ -36,15 +37,15 @@ export const FeedOrderDetails = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // Открытие wev socket.
-    if (!wsConnected) {
-      dispatch({
-        type: WSActionTypes.WS_CONNECTION_START,
-        payload: '',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Открытие wev socket.
+  //   if (!wsConnected) {
+  //     dispatch({
+  //       type: WSActionTypes.WS_CONNECTION_START,
+  //       payload: NORMA_API_WS,
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (ingredients && messages && messages.orders && messages.orders.length) {
