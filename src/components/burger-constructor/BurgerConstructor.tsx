@@ -22,7 +22,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IngredientsConstructorActionTypes } from '../../services/store/types/ingredientsConstructor';
 import { IBurgerIngredient } from '../../services/common/interfaces';
 import { OrderRequestBody } from '../../services/store/types/order';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IState {
   ingredientsPrice: null | number;

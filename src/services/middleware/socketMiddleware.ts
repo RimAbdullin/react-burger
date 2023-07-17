@@ -17,6 +17,14 @@ export const socketMiddleware = (): Middleware => {
         // объект класса WebSocket
         socket = new WebSocket(payload);
       }
+
+      if (type === WSActionTypes.WS_CONNECTION_CLOSED) {
+        // объект класса WebSocket
+        if (socket) {
+          socket.close();
+        }
+      }
+
       if (socket) {
         // функция, которая вызывается при открытии сокета
         socket.onopen = () => {
@@ -39,14 +47,7 @@ export const socketMiddleware = (): Middleware => {
           dispatch({ type: WSActionTypes.WS_GET_MESSAGE, payload: parseData });
         };
         // функция, которая вызывается при закрытии соединения
-        socket.onclose = (event: CloseEvent) => {
-          console.log('ws close');
-
-          dispatch({
-            type: WSActionTypes.WS_CONNECTION_CLOSED,
-            payload: event,
-          });
-        };
+        socket.onclose = (event: CloseEvent) => {};
 
         if (type === WSActionTypes.WS_SEND_MESSAGE) {
           const message = payload;

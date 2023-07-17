@@ -8,10 +8,10 @@ import {
 } from '../../../../services/selectors/selector';
 import { IBurgerIngredient } from '../../../../services/common/interfaces';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getDateToString } from '../../../../services/common/common';
+import { getCookie, getDateToString } from '../../../../services/common/common';
 import { WSActionTypes } from '../../../../services/store/types/ws';
 import { useAppDispatch } from '../../../../hooks/hooks';
-import { NORMA_API_WS } from '../../../../data/data';
+import { NORMA_API_ORDERS_WS, NORMA_API_WS } from '../../../../data/data';
 
 interface IItemFeedDetails {
   ingredients: IBurgerIngredient[];
@@ -23,8 +23,15 @@ interface IItemFeedDetails {
   updatedAt?: string;
   sum?: number;
 }
+interface IFeedOrderDetailsProps {
+  path: 'feed' | 'profile';
+  modal: boolean;
+}
 
-export const FeedOrderDetails = () => {
+export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
+  path,
+  modal,
+}) => {
   const params = useParams();
   const { _id } = params;
 
@@ -35,17 +42,36 @@ export const FeedOrderDetails = () => {
   const { ingredients } = useTypedSelector(getIngredientsSelector);
   const { error, messages, wsConnected } = useTypedSelector(getWSSelector);
 
+  const accessToken = getCookie('accessToken');
+  let token = '';
+  if (accessToken) {
+    token = accessToken.split(' ')[1];
+  }
+
+  const api =
+    path === 'feed' ? NORMA_API_WS : NORMA_API_ORDERS_WS + '?token=' + token;
+
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   // Открытие wev socket.
-  //   if (!wsConnected) {
-  //     dispatch({
-  //       type: WSActionTypes.WS_CONNECTION_START,
-  //       payload: NORMA_API_WS,
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Открытие wev socket.
+    if (!wsConnected) {
+      dispatch({
+        type: WSActionTypes.WS_CONNECTION_START,
+        payload: api,
+      });
+    }
+
+    return () => {
+      if (!modal) {
+        // Закрытие web socket.
+        dispatch({
+          type: WSActionTypes.WS_CONNECTION_CLOSED,
+          payload: '',
+        });
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (ingredients && messages && messages.orders && messages.orders.length) {

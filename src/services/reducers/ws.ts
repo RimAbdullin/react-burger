@@ -47,10 +47,7 @@ export const wsReducer = (state = initialState, action: WSAction) => {
     // Опишем обработку экшена с типом WS_CONNECTION_CLOSED, когда соединение закрывается
     // Установим флаг wsConnected в состояние false
     case WSActionTypes.WS_CONNECTION_CLOSED:
-      return initialState;
-    // ...state,
-    // error: undefined,
-    // wsConnected: false,
+      return { ...state, error: undefined, wsConnected: false };
 
     default:
       return state;

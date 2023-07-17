@@ -70,7 +70,10 @@ const ModalSwitch = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/ingredients/:_id" element={<IngredientDetails />} />
           <Route path="/feed" element={<FeedPage />} />
-          <Route path="/feed/:_id" element={<FeedOrderDetails />} />
+          <Route
+            path="/feed/:_id"
+            element={<FeedOrderDetails path="feed" modal={false} />}
+          />
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
@@ -79,7 +82,10 @@ const ModalSwitch = () => {
             path="/profile/orders"
             element={<ProtectedRouteElement element={<ProfileOrderPage />} />}
           />
-          <Route path="/profile/orders/:_id" element={<FeedOrderDetails />} />
+          <Route
+            path="/profile/orders/:_id"
+            element={<FeedOrderDetails path="profile" modal={false} />}
+          />
           <Route element={<NotFoundPage />} />
         </Routes>
 
@@ -102,7 +108,7 @@ const ModalSwitch = () => {
               path="/feed/:_id"
               element={
                 <Modal isTitle={true} title={''} onClose={handleModalClose}>
-                  <FeedOrderDetails />
+                  <FeedOrderDetails path="feed" modal={true} />
                 </Modal>
               }
             />
@@ -111,7 +117,7 @@ const ModalSwitch = () => {
               path="/profile/orders/:_id"
               element={
                 <Modal isTitle={true} title={''} onClose={handleModalClose}>
-                  <FeedOrderDetails />
+                  <FeedOrderDetails path="profile" modal={true} />
                 </Modal>
               }
             />

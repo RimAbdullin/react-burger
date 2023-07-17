@@ -36,9 +36,6 @@ export const ingredientsReducer = (
         bun: [...action.items.filter((bun) => bun.type == 'bun')],
         main: [...action.items.filter((bun) => bun.type == 'main')],
         sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
-        // currentBun: {
-        //   ...action.items.filter((item) => item.name === action.bunName)[0],
-        // },
       };
     }
     case IngredientsActionTypes.GET_ITEMS_FAILED: {

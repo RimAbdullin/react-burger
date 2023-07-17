@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
-import { NavLink, useLocation } from 'react-router-dom';
 
 import {
   Button,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './FeedInfo.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { getWSSelector } from '../../../services/selectors/selector';

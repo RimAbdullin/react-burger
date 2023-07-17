@@ -1,7 +1,7 @@
 import PortalReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IModalProps {

@@ -1,4 +1,4 @@
-import { NORMA_API, NORMA_API_WS } from '../data/data';
+import { NORMA_API } from '../data/data';
 import { getCookie } from '../services/common/common';
 import { IForgotPasswordForm } from '../services/store/types/forgot-password';
 import { OrderRequestBody } from '../services/store/types/order';
