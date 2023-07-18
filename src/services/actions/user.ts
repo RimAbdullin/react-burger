@@ -20,8 +20,8 @@ import { AppDispatch } from '../store/store';
 export const checkAuthThunk = () => (dispatch: AppDispatch) => {
   if (getCookie('accessToken')) {
     dispatch(getUserThunk());
+    dispatch({ type: UserActionTypes.AUTH_CHECKED });
   }
-  dispatch({ type: UserActionTypes.AUTH_CHECKED });
 };
 
 // get user.
@@ -148,8 +148,6 @@ export function logoutThunk() {
     });
     logoutRequest()
       .then((data) => {
-        localStorage.removeItem('refreshToken');
-
         dispatch({
           type: UserActionTypes.POST_LOGOUT_SUCCESS,
           data: data,
@@ -159,6 +157,7 @@ export function logoutThunk() {
           type: UserActionTypes.RESET_STATE,
         });
 
+        localStorage.removeItem('refreshToken');
         removeCookie('accessToken');
 
         return data;

@@ -19,4 +19,6 @@ export const getForgotPasswordSelector = (store: RootState) =>
 export const getPasswordResetSelector = (store: RootState) =>
   store.passwordReset;
 
-export const getWSSelector = (store: RootState) => store.ws;
+export const getFeedWSSelector = (store: RootState) => store.feedWsReducer;
+
+export const getOrderWSSelector = (store: RootState) => store.orderWsReducer;

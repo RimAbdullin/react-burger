@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './FeedInfo.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { getWSSelector } from '../../../services/selectors/selector';
-import { TWSState } from '../../../services/reducers/ws';
 import { IFeedOrderData } from '../../../services/common/interfaces';
+import { TFeedWsState } from '../../../services/reducers/feedWsReducer';
+import { getFeedWSSelector } from '../../../services/selectors/selector';
 
 interface IDoneResult {
   num?: number;
@@ -13,7 +13,7 @@ interface IDoneResult {
 function FeedInfo() {
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
-    useTypedSelector<TWSState>(getWSSelector);
+    useTypedSelector<TFeedWsState>(getFeedWSSelector);
 
   const [total, setTotal] = useState(0);
   const [totalDay, setTotalDay] = useState(0);

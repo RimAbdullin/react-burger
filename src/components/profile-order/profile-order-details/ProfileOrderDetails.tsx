@@ -1,17 +1,17 @@
-import styles from './FeedOrderDetails.module.css';
+import styles from './ProfileOrderDetails.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTypedSelector } from '../../../../hooks/useTypeSelector';
+import { IBurgerIngredient } from '../../../services/common/interfaces';
+import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import {
-  getFeedWSSelector,
   getIngredientsSelector,
-} from '../../../../services/selectors/selector';
-import { IBurgerIngredient } from '../../../../services/common/interfaces';
+  getOrderWSSelector,
+} from '../../../services/selectors/selector';
+import { getCookie, getDateToString } from '../../../services/common/common';
+import { NORMA_API_ORDERS_WS } from '../../../data/data';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { orderWsActions } from '../../../services/store/types/orderWsActions';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getCookie, getDateToString } from '../../../../services/common/common';
-import { useAppDispatch } from '../../../../hooks/hooks';
-import { NORMA_API_WS } from '../../../../data/data';
-import { feedWsActions } from '../../../../services/store/types/feedWsActions';
 
 interface IItemFeedDetails {
   ingredients: IBurgerIngredient[];
@@ -23,12 +23,11 @@ interface IItemFeedDetails {
   updatedAt?: string;
   sum?: number;
 }
-
-interface IFeedOrderDetailsProps {
+interface IProfileOrderDetailsProps {
   modal: boolean;
 }
 
-export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
+export const ProfileOrderDetails: React.FC<IProfileOrderDetailsProps> = ({
   modal,
 }) => {
   const params = useParams();
@@ -39,7 +38,7 @@ export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
   // Получаем данные из хранилища redux.
   // Список ингредиентов.
   const { ingredients } = useTypedSelector(getIngredientsSelector);
-  const { error, messages, wsConnected } = useTypedSelector(getFeedWSSelector);
+  const { error, messages, wsConnected } = useTypedSelector(getOrderWSSelector);
 
   const accessToken = getCookie('accessToken');
   let token = '';
@@ -53,8 +52,8 @@ export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
     // Открытие wev socket.
     if (!wsConnected) {
       dispatch({
-        type: feedWsActions.wsInit,
-        payload: NORMA_API_WS,
+        type: orderWsActions.wsInit,
+        payload: NORMA_API_ORDERS_WS + '?token=' + token,
       });
     }
 
@@ -62,7 +61,7 @@ export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
       if (!modal) {
         // Закрытие web socket.
         dispatch({
-          type: feedWsActions.wsClose,
+          type: orderWsActions.wsClose,
           payload: '',
         });
       }
@@ -235,4 +234,4 @@ export const FeedOrderDetails: React.FC<IFeedOrderDetailsProps> = ({
   );
 };
 
-export default FeedOrderDetails;
+export default ProfileOrderDetails;

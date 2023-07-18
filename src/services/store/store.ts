@@ -13,12 +13,21 @@ import { Action, ActionCreator } from 'redux';
 import thunk, { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import { socketMiddleware } from '../middleware/socketMiddleware';
 import { WSAction } from './types/ws';
+import { feedWsActions } from './types/feedWsActions';
+import { orderWsActions } from './types/orderWsActions';
 
-export const webSocketMiddleWare = socketMiddleware();
+// export const webSocketMiddleWare = socketMiddleware();
 
 export const store = createStore(
   rootReducer,
-  compose(applyMiddleware(thunk, webSocketMiddleWare), composeWithDevTools())
+  compose(
+    applyMiddleware(
+      thunk,
+      socketMiddleware(feedWsActions),
+      socketMiddleware(orderWsActions)
+    ),
+    composeWithDevTools()
+  )
 );
 
 export type RootState = ReturnType<typeof rootReducer>;

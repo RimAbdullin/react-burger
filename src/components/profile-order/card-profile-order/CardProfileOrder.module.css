@@ -1,0 +1,126 @@
+.Card-ingredients {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: none;
+
+  width: 584px;
+  min-height: 214px;
+
+  cursor: pointer;
+}
+
+.Order-id-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 536px;
+  height: 24px;
+}
+
+.Id-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 102px;
+  height: 24px;
+}
+
+.Date-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  flex: none;
+
+  width: 418px;
+  height: 24px;
+}
+
+.Name-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  flex: none;
+
+  width: 536px;
+  min-height: 30px;
+}
+
+.Components-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 536px;
+  min-height: 64px;
+  position: relative;
+}
+
+.Ingredients-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  width: 436px;
+  min-height: 64px;
+}
+
+.Price-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: none;
+
+  min-width: 76px;
+  min-height: 64px;
+}
+
+.Price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  flex: none;
+
+  min-height: 64px;
+}
+
+.Icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  flex: none;
+}
+
+.Name {
+  text-align: center;
+
+  width: 270px;
+  height: 52px;
+}
+
+.Image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+
+  height: 64px;
+}
+
+.ml-container {
+  margin-left: 0px;
+}
+
+.ml-container-2 {
+  margin-left: -34px;
+}

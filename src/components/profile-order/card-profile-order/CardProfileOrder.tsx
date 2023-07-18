@@ -1,17 +1,17 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './CardFeedOrder.module.css';
+import styles from './CardProfileOrder.module.css';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { IFeedOrderData } from '../../../../services/common/interfaces';
-import { useTypedSelector } from '../../../../hooks/useTypeSelector';
-import { getIngredientsSelector } from '../../../../services/selectors/selector';
-import { getDateToString } from '../../../../services/common/common';
+import { IFeedOrderData } from '../../../services/common/interfaces';
+import { getDateToString } from '../../../services/common/common';
+import { useTypedSelector } from '../../../hooks/useTypeSelector';
+import { getIngredientsSelector } from '../../../services/selectors/selector';
 
-interface ICardFeedOrderProps {
+interface ICardProfileOrderProps {
   children: IFeedOrderData;
 }
 
-const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
+const CardProfileOrder: FC<ICardProfileOrderProps> = ({ children }) => {
   const [date, setDate] = useState('');
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
     <Link
       key={_id}
       to={{
-        pathname: `/feed/${_id}`,
+        pathname: `/profile/orders/${_id}`,
       }}
       state={{ background: location }}
     >
@@ -168,4 +168,4 @@ const CardFeedOrder: FC<ICardFeedOrderProps> = ({ children }) => {
   );
 };
 
-export default CardFeedOrder;
+export default CardProfileOrder;

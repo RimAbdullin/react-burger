@@ -41,7 +41,7 @@ export const saveTokens = (accessToken: string, refreshToken: string) => {
 
 export const removeCookie = (
   sKey: string,
-  sPath: string = '',
+  sPath: string = '/',
   sDomain: string = ''
 ) => {
   document.cookie =

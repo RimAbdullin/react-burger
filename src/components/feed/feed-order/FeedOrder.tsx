@@ -1,14 +1,13 @@
 import styles from './FeedOrder.module.css';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { getWSSelector } from '../../../services/selectors/selector';
 import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
-
-import { TWSState } from '../../../services/reducers/ws';
+import { TFeedWsState } from '../../../services/reducers/feedWsReducer';
+import { getFeedWSSelector } from '../../../services/selectors/selector';
 
 function FeedOrder() {
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
-    useTypedSelector<TWSState>(getWSSelector);
+    useTypedSelector<TFeedWsState>(getFeedWSSelector);
 
   const { orders } = messages;
 
@@ -25,7 +24,7 @@ function FeedOrder() {
       <div className={`custom-scroll ${styles['Scroll-area']}`}>
         <div>
           {messages && messages.orders && (
-            <ListFeedOrders path="feed" data={orders}></ListFeedOrders>
+            <ListFeedOrders data={orders}></ListFeedOrders>
           )}
         </div>
       </div>

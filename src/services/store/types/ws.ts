@@ -1,41 +1,36 @@
 import { IFeedOrders } from '../../common/interfaces';
-
-export enum WSActionTypes {
-  WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR',
-  WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS',
-  WS_CONNECTION_START = 'WS_CONNECTION_START',
-  WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED',
-  WS_GET_MESSAGE = 'WS_GET_MESSAGE',
-  WS_SEND_MESSAGE = 'WS_SEND_MESSAGE',
-}
+import { feedWsActions } from './feedWsActions';
+import { orderWsActions } from './orderWsActions';
 
 interface IConnectionErrorWS {
-  readonly type: typeof WSActionTypes.WS_CONNECTION_ERROR;
+  readonly type: typeof feedWsActions.onError | typeof orderWsActions.onError;
   payload: any;
 }
 
 interface IConnectionSuccessWS {
-  readonly type: typeof WSActionTypes.WS_CONNECTION_SUCCESS;
+  readonly type: typeof feedWsActions.onOpen | typeof orderWsActions.onOpen;
   payload: any;
 }
 
 interface IGetMessageWS {
-  readonly type: typeof WSActionTypes.WS_GET_MESSAGE;
+  readonly type:
+    | typeof feedWsActions.onMessage
+    | typeof orderWsActions.onMessage;
   payload: IFeedOrders;
 }
 
-interface ISendMessageWS {
-  readonly type: typeof WSActionTypes.WS_SEND_MESSAGE;
+interface IConnectionClosed {
+  readonly type: typeof feedWsActions.onClose | typeof orderWsActions.onClose;
   payload: any;
 }
 
-interface IConnectionClosedWS {
-  readonly type: typeof WSActionTypes.WS_CONNECTION_CLOSED;
+interface IConnectionCloseWS {
+  readonly type: typeof feedWsActions.wsClose | typeof orderWsActions.wsClose;
   payload: any;
 }
 
-interface IConnectionStartWS {
-  readonly type: typeof WSActionTypes.WS_CONNECTION_START;
+interface IConnectionInitWS {
+  readonly type: typeof feedWsActions.wsInit | typeof orderWsActions.wsInit;
   payload: string;
 }
 
@@ -43,6 +38,17 @@ export type WSAction =
   | IConnectionErrorWS
   | IConnectionSuccessWS
   | IGetMessageWS
-  | ISendMessageWS
-  | IConnectionClosedWS
-  | IConnectionStartWS;
+  | IConnectionInitWS
+  | IConnectionClosed
+  | IConnectionCloseWS;
+
+export type WSActionType = typeof feedWsActions | typeof orderWsActions;
+
+const test: WSActionType = {
+  onClose: 'FEED_CONNECTION_CLOSED',
+  onError: 'FEED_CONNECTION_ERROR',
+  onMessage: 'FEED_GET_MESSAGE',
+  onOpen: 'FEED_CONNECTION_SUCCESS',
+  wsClose: 'FEED_CONNECTION_CLOSE',
+  wsInit: 'FEED_CONNECTION_INIT',
+};

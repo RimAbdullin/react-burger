@@ -1,13 +1,13 @@
-import { useTypedSelector } from '../../../hooks/useTypeSelector';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
+import { TOrderWsState } from '../../services/reducers/orderWsReducer';
+import { getOrderWSSelector } from '../../services/selectors/selector';
 import styles from './ProfileOrder.module.css';
-import { ListFeedOrders } from './list-feed-order/ListFeedOrders';
-import { TWSState } from '../../../services/reducers/ws';
-import { getWSSelector } from '../../../services/selectors/selector';
+import { ListProfileOrders } from './list-profile-order/ListFeedOrders';
 
 function ProfileOrder() {
   // Получаем данные из хранилища redux.
   const { error, messages, wsConnected } =
-    useTypedSelector<TWSState>(getWSSelector);
+    useTypedSelector<TOrderWsState>(getOrderWSSelector);
 
   const { orders } = messages;
 
@@ -24,7 +24,7 @@ function ProfileOrder() {
       <div className={`custom-scroll ${styles['Scroll-area']}`}>
         <div>
           {messages && messages.orders && (
-            <ListFeedOrders path="profile" data={orders}></ListFeedOrders>
+            <ListProfileOrders data={orders}></ListProfileOrders>
           )}
         </div>
       </div>
