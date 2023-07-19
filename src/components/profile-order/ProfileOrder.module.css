@@ -1,0 +1,22 @@
+.Container {
+  width: 600px;
+  height: 912px;
+}
+
+.Title {
+  width: 600px;
+  height: 40px;
+}
+
+.Scroll-area {
+  width: 600px;
+  height: 756px;
+  overflow-y: scroll;
+}
+
+.Info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

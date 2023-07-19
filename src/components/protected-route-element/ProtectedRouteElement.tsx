@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useUser } from '../../hooks/useUser';
 import { useLocation, Navigate } from 'react-router-dom';
+import { getCookie } from '../../services/common/common';
 
 interface IProtectedRouteElementProps {
   element: React.ReactElement;
@@ -13,9 +14,9 @@ export const ProtectedRouteElement: FC<IProtectedRouteElementProps> = ({
 
   const location = useLocation();
 
-  return user.isAuthChecked && user.user && element ? (
-    element
-  ) : (
-    <Navigate to="/login" replace state={{ redirectTo: location }} />
-  );
+  if (!getCookie('accessToken')) {
+    return <Navigate to="/login" replace state={{ redirectTo: location }} />;
+  }
+
+  return element;
 };

@@ -22,7 +22,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IngredientsConstructorActionTypes } from '../../services/store/types/ingredientsConstructor';
 import { IBurgerIngredient } from '../../services/common/interfaces';
 import { OrderRequestBody } from '../../services/store/types/order';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IState {
   ingredientsPrice: null | number;
@@ -117,7 +117,7 @@ function BurgerConstructor() {
     if (user.isAuthChecked && user.user) {
       if (ingredientsConstructor && ingredientsConstructor.length > 0) {
         // Получаем номер заказа.
-        dispatch(getOrderNumber(getBody()) as any);
+        dispatch(getOrderNumber(getBody()));
 
         // Открываем модальное окно.
         openModal();
@@ -133,7 +133,7 @@ function BurgerConstructor() {
   };
 
   const modal = (
-    <Modal onClose={closeModal} title={''}>
+    <Modal isTitle={true} onClose={closeModal} title={''}>
       {!state.loadingOrder && <OrderDetails></OrderDetails>}
     </Modal>
   );

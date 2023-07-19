@@ -22,10 +22,16 @@ export function getIngredientsRequest() {
  * @returns Promise<data>
  */
 export function getOrderRequest(data: OrderRequestBody) {
+  let accessToken = getCookie('accessToken');
+  if (!accessToken) {
+    accessToken = '';
+  }
+
   return fetch(`${NORMA_API}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: accessToken,
     },
     body: JSON.stringify(data),
   }).then(checkResponse);

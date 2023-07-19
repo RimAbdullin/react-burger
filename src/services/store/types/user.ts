@@ -1,5 +1,3 @@
-import { extend } from 'immutability-helper';
-
 export enum UserActionTypes {
   POST_LOGIN_FAILED = 'POST_LOGIN_FAILED',
   POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS',
@@ -105,7 +103,6 @@ interface IUserResetState {
 // auth checked.
 interface IUserAuthChecked {
   type: UserActionTypes.AUTH_CHECKED;
-  // data: IUserResponse;
 }
 
 export type UserAction =

@@ -71,7 +71,7 @@ export const useUser = () => {
   const getUser = useCallback(() => {
     setIsLoadingGetUser(true);
     try {
-      dispatch(getUserThunk() as any);
+      dispatch(getUserThunk());
     } catch (error) {
     } finally {
       setIsLoadingGetUser(false);
@@ -93,7 +93,7 @@ export const useUser = () => {
     (form: IUserWithPassword) => {
       setIsLoadingUpdateUser(true);
       try {
-        dispatch(updateUserThunk(form) as any);
+        dispatch(updateUserThunk(form));
       } catch (error) {
       } finally {
         setIsLoadingUpdateUser(false);
@@ -116,7 +116,7 @@ export const useUser = () => {
   const checkAuth = () => {
     setIsLoadingCheckAuth(true);
     try {
-      dispatch(checkAuthThunk() as any);
+      dispatch(checkAuthThunk());
     } catch (error) {
     } finally {
       setIsLoadingCheckAuth(false);
@@ -138,7 +138,7 @@ export const useUser = () => {
     (form: IUserLoginForm) => {
       setIsLoadingLogin(true);
       try {
-        dispatch(loginThunk(form) as any);
+        dispatch(loginThunk(form));
       } catch (error) {
       } finally {
         setIsLoadingLogin(false);
@@ -161,7 +161,7 @@ export const useUser = () => {
   const logout = useCallback(() => {
     setIsLoadingLogout(true);
     try {
-      dispatch(logoutThunk() as any);
+      dispatch(logoutThunk());
     } catch (error) {
     } finally {
       setIsLoadingLogout(false);
@@ -185,7 +185,7 @@ export const useUser = () => {
     (form: IForgotPasswordForm) => {
       setIsLoadingForgotPassword(true);
       try {
-        dispatch(forgotPasswordThunk(form) as any);
+        dispatch(forgotPasswordThunk(form));
       } catch (error) {
       } finally {
         setIsLoadingForgotPassword(false);
@@ -222,7 +222,7 @@ export const useUser = () => {
     (form: IPasswordResetForm) => {
       setIsLoadingPasswordReset(true);
       try {
-        dispatch(passwordResetThunk(form) as any);
+        dispatch(passwordResetThunk(form));
       } catch (error) {
       } finally {
         setIsLoadingPasswordReset(false);

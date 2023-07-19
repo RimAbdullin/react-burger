@@ -1,20 +1,11 @@
-import { Dispatch } from 'react';
 import { getOrderRequest } from '../../utils/burger-api';
-import {
-  IngredientsConstructorAction,
-  IngredientsConstructorActionTypes,
-} from '../store/types/ingredientsConstructor';
-import {
-  OrderAction,
-  OrderActionTypes,
-  OrderRequestBody,
-} from '../store/types/order';
+import { IngredientsConstructorActionTypes } from '../store/types/ingredientsConstructor';
+import { OrderActionTypes, OrderRequestBody } from '../store/types/order';
+import { AppDispatch } from '../store/store';
 
 // thunk
 export function getOrderNumber(data: OrderRequestBody) {
-  return function (
-    dispatch: Dispatch<OrderAction | IngredientsConstructorAction>
-  ) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: OrderActionTypes.GET_ORDER_REQUEST,
     });
@@ -39,7 +30,7 @@ export function getOrderNumber(data: OrderRequestBody) {
 
 // Устанавливаем номер выбранного заказа.
 export function setOrderNumber(orderNumber: number) {
-  return function (dispatch: Dispatch<OrderAction>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: OrderActionTypes.SET_ORDER_NUMBER,
       orderNumber: orderNumber,

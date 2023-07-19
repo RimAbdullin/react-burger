@@ -14,3 +14,20 @@ export interface IBurgerIngredient {
   id?: null | string;
   count?: number;
 }
+
+export interface IFeedOrderData {
+  ingredients: string[];
+  name: string;
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IFeedOrders {
+  success: boolean;
+  orders: IFeedOrderData[];
+  total: number;
+  totalToday: number;
+}

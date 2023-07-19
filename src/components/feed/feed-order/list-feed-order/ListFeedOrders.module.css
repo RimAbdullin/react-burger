@@ -1,0 +1,8 @@
+.List-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: none;
+
+  gap: 8px;
+}
