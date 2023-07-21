@@ -4,7 +4,7 @@ import {
   IForgotPasswordState,
 } from '../store/types/forgot-password';
 
-const initialState = {
+const initialState: IForgotPasswordState = {
   isEmailSent: false,
   forgotPasswordRequest: true,
   forgotPasswordFailed: false,
