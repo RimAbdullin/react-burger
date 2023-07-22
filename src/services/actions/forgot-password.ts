@@ -7,10 +7,11 @@ import { AppDispatch } from '../store/store';
 
 // thunk
 export function forgotPasswordThunk(form: IForgotPasswordForm) {
-  return function (dispatch: AppDispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: ForgotPasswordActionTypes.POST_FORGOT_PASSWORD_REQUEST,
     });
+
     forgotPasswordRequest(form)
       .then((data) => {
         dispatch({
