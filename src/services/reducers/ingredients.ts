@@ -4,7 +4,7 @@ import {
   IngredientsAction,
 } from '../store/types/ingredients';
 
-const initialState = {
+export const ingredientsInitialState: IBurgerIngredientsState = {
   ingredients: [],
   bun: [],
   main: [],
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export const ingredientsReducer = (
-  state: IBurgerIngredientsState = initialState,
+  state: IBurgerIngredientsState = ingredientsInitialState,
   action: IngredientsAction
 ): IBurgerIngredientsState => {
   switch (action.type) {
