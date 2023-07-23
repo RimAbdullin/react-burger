@@ -5,6 +5,8 @@ import {
 } from './ingredients';
 import * as types from '../store/types/ingredients';
 import { IBurgerIngredient } from '../common/interfaces';
+import IngredientDetails from '../../components/burger-ingredients/ingredient-details/IngredientDetails';
+import { ingredientsData } from '../../utils/ingredients-data';
 
 const middlewares: any = [];
 const mockStore = configureMockStore(middlewares);
@@ -93,6 +95,37 @@ describe('ingredients reducer', () => {
     };
 
     expect(actions).toEqual([expected]);
+
+    const test: IBurgerIngredient[] = [...ingredientsData];
+
+    expect(
+      reducer(
+        { ...initialState, ingredients: ingredientsData },
+        {
+          type: types.IngredientsActionTypes.INCREASE_ITEM,
+          itemId: '60666c42cc7b410027a1a9b5',
+        }
+      )
+    ).toEqual({
+      itemsRequest: false,
+      itemsFailed: false,
+      ingredients: [
+        ...ingredientsData.map((item) => ({
+          ...item,
+          count:
+            item._id === '60666c42cc7b410027a1a9b5'
+              ? item.count
+                ? item.count
+                : 0 + 1
+              : item.count,
+        })),
+      ],
+      bun: [],
+      main: [],
+      sauce: [],
+      currentBun: null,
+      currentIngredient: null,
+    });
   });
 
   // it('GET_ITEM', () => {
