@@ -30,11 +30,6 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
       type: IngredientsConstructorActionTypes.DELETE_ITEM_CONSTRUCTOR,
       item: { ...children },
     });
-
-    dispatch({
-      type: IngredientsActionTypes.DECREASE_ITEM,
-      itemId: children._id,
-    });
   };
 
   const { id } = children;

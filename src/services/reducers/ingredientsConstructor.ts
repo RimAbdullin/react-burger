@@ -4,12 +4,12 @@ import {
   IngredientsConstructorActionTypes,
 } from '../store/types/ingredientsConstructor';
 
-const initialState = {
+export const ingredientsConstructorInitialState = {
   ingredientsConstructor: [],
 };
 
 export const ingredientsConstructorReducer = (
-  state: IBurgerIngredientsConstructorState = initialState,
+  state: IBurgerIngredientsConstructorState = ingredientsConstructorInitialState,
   action: IngredientsConstructorAction
 ) => {
   switch (action.type) {
@@ -20,8 +20,6 @@ export const ingredientsConstructorReducer = (
           ...state.ingredientsConstructor,
           {
             ...action.item,
-            id: action.item.id,
-            count: action.item.count ? action.item.count : 0 + 1,
           },
         ],
       };
@@ -37,7 +35,8 @@ export const ingredientsConstructorReducer = (
     case IngredientsConstructorActionTypes.CLEAR_INGREDIENTS_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsConstructor: initialState.ingredientsConstructor,
+        ingredientsConstructor:
+          ingredientsConstructorInitialState.ingredientsConstructor,
       };
     }
     default: {

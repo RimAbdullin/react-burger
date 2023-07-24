@@ -1,21 +1,12 @@
-import configureMockStore from 'redux-mock-store';
 import {
   ingredientsInitialState,
   ingredientsReducer as reducer,
 } from './ingredients';
 import * as types from '../store/types/ingredients';
 import { IBurgerIngredient } from '../common/interfaces';
-import IngredientDetails from '../../components/burger-ingredients/ingredient-details/IngredientDetails';
 import { ingredientsData } from '../../utils/ingredients-data';
 
-const middlewares: any = [];
-const mockStore = configureMockStore(middlewares);
-
 describe('ingredients reducer', () => {
-  // Инициализируем хранилище mockStore с пустым state.
-  const initialState = ingredientsInitialState;
-  const store = mockStore(initialState);
-
   it('Корректное состояние initial state редюсера', () => {
     expect(reducer(undefined, {} as any)).toEqual({
       ingredients: [],
@@ -68,85 +59,67 @@ describe('ingredients reducer', () => {
     });
   });
 
-  // it('DECREASE_ITEM', () => {
-  //   expect(
-  //     reducer({} as types.IBurgerIngredientsState, {
-  //       type: types.IngredientsActionTypes.DECREASE_ITEM,
-  //       itemId: '',
-  //     })
-  //   ).toEqual({
-  //     ingredients: [] as IBurgerIngredient[],
-  //   });
-  // });
-
-  it('INCREASE_ITEM', () => {
-    const increaseItem = () => ({
-      type: types.IngredientsActionTypes.INCREASE_ITEM,
-      itemId: '60666c42cc7b410027a1a9b1',
-    });
-
-    store.dispatch(increaseItem());
-
-    const actions = store.getActions();
-
-    const expected = {
-      type: types.IngredientsActionTypes.INCREASE_ITEM,
-      itemId: '60666c42cc7b410027a1a9b1',
-    };
-
-    expect(actions).toEqual([expected]);
-
-    const test: IBurgerIngredient[] = [...ingredientsData];
-
+  it('GET_ITEM', () => {
     expect(
       reducer(
-        { ...initialState, ingredients: ingredientsData },
         {
-          type: types.IngredientsActionTypes.INCREASE_ITEM,
-          itemId: '60666c42cc7b410027a1a9b5',
+          ...ingredientsInitialState,
+          ingredients: ingredientsData,
+        } as types.IBurgerIngredientsState,
+        {
+          type: types.IngredientsActionTypes.GET_ITEM,
+          id: '60666c42cc7b410027a1a9bc',
         }
       )
     ).toEqual({
-      itemsRequest: false,
-      itemsFailed: false,
-      ingredients: [
-        ...ingredientsData.map((item) => ({
-          ...item,
-          count:
-            item._id === '60666c42cc7b410027a1a9b5'
-              ? item.count
-                ? item.count
-                : 0 + 1
-              : item.count,
-        })),
-      ],
-      bun: [],
-      main: [],
-      sauce: [],
-      currentBun: null,
-      currentIngredient: null,
+      ...ingredientsInitialState,
+      ingredients: ingredientsData,
+      currentIngredient: {
+        _id: '60666c42cc7b410027a1a9bc',
+        name: 'Плоды Фалленианского дерева',
+        type: 'main',
+        proteins: 20,
+        fat: 5,
+        carbohydrates: 55,
+        calories: 77,
+        price: 874,
+        image: 'https://code.s3.yandex.net/react/code/sp_1.png',
+        image_mobile: 'https://code.s3.yandex.net/react/code/sp_1-mobile.png',
+        image_large: 'https://code.s3.yandex.net/react/code/sp_1-large.png',
+        __v: 0,
+      },
     });
   });
 
-  // it('GET_ITEM', () => {
-  //   expect(
-  //     reducer({} as types.IBurgerIngredientsState, {
-  //       type: types.IngredientsActionTypes.GET_ITEM,
-  //       id: '',
-  //     })
-  //   ).toEqual({ currentIngredient: {} });
-  // });
-
-  // it('SET_BUN', () => {
-  //   expect(
-  //     reducer({} as types.IBurgerIngredientsState, {
-  //       type: types.IngredientsActionTypes.SET_BUN,
-  //       bunName: '',
-  //       id: '',
-  //     })
-  //   ).toEqual({
-  //     forgotPasswordRequest: true,
-  //     forgotPasswordFailed: false,
-  //   });
-  // });
+  it('SET_BUN', () => {
+    expect(
+      reducer(
+        {
+          ...ingredientsInitialState,
+          ingredients: ingredientsData,
+        } as types.IBurgerIngredientsState,
+        {
+          type: types.IngredientsActionTypes.SET_BUN,
+          bunName: 'Краторная булка N-200i',
+        }
+      )
+    ).toEqual({
+      ...ingredientsInitialState,
+      ingredients: ingredientsData,
+      currentBun: {
+        _id: '60666c42cc7b410027a1a9b1',
+        name: 'Краторная булка N-200i',
+        type: 'bun',
+        proteins: 80,
+        fat: 24,
+        carbohydrates: 53,
+        calories: 420,
+        price: 1255,
+        image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+        image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+        image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+        __v: 0,
+      },
+    });
+  });
 });

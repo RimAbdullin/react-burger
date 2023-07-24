@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
-import { getIngredientsItems } from '../../services/actions/ingredients';
+import { getIngredientsItemsThunk } from '../../services/actions/ingredients';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
   HomePage,
@@ -40,7 +40,7 @@ const ModalSwitch = () => {
 
   useEffect(() => {
     // Инициализируем объекты с ингредиентами.
-    dispatch(getIngredientsItems('Краторная булка N-200i'));
+    dispatch(getIngredientsItemsThunk('Краторная булка N-200i'));
   }, [dispatch]);
 
   useEffect(() => {

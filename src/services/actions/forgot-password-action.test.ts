@@ -1,10 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { forgotPasswordThunk as actions } from './forgot-password';
-import {
-  ForgotPasswordActionTypes,
-  ForgotPasswordActionTypes as types,
-} from '../store/types/forgot-password';
+import { ForgotPasswordActionTypes } from '../store/types/forgot-password';
 import fetchMock from 'fetch-mock';
 import { NORMA_API } from '../../data/data';
 
@@ -33,7 +30,7 @@ describe('Проверка асинхронного thunk для ForgotPassword'
       // request options.
       {
         url: `${NORMA_API}/password-reset`,
-        body: { email: '123' },
+        body: { email: 'a@a.ru' },
         headers: { 'Content-Type': 'application/json' },
       },
 
@@ -45,7 +42,7 @@ describe('Проверка асинхронного thunk для ForgotPassword'
     );
 
     // Проверка actions.
-    return store.dispatch(actions({ email: '123' }) as any).then(() => {
+    return store.dispatch(actions({ email: 'a@a.ru' }) as any).then(() => {
       const actions = store.getActions();
       expect(actions).toEqual(expectedActions);
     });

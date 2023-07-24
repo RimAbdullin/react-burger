@@ -1,7 +1,7 @@
 import styles from './IngredientDetails.module.css';
 import { useEffect } from 'react';
 import { getIngredientsSelector } from '../../../services/selectors/selector';
-import { getIngredientsItems } from '../../../services/actions/ingredients';
+import { getIngredientsItemsThunk } from '../../../services/actions/ingredients';
 
 import { useParams } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
@@ -29,7 +29,7 @@ export const IngredientDetails: React.FC<IIngredientDetailsProps> = ({
 
   useEffect(() => {
     if (!ingredients) {
-      dispatch(getIngredientsItems('Краторная булка N-200i'));
+      dispatch(getIngredientsItemsThunk('Краторная булка N-200i'));
     }
   }, [dispatch]);
 

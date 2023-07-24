@@ -5,8 +5,6 @@ export enum IngredientsActionTypes {
   GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS',
   GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST',
   SET_BUN = 'SET_BUN',
-  INCREASE_ITEM = 'INCREASE_ITEM',
-  DECREASE_ITEM = 'DECREASE_ITEM',
   GET_ITEM = 'GET_ITEM',
 }
 
@@ -26,18 +24,7 @@ interface IGetItemsRequest {
 
 interface ISetBun {
   type: IngredientsActionTypes.SET_BUN;
-  id: null | string;
   bunName: null | string;
-}
-
-interface IIncreaseItem {
-  type: IngredientsActionTypes.INCREASE_ITEM;
-  itemId: string;
-}
-
-interface IDecreaseItem {
-  type: IngredientsActionTypes.DECREASE_ITEM;
-  itemId: string;
 }
 
 interface IGetItem {
@@ -50,8 +37,6 @@ export type IngredientsAction =
   | IGetItemsSuccess
   | IGetItemsRequest
   | ISetBun
-  | IIncreaseItem
-  | IDecreaseItem
   | IGetItem;
 
 export interface IBurgerIngredientsState {

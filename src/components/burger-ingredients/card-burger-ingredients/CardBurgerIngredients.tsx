@@ -5,7 +5,10 @@ import {
 import styles from './CardBurgerIngredients.module.css';
 import { useDrag } from 'react-dnd';
 import { useState, useEffect, FC } from 'react';
-import { getIngredientsConstructorSelector } from '../../../services/selectors/selector';
+import {
+  getIngredientsConstructorSelector,
+  getIngredientsSelector,
+} from '../../../services/selectors/selector';
 import { useLocation, Link } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
@@ -29,26 +32,50 @@ const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
     getIngredientsConstructorSelector
   );
 
+  const { currentBun } = useTypedSelector(getIngredientsSelector);
+
   // Изменяем количество выбранных ингредиентов.
   useEffect(() => {
-    if (ingredientsConstructor.length > 0) {
-      const filter = ingredientsConstructor.filter((item) => item._id === _id);
-
-      if (filter.length <= 1) {
-        setCount(filter.length);
-      }
-
-      if (filter.length > 1) {
-        const count = ingredientsConstructor.filter(
+    if (children.type !== 'bun') {
+      if (ingredientsConstructor.length > 0) {
+        const filter = ingredientsConstructor.filter(
           (item) => item._id === _id
-        ).length;
+        );
 
-        if (count) {
-          setCount(count);
+        if (filter.length <= 1) {
+          setCount(filter.length);
         }
+
+        if (filter.length > 1) {
+          const count = ingredientsConstructor.filter(
+            (item) => item._id === _id
+          ).length;
+
+          if (count) {
+            setCount(count);
+          }
+        }
+      } else {
+        setCount(0);
       }
     }
   }, [ingredientsConstructor]);
+
+  useEffect(() => {
+    if (
+      children.type === 'bun' &&
+      currentBun &&
+      children._id === currentBun._id
+    ) {
+      setCount(1);
+    } else if (
+      children.type === 'bun' &&
+      currentBun &&
+      children._id !== currentBun._id
+    ) {
+      setCount(0);
+    }
+  }, [currentBun]);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredients',

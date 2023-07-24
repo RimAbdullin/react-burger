@@ -32,7 +32,7 @@ export const ingredientsReducer = (
         ...state,
         itemsRequest: false,
         itemsFailed: false,
-        ingredients: action.items.map((item) => ({ ...item, count: 0 })),
+        ingredients: action.items.map((item) => item),
         bun: [...action.items.filter((bun) => bun.type == 'bun')],
         main: [...action.items.filter((bun) => bun.type == 'main')],
         sauce: [...action.items.filter((bun) => bun.type == 'sauce')],
@@ -45,53 +45,10 @@ export const ingredientsReducer = (
       return {
         ...state,
         currentBun: {
-          id: action.id,
-          ...state.bun.filter((item) => item.name === action.bunName)[0],
+          ...state.ingredients.filter(
+            (item) => item.name === action.bunName
+          )[0],
         },
-        ingredients: [
-          ...state.ingredients.map((item) => ({
-            ...item,
-            count:
-              item.type === 'bun'
-                ? item.name === action.bunName
-                  ? 1
-                  : 0
-                : item.count,
-          })),
-        ],
-      };
-    }
-    case IngredientsActionTypes.INCREASE_ITEM: {
-      return {
-        ...state,
-        ingredients: [
-          ...state.ingredients.map((item) => ({
-            ...item,
-            count:
-              item._id === action.itemId
-                ? item.count
-                  ? item.count
-                  : 0 + 1
-                : item.count,
-          })),
-        ],
-      };
-    }
-
-    case IngredientsActionTypes.DECREASE_ITEM: {
-      return {
-        ...state,
-        ingredients: [
-          ...state.ingredients.map((item) => ({
-            ...item,
-            count:
-              item._id === action.itemId
-                ? item.count
-                  ? item.count
-                  : 0 - 1
-                : item.count,
-          })),
-        ],
       };
     }
 

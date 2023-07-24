@@ -65,11 +65,6 @@ function BurgerConstructor() {
         type: IngredientsConstructorActionTypes.ADD_ITEM_CONSTRUCTOR,
         item: { id: v4(), ...item },
       });
-
-      dispatch({
-        type: IngredientsActionTypes.INCREASE_ITEM,
-        itemId: item._id,
-      });
     }
   };
 
