@@ -4,12 +4,12 @@ import {
   ModalActionTypes,
 } from '../store/types/modal';
 
-const initialState = {
+export const modalInitialState = {
   currentIngredient: null,
 };
 
 export const modalReducer = (
-  state: IModalState = initialState,
+  state: IModalState = modalInitialState,
   action: ModalAction
 ) => {
   switch (action.type) {

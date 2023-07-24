@@ -4,12 +4,12 @@ import { OrderActionTypes, OrderRequestBody } from '../store/types/order';
 import { AppDispatch } from '../store/store';
 
 // thunk
-export function getOrderNumber(data: OrderRequestBody) {
+export function getOrderNumberThunk(data: OrderRequestBody) {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: OrderActionTypes.GET_ORDER_REQUEST,
     });
-    getOrderRequest(data)
+    return getOrderRequest(data)
       .then((data) => {
         dispatch({
           type: OrderActionTypes.GET_ORDER_SUCCESS,
