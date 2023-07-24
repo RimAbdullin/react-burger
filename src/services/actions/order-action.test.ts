@@ -10,7 +10,7 @@ import { IngredientsConstructorActionTypes } from '../store/types/ingredientsCon
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Проверка асинхронного thunk для Ingredients', () => {
+describe('Проверка асинхронного thunk для Order', () => {
   afterEach(() => {
     fetchMock.restore();
   });

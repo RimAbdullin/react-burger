@@ -29,7 +29,7 @@ describe('Проверка асинхронного thunk для PasswordReset',
       // request options.
       {
         url: `${NORMA_API}/password-reset/reset`,
-        body: { email: 'a@a.ru' },
+        body: { password: '123', token: '123' },
         headers: { 'Content-Type': 'application/json' },
       },
 
