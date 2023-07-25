@@ -30,7 +30,7 @@ export function getUserThunk() {
     dispatch({
       type: UserActionTypes.GET_USER_REQUEST,
     });
-    getUserRequest()
+    return getUserRequest()
       .then((data) => {
         dispatch({
           type: UserActionTypes.GET_USER_SUCCESS,
@@ -59,7 +59,7 @@ export function updateUserThunk(form: IUserWithPassword) {
     dispatch({
       type: UserActionTypes.UPDATE_USER_REQUEST,
     });
-    updateUserRequest(form)
+    return updateUserRequest(form)
       .then((data) => {
         dispatch({
           type: UserActionTypes.UPDATE_USER_SUCCESS,
@@ -93,7 +93,7 @@ export function loginThunk(form: IUserLoginForm) {
     dispatch({
       type: UserActionTypes.POST_LOGIN_REQUEST,
     });
-    loginRequest(form)
+    return loginRequest(form)
       .then((data) => {
         dispatch({
           type: UserActionTypes.POST_LOGIN_SUCCESS,
@@ -121,7 +121,7 @@ export function refreshTokenThunk() {
     dispatch({
       type: UserActionTypes.POST_REFRESH_TOKEN_REQUEST,
     });
-    refreshTokenRequest()
+    return refreshTokenRequest()
       .then((data) => {
         dispatch({
           type: UserActionTypes.POST_REFRESH_TOKEN_SUCCESS,
@@ -146,7 +146,7 @@ export function logoutThunk() {
     dispatch({
       type: UserActionTypes.POST_LOGOUT_REQUEST,
     });
-    logoutRequest()
+    return logoutRequest()
       .then((data) => {
         dispatch({
           type: UserActionTypes.POST_LOGOUT_SUCCESS,

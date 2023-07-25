@@ -48,6 +48,7 @@ export function LoginPage() {
         <div className={`mb-6 ${styles['title-container']}`}>
           <span className={`text_type_main-medium`}>Вход</span>
         </div>
+        <input type="email"></input>
         <Input
           placeholder="Email"
           value={form.email}
