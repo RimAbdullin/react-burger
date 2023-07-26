@@ -48,8 +48,8 @@ export function LoginPage() {
         <div className={`mb-6 ${styles['title-container']}`}>
           <span className={`text_type_main-medium`}>Вход</span>
         </div>
-        <input type="email"></input>
         <Input
+          id="id-email"
           placeholder="Email"
           value={form.email}
           name="email"
@@ -57,6 +57,7 @@ export function LoginPage() {
           extraClass="mb-6"
         />
         <PasswordInput
+          id="id-password"
           placeholder="Пароль"
           value={form.password}
           name="password"

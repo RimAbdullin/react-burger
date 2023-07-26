@@ -83,7 +83,10 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
       {/* ingredientsConstructor && (currentBun || bun) && ( */}
       {/* Первый элемент булки. */}
       {currentBun && bun && (
-        <div className={`ml-4  ${styles['Card-ingredients']}`}>
+        <div
+          className={`ml-4  ${styles['Card-ingredients']}`}
+          data-cy="constructor-bun-1"
+        >
           <ConstructorElement
             extraClass={'mb-4 ml-15'}
             type={'top'}
@@ -96,6 +99,7 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
       )}
       <div
         className={`mb-4 custom-scroll ${styles['Scroll-area']}`}
+        data-cy="constructor"
         ref={dropTarget}
       >
         {!currentBun && !bun && ingredientsConstructor.length === 0 && (
@@ -113,7 +117,10 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
       </div>
       {/* Последний элемент булки. */}
       {currentBun && bun && (
-        <div className={`ml-4  ${styles['Card-ingredients']}`}>
+        <div
+          className={`ml-4  ${styles['Card-ingredients']}`}
+          data-cy="constructor-bun-2"
+        >
           <ConstructorElement
             extraClass={'ml-15'}
             type={'bottom'}

@@ -65,9 +65,9 @@ function BurgerIngredients() {
         click={scrollToElement}
       />
       <div
-        // ref={scrollRef}
         className={`custom-scroll ${styles['Scroll-area']}`}
         onScroll={scrollList}
+        data-cy="ingredients"
       >
         <div>
           <div
