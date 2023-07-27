@@ -49,6 +49,7 @@ const Modal: React.FC<IModalProps> = ({
     PortalReactDOM.createPortal(
       <>
         <section
+          id="id-modal"
           className={`${styles['Modal-container']}`}
           onClick={handleClick}
         >
@@ -64,7 +65,11 @@ const Modal: React.FC<IModalProps> = ({
                   </span>
                 </div>
                 {/* Иконка закрытия. */}
-                <div className={styles['Button-close']} onClick={handleClick}>
+                <div
+                  className={styles['Button-close']}
+                  onClick={handleClick}
+                  aria-label="закрыть"
+                >
                   <CloseIcon type="primary" />
                 </div>
               </div>

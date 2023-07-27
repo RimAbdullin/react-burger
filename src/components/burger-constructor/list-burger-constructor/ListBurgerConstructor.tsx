@@ -113,7 +113,9 @@ const ListBurgerConstructor: FC<IListBurgerConstructorProps> = ({
           </div>
         )}
         {/* Список ингредиентов. */}
+        {/* <div data-cy="constructor-ingredients" ref={dropTarget}> */}
         {cards.map((card, i) => renderCard(card, i))}
+        {/* </div> */}
       </div>
       {/* Последний элемент булки. */}
       {currentBun && bun && (

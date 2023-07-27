@@ -93,10 +93,11 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
       className={`ml-4  ${styles['Card-ingredients']}`}
       ref={ref}
       data-handler-id={handlerId}
+      data-cy="card-constructor"
     >
       {<DragIcon type="primary" />}
       <ConstructorElement
-        extraClass={'ml-10 mr-2 ' + extraClass}
+        extraClass={'card ml-10 mr-2 ' + extraClass}
         key={children._id}
         type={undefined}
         isLocked={false}
