@@ -94,7 +94,11 @@ const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
       state={{ background: location }}
     >
       <>
-        <section className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}>
+        <section
+          className={`ml-4 mb-10 mt-6 ${styles['Card-ingredients']}`}
+          data-cy="ingredients"
+          ref={dragRef}
+        >
           <Counter
             extraClass={`${styles['Counter']}`}
             count={count}
@@ -102,7 +106,7 @@ const CardBurgerIngredients: FC<ICardBurgerIngredientsProps> = ({
           />
           <div className={`mr-4 ml-4 ${styles['Illustration']}`}>
             <img
-              ref={dragRef}
+              // ref={dragRef}
               src={children.image}
               className={`ml-4 mb-10 mt-6 ${styles['Image']}`}
               alt=""
