@@ -154,6 +154,7 @@ function BurgerConstructor() {
             </div>
             <div className={`ml-10 ${styles['Info-price-container ']}`}>
               <Button
+                id="id-btn-order"
                 htmlType="button"
                 type="primary"
                 size="large"

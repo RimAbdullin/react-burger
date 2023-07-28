@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import styles from './CardBurgerConstructor.module.css';
 import {
   ConstructorElement,
@@ -6,7 +6,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop, useDrag } from 'react-dnd';
 import { IBurgerIngredient } from '../../../services/common/interfaces';
-import { IngredientsActionTypes } from '../../../services/store/types/ingredients';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IngredientsConstructorActionTypes } from '../../../services/store/types/ingredientsConstructor';
 
@@ -62,13 +61,13 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
 
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
+      // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      //   return;
+      // }
 
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
+      // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      //   return;
+      // }
 
       moveCard(dragIndex, hoverIndex);
 
@@ -88,16 +87,20 @@ const CardBurgerConstructor: FC<ICardBurgerConstructorProps> = ({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
+  const [index1, setIndex1] = useState(0);
+
+  const classCard = 'card' + index;
+
   return (
     <section
-      className={`ml-4  ${styles['Card-ingredients']}`}
+      className={`card ml-4  ${styles['Card-ingredients']} ${classCard}`}
       ref={ref}
       data-handler-id={handlerId}
       data-cy="card-constructor"
     >
       {<DragIcon type="primary" />}
       <ConstructorElement
-        extraClass={'card ml-10 mr-2 ' + extraClass}
+        extraClass={'ml-10 mr-2 ' + extraClass}
         key={children._id}
         type={undefined}
         isLocked={false}
