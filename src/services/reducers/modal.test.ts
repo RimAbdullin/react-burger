@@ -1,4 +1,4 @@
-import { modalReducer as reducer } from './modal';
+import { modalInitialState, modalReducer as reducer } from './modal';
 import * as types from '../store/types/modal';
 
 describe('ingredients reducer', () => {
@@ -18,9 +18,7 @@ describe('ingredients reducer', () => {
   };
 
   it('Корректное состояние initial state редюсера modalReducer', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      currentIngredient: null,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(modalInitialState);
   });
 
   it('SELECT_ITEM', () => {

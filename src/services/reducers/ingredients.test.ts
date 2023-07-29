@@ -8,16 +8,7 @@ import { ingredientsData } from '../../utils/ingredients-data';
 
 describe('ingredients reducer', () => {
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      ingredients: [],
-      bun: [],
-      main: [],
-      sauce: [],
-      itemsRequest: false,
-      itemsFailed: false,
-      currentBun: null,
-      currentIngredient: null,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(ingredientsInitialState);
   });
 
   it('GET_ITEMS_REQUEST', () => {

@@ -18,11 +18,7 @@ describe('ingredients reducer', () => {
   };
 
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      orderNumber: 0,
-      orderRequest: true,
-      orderFailed: false,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(orderInitialState);
   });
 
   it('GET_ORDER_REQUEST', () => {

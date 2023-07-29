@@ -1,27 +1,9 @@
-import { userReducer as reducer } from './user';
+import { userReducer as reducer, userInitialState } from './user';
 import * as types from '../store/types/user';
 
 describe('user reducer', () => {
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      isAuthChecked: false,
-      user: null,
-      // getUser.
-      getUserRequest: true,
-      getUserFailed: false,
-      // updateUser.
-      updateUserRequest: true,
-      updateUserFailed: false,
-      // login.
-      loginRequest: true,
-      loginFailed: false,
-      // refresh.
-      refreshTokenRequest: true,
-      refreshTokenFailed: false,
-      // logout.
-      logoutRequest: true,
-      logoutFailed: false,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(userInitialState);
   });
 
   // get user.

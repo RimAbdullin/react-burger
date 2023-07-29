@@ -1,13 +1,12 @@
-import { forgotPasswordReducer as reducer } from './forgot-password';
+import {
+  forgotInitialState,
+  forgotPasswordReducer as reducer,
+} from './forgot-password';
 import * as types from '../store/types/forgot-password';
 
 describe('forgot-password reducer', () => {
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      isEmailSent: false,
-      forgotPasswordRequest: true,
-      forgotPasswordFailed: false,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(forgotInitialState);
   });
 
   it('POST_FORGOT_PASSWORD_REQUEST', () => {

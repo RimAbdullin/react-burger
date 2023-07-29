@@ -4,14 +4,14 @@ import {
   IForgotPasswordState,
 } from '../store/types/forgot-password';
 
-const initialState: IForgotPasswordState = {
+export const forgotInitialState: IForgotPasswordState = {
   isEmailSent: false,
   forgotPasswordRequest: true,
   forgotPasswordFailed: false,
 };
 
 export const forgotPasswordReducer = (
-  state: IForgotPasswordState = initialState,
+  state: IForgotPasswordState = forgotInitialState,
   action: ForgotPasswordAction
 ): IForgotPasswordState => {
   switch (action.type) {
@@ -45,7 +45,7 @@ export const forgotPasswordReducer = (
     // reset all store.
     case ForgotPasswordActionTypes.RESET_STATE: {
       return {
-        ...initialState,
+        ...forgotInitialState,
         isEmailSent: state.isEmailSent,
       };
     }

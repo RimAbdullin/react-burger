@@ -4,13 +4,13 @@ import {
   PasswordResetActionTypes,
 } from '../store/types/password-reset';
 
-const initialState = {
+export const passwordInitialState = {
   passwordResetRequest: true,
   passwordResetFailed: false,
 };
 
 export const passwordResetReducer = (
-  state: IPasswordResetState = initialState,
+  state: IPasswordResetState = passwordInitialState,
   action: PasswordResetAction
 ): IPasswordResetState => {
   switch (action.type) {
@@ -39,7 +39,7 @@ export const passwordResetReducer = (
     // reset all store.
     case PasswordResetActionTypes.RESET_STATE: {
       return {
-        ...initialState,
+        ...passwordInitialState,
       };
     }
 

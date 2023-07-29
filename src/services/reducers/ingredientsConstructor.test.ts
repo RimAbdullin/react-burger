@@ -1,4 +1,7 @@
-import { ingredientsConstructorReducer as reducer } from './ingredientsConstructor';
+import {
+  ingredientsConstructorInitialState,
+  ingredientsConstructorReducer as reducer,
+} from './ingredientsConstructor';
 import * as types from '../store/types/ingredientsConstructor';
 import { IBurgerIngredient } from '../common/interfaces';
 
@@ -19,9 +22,9 @@ describe('ingredients reducer', () => {
   };
 
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      ingredientsConstructor: [],
-    });
+    expect(reducer(undefined, {} as any)).toEqual(
+      ingredientsConstructorInitialState
+    );
   });
 
   it('ADD_ITEM_CONSTRUCTOR', () => {

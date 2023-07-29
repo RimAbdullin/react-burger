@@ -1,12 +1,12 @@
-import { passwordResetReducer as reducer } from './password-reset';
+import {
+  passwordInitialState,
+  passwordResetReducer as reducer,
+} from './password-reset';
 import * as types from '../store/types/password-reset';
 
 describe('password-reset reducer', () => {
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      passwordResetRequest: true,
-      passwordResetFailed: false,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(passwordInitialState);
   });
 
   it('POST_PASSWORD_RESET_REQUEST', () => {

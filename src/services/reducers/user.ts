@@ -1,6 +1,6 @@
 import { IUserState, UserAction, UserActionTypes } from '../store/types/user';
 
-const initialState = {
+export const userInitialState = {
   isAuthChecked: false,
   user: null,
   // getUser.
@@ -21,7 +21,7 @@ const initialState = {
 };
 
 export const userReducer = (
-  state: IUserState = initialState,
+  state: IUserState = userInitialState,
   action: UserAction
 ): IUserState => {
   switch (action.type) {

@@ -1,12 +1,12 @@
-import { registrationReducer as reducer } from './registration';
+import {
+  registrationReducer as reducer,
+  registrationInitialState,
+} from './registration';
 import * as types from '../store/types/registration';
 
 describe('registration reducer', () => {
   it('Корректное состояние initial state редюсера', () => {
-    expect(reducer(undefined, {} as any)).toEqual({
-      registrationRequest: true,
-      registrationFailed: false,
-    });
+    expect(reducer(undefined, {} as any)).toEqual(registrationInitialState);
   });
 
   it('POST_REGISTRATION_REQUEST', () => {

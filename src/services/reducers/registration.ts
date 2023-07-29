@@ -3,13 +3,13 @@ import {
   RegistrationActionTypes,
 } from '../store/types/registration';
 
-const initialState = {
+export const registrationInitialState = {
   registrationRequest: true,
   registrationFailed: false,
 };
 
 export const registrationReducer = (
-  state = initialState,
+  state = registrationInitialState,
   action: RegistrationAction
 ) => {
   switch (action.type) {
@@ -34,7 +34,7 @@ export const registrationReducer = (
     // reset all store.
     case RegistrationActionTypes.RESET_STATE: {
       return {
-        ...initialState,
+        ...registrationInitialState,
       };
     }
 
