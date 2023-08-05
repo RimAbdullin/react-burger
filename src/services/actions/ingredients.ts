@@ -3,12 +3,12 @@ import { IngredientsActionTypes } from '../store/types/ingredients';
 import { AppDispatch } from '../store/store';
 
 // thunk
-export const getIngredientsItems = (bunName: string) => {
+export const getIngredientsItemsThunk = (bunName: string) => {
   return (dispatch: AppDispatch) => {
     dispatch({
       type: IngredientsActionTypes.GET_ITEMS_REQUEST,
     });
-    getIngredientsRequest()
+    return getIngredientsRequest()
       .then((data) => {
         dispatch({
           type: IngredientsActionTypes.GET_ITEMS_SUCCESS,

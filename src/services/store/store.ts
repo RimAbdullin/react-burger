@@ -1,6 +1,5 @@
 import { rootReducer } from '../reducers/rootReducer';
 import { createStore, compose, applyMiddleware } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { ForgotPasswordAction } from './types/forgot-password';
 import { IngredientsAction } from './types/ingredients';
 import { IngredientsConstructorAction } from './types/ingredientsConstructor';
@@ -16,17 +15,20 @@ import { WSAction } from './types/ws';
 import { feedWsActions } from './types/feedWsActions';
 import { orderWsActions } from './types/orderWsActions';
 
-// export const webSocketMiddleWare = socketMiddleware();
+const composeEnhancers =
+  typeof window === 'object' &&
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
 export const store = createStore(
   rootReducer,
-  compose(
+  composeEnhancers(
     applyMiddleware(
       thunk,
       socketMiddleware(feedWsActions),
       socketMiddleware(orderWsActions)
-    ),
-    composeWithDevTools()
+    )
   )
 );
 

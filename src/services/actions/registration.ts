@@ -12,7 +12,7 @@ export function registrationThunk(form: IRegistrationForm) {
     dispatch({
       type: RegistrationActionTypes.POST_REGISTRATION_REQUEST,
     });
-    registrationRequest(form)
+    return registrationRequest(form)
       .then((data) => {
         dispatch({
           type: RegistrationActionTypes.POST_REGISTRATION_SUCCESS,

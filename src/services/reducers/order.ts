@@ -4,14 +4,14 @@ import {
   OrderActionTypes,
 } from '../store/types/order';
 
-const initialState = {
-  orderNumber: 5,
+export const orderInitialState: IOrderState = {
+  orderNumber: 0,
   orderRequest: true,
   orderFailed: false,
 };
 
 export const orderReducer = (
-  state: IOrderState = initialState,
+  state: IOrderState = orderInitialState,
   action: OrderAction
 ): IOrderState => {
   switch (action.type) {

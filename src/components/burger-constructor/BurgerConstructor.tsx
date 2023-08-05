@@ -8,7 +8,7 @@ import {
 import Modal from '../modal/Modal';
 import OrderDetails from './order-details/OrderDetails';
 import { useModal } from '../../hooks/useModal';
-import { getOrderNumber } from '../../services/actions/order';
+import { getOrderNumberThunk } from '../../services/actions/order';
 import { v4 } from 'uuid';
 import {
   getIngredientsConstructorSelector,
@@ -65,11 +65,6 @@ function BurgerConstructor() {
         type: IngredientsConstructorActionTypes.ADD_ITEM_CONSTRUCTOR,
         item: { id: v4(), ...item },
       });
-
-      dispatch({
-        type: IngredientsActionTypes.INCREASE_ITEM,
-        itemId: item._id,
-      });
     }
   };
 
@@ -117,7 +112,7 @@ function BurgerConstructor() {
     if (user.isAuthChecked && user.user) {
       if (ingredientsConstructor && ingredientsConstructor.length > 0) {
         // Получаем номер заказа.
-        dispatch(getOrderNumber(getBody()));
+        dispatch(getOrderNumberThunk(getBody()));
 
         // Открываем модальное окно.
         openModal();
@@ -159,6 +154,7 @@ function BurgerConstructor() {
             </div>
             <div className={`ml-10 ${styles['Info-price-container ']}`}>
               <Button
+                id="id-btn-order"
                 htmlType="button"
                 type="primary"
                 size="large"

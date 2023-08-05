@@ -49,6 +49,7 @@ export function LoginPage() {
           <span className={`text_type_main-medium`}>Вход</span>
         </div>
         <Input
+          id="id-email"
           placeholder="Email"
           value={form.email}
           name="email"
@@ -56,6 +57,7 @@ export function LoginPage() {
           extraClass="mb-6"
         />
         <PasswordInput
+          id="id-password"
           placeholder="Пароль"
           value={form.password}
           name="password"
